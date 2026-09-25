@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "data_sources": [
+    {
+      "id": "clinvar_grch38",
+      "name": "ClinVar GRCh38 VCF",
+      "url": "https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz",
+      "path": "data/raw/clinvar/clinvar.vcf.gz",
+      "scope": "ClinVar variants with precise GRCh38 locations",
+      "license": "NCBI public data; see source terms"
+    },
+    {
+      "id": "hpo_annotations",
+      "name": "Human Phenotype Ontology disease annotations",
+      "url": "https://purl.obolibrary.org/obo/hp/hpoa/phenotype.hpoa",
+      "path": "data/raw/hpo/phenotype.hpoa",
+      "scope": "Disease-to-HPO annotations",
+      "license": "See HPO annotation terms and source-specific restrictions"
+    },
+    {
+      "id": "monarch_upheno",
+      "name": "Monarch UPheno cross-species mappings",
+      "url": "https://data.monarchinitiative.org/mappings/latest/upheno-cross-species.sssom.tsv",
+      "path": "data/raw/monarch/upheno-cross-species.sssom.tsv",
+      "scope": "Cross-species ontology mappings filtered to HP-MP",
+      "license": "See embedded SSSOM metadata"
+    },
+    {
+      "id": "mhmi_mgi",
+      "name": "Mouse-Human Mapping Initiative MGI mappings",
+      "url": "https://raw.githubusercontent.com/mapping-commons/mh_mapping_initiative/master/mappings/mp_hp_mgi_all.sssom.tsv",
+      "path": "data/raw/mhmi/mp_hp_mgi_all.sssom.tsv",
+      "scope": "MGI-curated MP-HPO mappings",
+      "license": "CC BY 4.0 (embedded metadata)"
+    },
+    {
+      "id": "mgi_gene_pheno",
+      "name": "MGI gene genotype-phenotype annotations",
+      "url": "https://www.informatics.jax.org/downloads/reports/MGI_GenePheno.rpt",
+      "path": "data/raw/mgi/MGI_GenePheno.rpt",
+      "scope": "Gene genotypes excluding conditional mutations, with specific MP annotations",
+      "license": "See MGI use and citation policy"
+    },
+    {
+      "id": "mgi_orthologs",
+      "name": "MGI one-to-one human-mouse protein-coding orthologs",
+      "url": "https://www.informatics.jax.org/downloads/reports/HOM_ProteinCoding.rpt",
+      "path": "data/raw/mgi/HOM_ProteinCoding.rpt",
+      "scope": "One-to-one protein-coding human-mouse orthology",
+      "license": "See MGI use and citation policy"
+    },
+    {
+      "id": "gwas_catalog_associations",
+      "name": "NHGRI-EBI GWAS Catalog associations v1.0.2",
+      "url": "https://www.ebi.ac.uk/gwas/api/search/downloads/associations/v1.0.2?split=false",
+      "path": "data/raw/gwas/gwas_catalog_associations_v1.0.2.zip",
+      "scope": "Curated associations with ontology annotations; this pipeline retains p <= 5e-8 and direct SNP_GENE_IDS",
+      "license": "GWAS Catalog data use policy; see source documentation"
+    },
+    {
+      "id": "mgi_phenotypic_alleles",
+      "name": "MGI phenotypic allele report",
+      "url": "https://www.informatics.jax.org/downloads/reports/MGI_PhenotypicAllele.rpt",
+      "path": "data/raw/mgi/MGI_PhenotypicAllele.rpt",
+      "scope": "Allele symbols, names, types, marker identifiers and original references",
+      "license": "See MGI use and citation policy"
+    },
+    {
+      "id": "mgi_mp_vocabulary",
+      "name": "MGI Mammalian Phenotype vocabulary",
+      "url": "https://www.informatics.jax.org/downloads/reports/VOC_MammalianPhenotype.rpt",
+      "path": "data/raw/mgi/VOC_MammalianPhenotype.rpt",
+      "scope": "MP identifiers, labels and definitions",
+      "license": "See MGI use and citation policy"
+    },
+    {
+      "id": "mgi_genotype_disease_models",
+      "name": "MGI genotype phenotype and disease annotations",
+      "url": "https://www.informatics.jax.org/downloads/reports/MGI_Geno_DiseaseDO.rpt",
+      "path": "data/raw/mgi/MGI_Geno_DiseaseDO.rpt",
+      "scope": "Single-gene, non-conditional mouse genotypes with MP and curated DO/OMIM disease model annotations",
+      "license": "See MGI use and citation policy"
+    },
+    {
+      "id": "hgnc_complete_set",
+      "name": "HGNC complete approved gene set",
+      "url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
+      "path": "data/raw/hgnc/hgnc_complete_set.txt",
+      "scope": "Current approved human gene identifiers used to map GWAS Ensembl gene IDs to MGI orthologs",
+      "license": "CC0"
+    }
+  ],
+  "strict_mapping": {
+    "minimum_mapping_confidence": 0.8,
+    "accepted_predicates": [
+      "skos:exactMatch",
+      "skos:closeMatch",
+      "skos:broadMatch",
+      "skos:narrowMatch"
+    ],
+    "exclude_negated_hpo_annotations": true,
+    "hpo_aspect": "P",
+    "require_rsid": true,
+    "accepted_clinvar_significance": [
+      "Pathogenic",
+      "Likely_pathogenic",
+      "Pathogenic/Likely_pathogenic",
+      "risk_factor",
+      "association",
+      "drug_response",
+      "confers_sensitivity",
+      "protective",
+      "Affects"
+    ],
+    "require_single_gene_mouse_genotype": true
+  },
+  "ortholog_first_mapping": {
+    "maximum_gwas_p_value": 5e-8,
+    "minimum_informative_token_overlap": 2,
+    "minimum_token_jaccard": 0.6,
+    "included_human_evidence_classes": [
+      "gwas_significant",
+      "clinvar_supported"
+    ],
+    "uninformative_tokens": [
+      "abnormal",
+      "abnormality",
+      "associated",
+      "association",
+      "disease",
+      "disorder",
+      "mouse",
+      "phenotype",
+      "response",
+      "trait"
+    ]
+  },
+  "semantic_mapping": {
+    "model_id": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext",
+    "pooling": "cls_before_pooler",
+    "max_length": 128,
+    "batch_size": 64,
+    "class_a_min": 0.8,
+    "class_b_min": 0.7,
+    "class_c_min": 0.5,
+    "default_use_classes": ["A", "B", "C"],
+    "low_similarity_top_k_per_human_text_per_ortholog": 20,
+    "excluded_placeholder_labels": ["not provided", "not specified", "not available", "unknown", "none"],
+    "interpretation": "Exploratory cosine bands, not calibrated biological confidence. A/B include all above-threshold ortholog pairs; C/D retain the previous top-k low-similarity retrieval scope. C is [0.5,0.7); D is below 0.5, archive-only and excluded from default-use views."
+  },
+  "tier_definitions": [
+    {
+      "tier_id": "tier1",
+      "name": "Monarch phenotype bridge",
+      "connection_basis": "ClinVar condition to HPO to Monarch UPheno or MHMI HPO-MP to MGI allele, constrained by 1:1 orthology",
+      "output": "output/tier1_monarch_phenotype.tsv.gz",
+      "interpretation": "Ontology-based cross-species phenotype correspondence"
+    },
+    {
+      "tier_id": "tier2",
+      "name": "Ortholog-first phenotype evidence",
+      "connection_basis": "1:1 ortholog first, then ClinVar or significant GWAS phenotype evidence compared with MGI MP and allele-name evidence",
+      "output": "output/tier2_ortholog_phenotype.tsv.gz",
+      "interpretation": "Candidate correspondence with within-tier support B or C; B is an exact normalized label and C a lexical hypothesis. Manual human literature phenotypes and support A are disabled."
+    },
+    {
+      "tier_id": "tier3",
+      "name": "Curated disease model",
+      "connection_basis": "Exact OMIM identifier shared by a supported ClinVar condition and an MGI-curated mouse disease model, constrained by 1:1 orthology",
+      "output": "output/tier3_disease_model.tsv.gz",
+      "interpretation": "Disease-model-level candidate correspondence independent of the HPO-MP bridge"
+    }
+  ],
+  "execution": {
+    "run_semantic": true,
+    "tier0_input": "data/external/tier0_exact_variant.template.tsv"
+  }
+}

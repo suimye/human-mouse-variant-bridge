@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-09-11T17:48:39.294Z",
+  "acceptedHpoMpRows": 1354,
+  "indexedMouseRows": 133574,
+  "indexedOrthologRows": 16537,
+  "humanVariantHpoRows": 7720698,
+  "hpoMpCandidateRows": 6099809,
+  "orthologGeneCandidateRows": 7720698,
+  "mousePhenotypeCandidateRows": 1089740,
+  "finalRows": 1089740,
+  "unique": {
+    "humanVariants": 101547,
+    "humanGenes": 1655,
+    "mouseGenes": 1655,
+    "hpoTerms": 503,
+    "mpTerms": 518
+  }
+}

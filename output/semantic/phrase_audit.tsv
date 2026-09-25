@@ -1,0 +1,7 @@
+audit_id	human_text	mouse_text	expected_relation	cosine_similarity	cosine_class	direction_conflict	negation_flag	review_status
+hearing_paraphrase	hearing loss	hearing impairment	related_example	0.9044311046600342	A	0	0	unreviewed
+glucose_paraphrase	increased blood glucose level	elevated blood glucose concentration	related_example	0.9759718179702759	A	0	0	unreviewed
+opposite_glucose	increased blood glucose level	decreased blood glucose level	opposite_direction	0.7105876803398132	B	1	0	direction_conflict
+different_stimulus	decreased response to acoustic stimulation	decreased response to tactile stimulation	different_target	0.7234088778495789	B	0	0	unreviewed
+unrelated_organ	abnormal heart morphology	abnormal kidney morphology	different_organ	0.5827565789222717	C	0	0	unreviewed
+negation	hearing loss	no hearing loss	negated	0.729275643825531	B	0	1	negation_review

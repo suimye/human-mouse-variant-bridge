@@ -1,0 +1,10 @@
+control_id	tier_id	expected	found_rows	within_tier_support	status	interpretation
+TLR4_LPS_001	tier1	not_required	0		PASS	No recovery expected for this basis.
+TLR4_LPS_001	tier2	not_required	0		PASS	No recovery expected for this basis.
+TLR4_LPS_001	tier3	not_required	0		PASS	No recovery expected for this basis.
+CFTR_F508DEL_001	tier1	found	6		PASS	Expected positive control recovered.
+CFTR_F508DEL_001	tier2	not_required	0		PASS	No recovery expected for this basis.
+CFTR_F508DEL_001	tier3	found	2		PASS	Expected positive control recovered.
+ALPL_HPP_001	tier1	not_required	0		PASS	No recovery expected for this basis.
+ALPL_HPP_001	tier2	found	20	B	PASS	Expected positive control recovered.
+ALPL_HPP_001	tier3	found	2		PASS	Expected positive control recovered.

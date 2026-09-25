@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1120" viewBox="0 0 1500 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Build human–mouse candidates from orthologous genes</title>
+  <desc id="desc">Within MGI one-to-one orthologous gene pairs, Tier 1 uses HPO–MP mappings, Tier 2 uses phenotype labels, and Tier 3 uses shared OMIM disease identifiers.</desc>
+  <defs>
+    <style>
+      .title{font:500 48px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7f7f7}.step{font:600 27px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7f7f7}.label{font:500 23px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f5f5f5}.small{font:400 19px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#929292}.tableh{font:500 18px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#929292}.tabler{font:500 19px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f2f2f2}.gene{stroke:#f5f5f5;stroke-width:12;stroke-linecap:round}.region{stroke:#f5f5f5;stroke-width:2}.tier1{stroke:#377bd2;fill:#377bd2}.tier2{stroke:#ffd45a;fill:#ffd45a}.tier3{stroke:#ec7cb2;fill:#ec7cb2}.link{fill:none;stroke-width:5;stroke-linecap:round}
+    </style>
+    <marker id="down" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#f5f5f5"/></marker>
+  </defs>
+  <rect width="1500" height="1120" fill="#171717"/>
+  <text x="34" y="60" class="title">Build human–mouse candidates from orthologous genes</text>
+  <text x="34" y="145" class="step">Step 1　Select MGI 1:1 orthologous gene pairs</text>
+  <text x="210" y="236" class="label">HUMAN genomic region</text><text x="655" y="236" class="label">Gene A (human ortholog)</text><text x="1240" y="236" class="small">5′ → 3′</text>
+  <line x1="180" y1="300" x2="1320" y2="300" class="region"/><line x1="300" y1="300" x2="1220" y2="300" class="gene"/>
+  <circle cx="430" cy="300" r="11" class="tier1"/><text x="430" y="177" text-anchor="middle" class="label">H-var-01</text><text x="430" y="205" text-anchor="middle" class="small">ClinVar · HPO</text>
+  <circle cx="760" cy="300" r="11" class="tier2"/><text x="760" y="177" text-anchor="middle" class="label">H-var-02</text><text x="760" y="205" text-anchor="middle" class="small">GWAS · trait</text>
+  <circle cx="1090" cy="300" r="11" class="tier3"/><text x="1090" y="177" text-anchor="middle" class="label">H-var-03</text><text x="1090" y="205" text-anchor="middle" class="small">ClinVar · OMIM</text>
+  <text x="34" y="362" class="step">Step 2　Connect variants and alleles by matching method</text>
+  <path d="M430 300 C430 366 455 420 480 472 C500 514 510 550 510 600" class="link tier1"/><path d="M760 300 C760 372 800 430 835 486 C860 526 875 558 875 600" class="link tier2"/><path d="M1090 300 C1090 375 1105 438 1115 492 C1122 530 1125 563 1125 600" class="link tier3"/>
+  <rect x="360" y="382" width="260" height="76" rx="13" fill="#171717" stroke="#377bd2" stroke-width="2"/><text x="490" y="411" text-anchor="middle" class="label" fill="#377bd2">Tier 1</text><text x="490" y="442" text-anchor="middle" class="small">HPO ↔ MP (Monarch / MHMI)</text>
+  <rect x="660" y="400" width="330" height="76" rx="13" fill="#171717" stroke="#ffd45a" stroke-width="2"/><text x="825" y="429" text-anchor="middle" class="label" fill="#ffd45a">Tier 2</text><text x="825" y="460" text-anchor="middle" class="small">full-label / lexical match</text>
+  <rect x="1010" y="418" width="260" height="76" rx="13" fill="#171717" stroke="#ec7cb2" stroke-width="2"/><text x="1140" y="447" text-anchor="middle" class="label" fill="#ec7cb2">Tier 3</text><text x="1140" y="478" text-anchor="middle" class="small">same OMIM disease ID</text>
+  <text x="34" y="520" class="small">Variant positions and types do not have to match between human and mouse</text>
+  <line x1="180" y1="600" x2="1320" y2="600" class="region"/><line x1="300" y1="600" x2="1220" y2="600" class="gene"/>
+  <circle cx="510" cy="600" r="11" class="tier1"/><circle cx="875" cy="600" r="11" class="tier2"/><circle cx="1125" cy="600" r="11" class="tier3"/>
+  <text x="210" y="668" class="label">MOUSE genomic region</text><text x="655" y="668" class="label">Gene A (mouse ortholog)</text><text x="1240" y="668" class="small">5′ → 3′</text>
+  <text x="510" y="720" text-anchor="middle" class="label">M-allele-01</text><text x="510" y="748" text-anchor="middle" class="small">MGI · MP</text>
+  <text x="875" y="720" text-anchor="middle" class="label">M-allele-02</text><text x="875" y="748" text-anchor="middle" class="small">MGI · allele phenotype</text>
+  <text x="1125" y="720" text-anchor="middle" class="label">M-allele-03</text><text x="1125" y="748" text-anchor="middle" class="small">MGI · disease model</text>
+  <line x1="750" y1="758" x2="750" y2="798" stroke="#f5f5f5" stroke-width="2" marker-end="url(#down)"/><text x="785" y="790" class="label">Store both annotations and the matching evidence</text>
+  <text x="34" y="850" class="step">Step 3　Store one matching line as one evidence row</text>
+  <line x1="34" y1="878" x2="1465" y2="878" stroke="#323232" stroke-width="2"/><text x="70" y="910" class="tableh">evidence</text><text x="270" y="910" class="tableh">human variant</text><text x="570" y="910" class="tableh">ortholog pair</text><text x="850" y="910" class="tableh">mouse allele</text><text x="1125" y="910" class="tableh">join key</text>
+  <line x1="34" y1="927" x2="1465" y2="927" stroke="#323232" stroke-width="2"/>
+  <circle cx="50" cy="963" r="9" class="tier1"/><text x="72" y="970" class="tabler">Tier 1</text><text x="270" y="970" class="tabler">H-var-01</text><text x="570" y="970" class="tabler">Gene A ↔ Gene A</text><text x="850" y="970" class="tabler">M-allele-01</text><text x="1125" y="970" class="tabler">HPO ↔ MP</text>
+  <line x1="34" y1="989" x2="1465" y2="989" stroke="#323232"/>
+  <circle cx="50" cy="1020" r="9" class="tier2"/><text x="72" y="1027" class="tabler">Tier 2</text><text x="270" y="1027" class="tabler">H-var-02</text><text x="570" y="1027" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1027" class="tabler">M-allele-02</text><text x="1125" y="1027" class="tabler">phenotype label</text>
+  <line x1="34" y1="1045" x2="1465" y2="1045" stroke="#323232"/>
+  <circle cx="50" cy="1064" r="9" class="tier3"/><text x="72" y="1071" class="tabler">Tier 3</text><text x="270" y="1071" class="tabler">H-var-03</text><text x="570" y="1071" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1071" class="tabler">M-allele-03</text><text x="1125" y="1071" class="tabler">same OMIM</text>
+</svg>

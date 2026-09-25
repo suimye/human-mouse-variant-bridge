@@ -1,0 +1,4 @@
+tier_id	name	connection_basis	output_file	row_count	interpretation
+tier1	Monarch phenotype bridge	ClinVar condition to HPO to Monarch UPheno or MHMI HPO-MP to MGI allele, constrained by 1:1 orthology	output/tier1_monarch_phenotype.tsv.gz	1089740	Ontology-based cross-species phenotype correspondence
+tier2	Ortholog-first phenotype evidence	1:1 ortholog first, then ClinVar or significant GWAS phenotype evidence compared with MGI MP and allele-name evidence	output/tier2_ortholog_phenotype.tsv.gz	76619	Candidate correspondence with within-tier support B or C; B is an exact normalized label and C a lexical hypothesis. Manual human literature phenotypes and support A are disabled.
+tier3	Curated disease model	Exact OMIM identifier shared by a supported ClinVar condition and an MGI-curated mouse disease model, constrained by 1:1 orthology	output/tier3_disease_model.tsv.gz	331245	Disease-model-level candidate correspondence independent of the HPO-MP bridge

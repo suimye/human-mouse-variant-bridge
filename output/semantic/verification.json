@@ -1,0 +1,71 @@
+{
+  "verified_at": "2026-09-24T10:23:46.906975+00:00",
+  "status": "PASS",
+  "checks": {
+    "class_A_boundary_errors": 0,
+    "class_B_boundary_errors": 0,
+    "class_C_boundary_errors": 0,
+    "class_D_boundary_errors": 0,
+    "low_similarity_rank_errors": 0,
+    "default_use_flag_errors": 0,
+    "D_in_active_phenotype_view": 0,
+    "manual_human_literature_rows": 0,
+    "nonortholog_pairs": 0,
+    "human_gene_orphans": 0,
+    "mouse_gene_orphans": 0,
+    "missing_human_pair_evidence": 0,
+    "missing_mouse_pair_evidence": 0,
+    "sqlite_integrity": "ok",
+    "foreign_key_errors": 0,
+    "default_use_rows": 72481,
+    "archive_only_rows": 2836628,
+    "semantic_control_expectations": {
+      "TLR4_LPS_001": "PASS"
+    },
+    "independent_float64_score_sample": {
+      "rows": 1000,
+      "maximum_absolute_error": 4.918054624658552e-07,
+      "maximum_vector_norm_error": 1.1920928955078125e-07
+    },
+    "above_threshold_completeness": {
+      "all_A_B_pairs": 6114,
+      "compared_text_pairs": 6095652,
+      "missing": 0,
+      "extra": 0
+    },
+    "class_review_flags": [
+      {
+        "cosine_class": "A",
+        "rows": 1702,
+        "direction_conflict_rows": 2,
+        "negation_flag_rows": 0
+      },
+      {
+        "cosine_class": "B",
+        "rows": 4412,
+        "direction_conflict_rows": 8,
+        "negation_flag_rows": 4
+      },
+      {
+        "cosine_class": "C",
+        "rows": 66367,
+        "direction_conflict_rows": 620,
+        "negation_flag_rows": 284
+      },
+      {
+        "cosine_class": "D",
+        "rows": 2836628,
+        "direction_conflict_rows": 12161,
+        "negation_flag_rows": 32198
+      }
+    ]
+  },
+  "export_rows": {
+    "A": 1702,
+    "B": 4412,
+    "C": 66367,
+    "D": 2836628
+  },
+  "summary_sha256": "9a02df435b3b77dd7f1a1ec93b37b23c3f74604ae81eeda04e294a8edd25e900",
+  "validation_scope": "Numerical, export and relational correctness only; not biological accuracy or threshold calibration"
+}

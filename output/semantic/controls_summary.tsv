@@ -1,0 +1,4 @@
+control_id	human_gene	rs_id	mgi_allele_id	class_A_rows	class_B_rows	class_C_rows	class_D_archive_rows	best_active_cosine	active_curated_input_rows	active_direction_conflict_rows	expected_semantic_class	expected_class_noncurated_rows	semantic_expectation_status	validation_scope
+TLR4_LPS_001	TLR4	rs4986790	MGI:1857718	0	0	1	78	0.5479247570037842	0	0	C	1	PASS	A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark
+CFTR_F508DEL_001	CFTR	rs113993960	MGI:1856709	1	1	61	434	0.8334996104240417	0	3		0	PASS	A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark
+ALPL_HPP_001	ALPL	rs1558543066	MGI:3051587	22	2	24	0	0.9999997615814209	0	0		0	PASS	A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark

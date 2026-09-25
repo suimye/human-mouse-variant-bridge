@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720" role="img" aria-labelledby="title description">
+  <title id="title">2026 cross-phenotype mapping summary</title>
+  <desc id="description">Record counts across ClinVar, HPO, MP, MGI allele and ortholog mapping stages. Bar lengths use a logarithmic scale.</desc>
+  <style>
+    .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #17324D; }
+    .subtitle { font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+    .label { font: 600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #243746; }
+    .count { font: 700 16px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #17324D; }
+    .small { font: 400 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+    .control { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  </style>
+  <rect width="1100" height="720" fill="#FFFFFF"/>
+  <text x="48" y="58" class="title">Human-Mouse phenotype bridge - 2026 rebuild</text>
+  <text x="48" y="88" class="subtitle">ClinVar → disease → HPO → MP → MGI allele, constrained by 1:1 orthology</text>
+  <text x="48" y="124" class="small">Bar length: log10(count + 1); values at right are exact row counts.</text>
+  
+      <text x="48" y="171" class="label">ClinVar records</text>
+      <rect x="48" y="180" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="180" width="685.5" height="24" rx="5" fill="#2C6E9B"/>
+      <text x="772" y="198" class="count">4,469,028</text>
+      <text x="48" y="243" class="label">ClinVar with rsID</text>
+      <rect x="48" y="252" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="252" width="666.1" height="24" rx="5" fill="#2C6E9B"/>
+      <text x="772" y="270" class="count">2,896,134</text>
+      <text x="48" y="315" class="label">Accepted-significance variants</text>
+      <rect x="48" y="324" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="324" width="559.5" height="24" rx="5" fill="#2C6E9B"/>
+      <text x="772" y="342" class="count">267,446</text>
+      <text x="48" y="387" class="label">Variant-disease-HPO rows</text>
+      <rect x="48" y="396" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="396" width="710.0" height="24" rx="5" fill="#2C6E9B"/>
+      <text x="772" y="414" class="count">7,720,698</text>
+      <text x="48" y="459" class="label">HPO-MP candidate joins</text>
+      <rect x="48" y="468" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="468" width="699.5" height="24" rx="5" fill="#2C6E9B"/>
+      <text x="772" y="486" class="count">6,099,809</text>
+      <text x="48" y="531" class="label">Final ortholog + phenotype rows</text>
+      <rect x="48" y="540" width="710" height="24" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="540" width="622.3" height="24" rx="5" fill="#12A594"/>
+      <text x="772" y="558" class="count">1,089,740</text>
+  <rect x="48" y="626" width="1004" height="58" rx="10" fill="#F1F8F5" stroke="#C3E2D5"/>
+  <text x="70" y="661" class="control" fill="#11845B">TLR4 rs4986790 ↔ Tlr4&lt;Lps-d&gt; / C3H/HeJ: PASS</text>
+  <text x="660" y="661" class="small">Identity/orthology audit; no manual human phenotype input</text>
+</svg>

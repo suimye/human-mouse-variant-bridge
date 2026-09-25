@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-09-24T04:27:43.727Z",
+  "diseaseRowsScanned": 53991,
+  "uniqueMouseDiseaseModels": 4202,
+  "humanEvidenceRows": 1644708,
+  "humanRowsWithSharedDisease": 90919,
+  "finalRows": 331245,
+  "unique": {
+    "humanVariants": 78571,
+    "genes": 1045,
+    "mouseGenotypes": 2543,
+    "diseases": 1152
+  }
+}

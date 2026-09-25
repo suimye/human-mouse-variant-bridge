@@ -1,0 +1,343 @@
+{
+  "generated_at": "2026-09-24T04:31:18.613991+00:00",
+  "config": {
+    "model_id": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext",
+    "pooling": "cls_before_pooler",
+    "max_length": 128,
+    "batch_size": 64,
+    "class_a_min": 0.8,
+    "class_b_min": 0.7,
+    "class_c_min": 0.5,
+    "default_use_classes": [
+      "A",
+      "B",
+      "C"
+    ],
+    "low_similarity_top_k_per_human_text_per_ortholog": 20,
+    "excluded_placeholder_labels": [
+      "not provided",
+      "not specified",
+      "not available",
+      "unknown",
+      "none"
+    ],
+    "interpretation": "Exploratory cosine bands, not calibrated biological confidence. A/B include all above-threshold ortholog pairs; C/D retain the previous top-k low-similarity retrieval scope. C is [0.5,0.7); D is below 0.5, archive-only and excluded from default-use views."
+  },
+  "model": {
+    "model_id": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext",
+    "revision": "090663c3ae57bf35ffe4d0d468a2a88d03051a4d",
+    "files": [
+      {
+        "name": "config.json",
+        "bytes": 462,
+        "sha256": "c0fa35def52bf7d81865d23dba0417fdbb67d416fdde70cae5c7beab476b584e"
+      },
+      {
+        "name": "vocab.txt",
+        "bytes": 226150,
+        "sha256": "79489a52be45e6fa033521e8ce8e4f62aedc0a742ee2aa6fc04667e5b0b1454d"
+      },
+      {
+        "name": "tokenizer_config.json",
+        "bytes": 198,
+        "sha256": "76eb84b4b5b0d1bdba02906d7fae249be541c41d72e2024094aea513f98f2be7"
+      },
+      {
+        "name": "special_tokens_map.json",
+        "bytes": 112,
+        "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3"
+      },
+      {
+        "name": "README.md",
+        "bytes": 4084,
+        "sha256": "377c2a56de9d04fe7c33691e24da24d585c077681a16bce1917a6cc140a99ed1"
+      },
+      {
+        "name": "model.safetensors",
+        "bytes": 437955508,
+        "sha256": "a4696930afef9aab296196d3d2142216c44cba24f21b4f285ceca7af21025614"
+      }
+    ],
+    "source": "https://huggingface.co/cambridgeltl/SapBERT-from-PubMedBERT-fulltext/tree/090663c3ae57bf35ffe4d0d468a2a88d03051a4d",
+    "code_execution": "trust_remote_code=False",
+    "model_license": "MIT according to publisher repository"
+  },
+  "preparation": {
+    "ortholog_source_rows": 16537,
+    "unique_ortholog_pairs": 16536,
+    "collapsed_same_identity_rows": 1,
+    "human": {
+      "scanned": 1644708,
+      "retained": 1642615,
+      "excluded": 2093,
+      "unique_texts": 26268
+    },
+    "mouse": {
+      "scanned": 306369,
+      "retained": 306369,
+      "excluded": 0,
+      "unique_texts": 26338
+    },
+    "source_files": {
+      "ortholog": {
+        "path": "data/processed/ortholog_mapping_enriched.tsv",
+        "sha256": "57c17b50977f2fb01cd8154f67c015fcdcf3b09847d18a4b9fbe3f9208d22ee3"
+      },
+      "human": {
+        "path": "data/processed/human_variant_phenotypes.tsv.gz",
+        "sha256": "53df6a07c8dafb8a55397d33f7f5622175d2a2af1604e419d5e352321bfa707a"
+      },
+      "mouse": {
+        "path": "data/processed/mouse_variant_phenotypes.tsv.gz",
+        "sha256": "2b849b27d483c3fbf42f5b7f1276763d29b73fb51b516cea4fd0225bfb26f50c"
+      }
+    },
+    "variant_annotation_cartesian_comparisons_avoided": 127770246
+  },
+  "embeddings": {
+    "signature": "810e1e5019b9e44c5fc6be7c3c6a2392f5d6b6895c65501fd0ddb9af19bd624f",
+    "sha256": "66c225739674c0439f45942db371cbe9bea3e73efd8eb4081bb5f8de8c0bf28a",
+    "dimension": 768,
+    "device": "cpu",
+    "torch_version": "2.8.0",
+    "transformers_version": "4.57.1",
+    "truncated_ids": [],
+    "max_token_length": 68,
+    "model_id": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext",
+    "model_revision": "090663c3ae57bf35ffe4d0d468a2a88d03051a4d",
+    "pooling": "cls_before_pooler",
+    "max_length": 128,
+    "seconds": 51.69,
+    "seed": 0
+  },
+  "mapping": {
+    "classes": {
+      "A": 1702,
+      "B": 4412,
+      "C": 66367,
+      "D": 2836628
+    },
+    "review_status": {
+      "unreviewed": 2863871,
+      "direction_conflict": 12791,
+      "negation_review": 32447
+    },
+    "default_use_rows": 72481,
+    "archive_only_rows": 2836628,
+    "default_use_review_status": {
+      "unreviewed": 71565,
+      "direction_conflict": 630,
+      "negation_review": 286
+    },
+    "orthologs_with_both_species_evidence": 11836,
+    "gene_constrained_text_comparisons": 6095652,
+    "omitted_low_similarity_text_pairs": 3186543
+  },
+  "validation": {
+    "controls": [
+      {
+        "control_id": "TLR4_LPS_001",
+        "human_gene": "TLR4",
+        "rs_id": "rs4986790",
+        "mgi_allele_id": "MGI:1857718",
+        "class_A_rows": 0,
+        "class_B_rows": 0,
+        "class_C_rows": 1,
+        "class_D_archive_rows": 78,
+        "best_active_cosine": 0.5479247570037842,
+        "active_curated_input_rows": 0,
+        "active_direction_conflict_rows": 0,
+        "expected_semantic_class": "C",
+        "expected_class_noncurated_rows": 1,
+        "semantic_expectation_status": "PASS",
+        "validation_scope": "A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark"
+      },
+      {
+        "control_id": "CFTR_F508DEL_001",
+        "human_gene": "CFTR",
+        "rs_id": "rs113993960",
+        "mgi_allele_id": "MGI:1856709",
+        "class_A_rows": 1,
+        "class_B_rows": 1,
+        "class_C_rows": 61,
+        "class_D_archive_rows": 434,
+        "best_active_cosine": 0.8334996104240417,
+        "active_curated_input_rows": 0,
+        "active_direction_conflict_rows": 3,
+        "expected_semantic_class": "",
+        "expected_class_noncurated_rows": 0,
+        "semantic_expectation_status": "PASS",
+        "validation_scope": "A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark"
+      },
+      {
+        "control_id": "ALPL_HPP_001",
+        "human_gene": "ALPL",
+        "rs_id": "rs1558543066",
+        "mgi_allele_id": "MGI:3051587",
+        "class_A_rows": 22,
+        "class_B_rows": 2,
+        "class_C_rows": 24,
+        "class_D_archive_rows": 0,
+        "best_active_cosine": 0.9999997615814209,
+        "active_curated_input_rows": 0,
+        "active_direction_conflict_rows": 0,
+        "expected_semantic_class": "",
+        "expected_class_noncurated_rows": 0,
+        "semantic_expectation_status": "PASS",
+        "validation_scope": "A/B/C default-use candidates from downloaded data; D archive-only; not independent benchmark"
+      }
+    ],
+    "phrase_audits": [
+      {
+        "id": "hearing_paraphrase",
+        "human": "hearing loss",
+        "mouse": "hearing impairment",
+        "expected": "related_example",
+        "cosine": 0.9044311046600342,
+        "class": "A",
+        "direction_conflict": 0,
+        "negation_flag": 0,
+        "review": "unreviewed"
+      },
+      {
+        "id": "glucose_paraphrase",
+        "human": "increased blood glucose level",
+        "mouse": "elevated blood glucose concentration",
+        "expected": "related_example",
+        "cosine": 0.9759718179702759,
+        "class": "A",
+        "direction_conflict": 0,
+        "negation_flag": 0,
+        "review": "unreviewed"
+      },
+      {
+        "id": "opposite_glucose",
+        "human": "increased blood glucose level",
+        "mouse": "decreased blood glucose level",
+        "expected": "opposite_direction",
+        "cosine": 0.7105876803398132,
+        "class": "B",
+        "direction_conflict": 1,
+        "negation_flag": 0,
+        "review": "direction_conflict"
+      },
+      {
+        "id": "different_stimulus",
+        "human": "decreased response to acoustic stimulation",
+        "mouse": "decreased response to tactile stimulation",
+        "expected": "different_target",
+        "cosine": 0.7234088778495789,
+        "class": "B",
+        "direction_conflict": 0,
+        "negation_flag": 0,
+        "review": "unreviewed"
+      },
+      {
+        "id": "unrelated_organ",
+        "human": "abnormal heart morphology",
+        "mouse": "abnormal kidney morphology",
+        "expected": "different_organ",
+        "cosine": 0.5827565789222717,
+        "class": "C",
+        "direction_conflict": 0,
+        "negation_flag": 0,
+        "review": "unreviewed"
+      },
+      {
+        "id": "negation",
+        "human": "hearing loss",
+        "mouse": "no hearing loss",
+        "expected": "negated",
+        "cosine": 0.729275643825531,
+        "class": "B",
+        "direction_conflict": 0,
+        "negation_flag": 1,
+        "review": "negation_review"
+      }
+    ]
+  },
+  "runtime_packages": {
+    "filelock": "3.32.6",
+    "numpy": "2.2.6",
+    "packaging": "26.3",
+    "charset-normalizer": "3.5.1",
+    "requests": "2.34.2",
+    "hf-xet": "1.6.0",
+    "networkx": "3.6.1",
+    "torch": "2.8.0",
+    "sympy": "1.14.0",
+    "huggingface_hub": "0.36.2",
+    "fsspec": "2026.7.0",
+    "safetensors": "0.8.0",
+    "tqdm": "4.70.1",
+    "pip": "25.0.1",
+    "setuptools": "84.0.0",
+    "mpmath": "1.3.0",
+    "PyYAML": "6.0.3",
+    "idna": "3.19",
+    "certifi": "2026.7.22",
+    "Jinja2": "3.1.6",
+    "MarkupSafe": "3.0.3",
+    "transformers": "4.57.1",
+    "urllib3": "2.7.0",
+    "typing_extensions": "4.16.0",
+    "tokenizers": "0.22.2",
+    "regex": "2026.9.10"
+  },
+  "seconds": 125.19,
+  "validation_scope": "Illustrative phrase audits and known positive controls only; no held-out calibrated benchmark",
+  "outputs": {
+    "human_annotations.tsv.gz": {
+      "bytes": 47076004,
+      "sha256": "44849dfe9ca0f3c79fc72b9f1a12295fcdca9bc921e2cc591363ce65d428cb7f"
+    },
+    "phenotype_pairs_class_D.tsv.gz": {
+      "bytes": 145205056,
+      "sha256": "1729d519479007979b0d8a9fe1b17cbab2756a568fc719cf63498a5573879f00"
+    },
+    "phrase_audit.tsv": {
+      "bytes": 872,
+      "sha256": "0f396efe2a0ee2507bbfb92fd6aaef28919d518ec527c9825b526dfe0bfe3959"
+    },
+    "phenotype_texts.tsv.gz": {
+      "bytes": 1637060,
+      "sha256": "028d60efc5d8db3d73959dcc6761a1ad5c0703b26bb1a73fd02a2b117613ce21"
+    },
+    "mouse_annotations.tsv.gz": {
+      "bytes": 23941352,
+      "sha256": "aca443f6dfb96b57e61f36e98f5df823c7651cb90f9ef27ac970f4d6ed46d627"
+    },
+    "control_variant_pairs.tsv.gz": {
+      "bytes": 35633,
+      "sha256": "bda7e70a6ce732229f6222d59f3076bc9e90e61cceb9f02d19a471d782082977"
+    },
+    "controls_summary.tsv": {
+      "bytes": 810,
+      "sha256": "26f9c4a1efe24e5151f9edaa7b82c857b7bbad8b83b6802f405b78f79f669ebe"
+    },
+    "phenotype_pairs_class_B.tsv.gz": {
+      "bytes": 313769,
+      "sha256": "986cebd4697ed76de65a6ceae0ec5f900706fcb03138d8624e2dfad96a15e1d8"
+    },
+    "gene_gene_ortholog.tsv": {
+      "bytes": 1410585,
+      "sha256": "1498a6bab957e44ae61137489edcf0555ceefd42a9aa1311252aca94bb493d13"
+    },
+    "phenotype_pairs_class_A.tsv.gz": {
+      "bytes": 117865,
+      "sha256": "7d77dd0532fbd0d4f172277e0c0177bcd11dffd0ee9c49b662af0a6093915a92"
+    },
+    "phenotype_pairs_class_C.tsv.gz": {
+      "bytes": 4214558,
+      "sha256": "4c68a26f646f69107b48fca1612c586d63b176df355f8c3896dea90cb020c6db"
+    },
+    "class_catalog.tsv": {
+      "bytes": 370,
+      "sha256": "ef8e0157385e57a557686c0efc6d3460564645a8443a0a23adee2dfa521a8273"
+    },
+    "correspondence.sqlite": {
+      "bytes": 1663512576,
+      "sha256": "f5944afc1c95697e98bf6792a2c45af0e92cacc24d5b148022465716d802428a"
+    }
+  }
+}

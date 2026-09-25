@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1160" viewBox="0 0 1500 1160" role="img" aria-labelledby="title desc">
+  <title id="title">Human–mouse variant対応データを作る6 Step</title>
+  <desc id="desc">配布ファイルの取得後、ortholog遺伝子表、human variant表、mouse allele表を並行して作り、それらを合流させて接続手法別の結果と検証済み出力を作る。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7fbff"/><stop offset="1" stop-color="#faf7ff"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#203047" flood-opacity=".1"/></filter>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 z" fill="#6f8197"/></marker>
+    <style>
+      .title{font:700 34px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#17263a}
+      .subtitle{font:400 17px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#586b82}
+      .step{font:800 17px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#fff}
+      .head{font:700 20px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#17263a}
+      .label{font:600 15px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#2b3d54}
+      .small{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#566980}
+      .mono{font:600 12.5px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#29405a}
+      .panel{fill:#fff;stroke:#d5deea;stroke-width:1.5;filter:url(#shadow)}
+      .source{fill:#eef4fa;stroke:#b8c9db;stroke-width:1.5}.process{fill:#eff8f4;stroke:#a9d0c2;stroke-width:1.5}.result{fill:#fff5e8;stroke:#e0bf91;stroke-width:1.5}
+      .route1{fill:#e9f3fc;stroke:#9fc3e3}.route2{fill:#e9f7f1;stroke:#9acdb8}.route3{fill:#fff3e3;stroke:#dfb983}.route4{fill:#f2ecfb;stroke:#b9a1d5}
+      .flow{stroke:#6f8197;stroke-width:3;fill:none;marker-end:url(#arrow)}.join{stroke:#6f8197;stroke-width:3;fill:none}
+    </style>
+  </defs>
+  <rect width="1500" height="1160" fill="url(#bg)"/>
+  <text x="60" y="55" class="title">Human–mouse variant対応データを作る6 Step</text>
+  <text x="60" y="86" class="subtitle">Step 2–4で作った三つの表をStep 5で合流させ、接続手法ごとの候補を作る</text>
+
+  <rect x="60" y="120" width="1380" height="150" rx="20" class="panel"/>
+  <rect x="80" y="140" width="92" height="32" rx="16" fill="#315c83"/><text x="126" y="162" text-anchor="middle" class="step">Step 1</text>
+  <text x="200" y="164" class="head">利用する配布ファイルを取得する</text>
+  <rect x="100" y="190" width="350" height="58" rx="12" class="source"/><text x="120" y="216" class="label">配布元URL・保存先</text><text x="120" y="237" class="mono">config/workflow.json</text>
+  <path d="M450 219 L520 219" class="flow"/>
+  <rect x="535" y="190" width="360" height="58" rx="12" class="process"/><text x="555" y="216" class="label">ファイル取得・更新日・SHA-256記録</text><text x="555" y="237" class="mono">src/download.js</text>
+  <path d="M895 219 L965 219" class="flow"/>
+  <rect x="980" y="190" width="390" height="58" rx="12" class="result"/><text x="1000" y="216" class="label">取得ファイルと取得記録</text><text x="1000" y="237" class="mono">data/raw/... / manifest.json</text>
+
+  <path d="M1175 248 L1175 300" class="join"/><path d="M250 300 L1250 300" class="join"/><path d="M250 300 L250 340" class="flow"/><path d="M750 300 L750 340" class="flow"/><path d="M1250 300 L1250 340" class="flow"/>
+
+  <rect x="55" y="355" width="390" height="300" rx="20" class="panel"/>
+  <rect x="75" y="375" width="92" height="32" rx="16" fill="#315c83"/><text x="121" y="397" text-anchor="middle" class="step">Step 2</text>
+  <text x="75" y="438" class="head">1:1 ortholog遺伝子表</text>
+  <rect x="75" y="462" width="350" height="62" rx="12" class="source"/><text x="95" y="489" class="label">MGI HOM_ProteinCoding.rpt</text><text x="95" y="512" class="small">human–mouse protein-coding ortholog</text>
+  <path d="M250 524 L250 552" class="flow"/>
+  <text x="95" y="582" class="label">1対1の組だけを採用</text><text x="95" y="605" class="small">多対多の組は自動選択しない</text><text x="95" y="631" class="mono">prepare.js / prepare-relaxed.js</text>
+
+  <rect x="555" y="355" width="390" height="300" rx="20" class="panel"/>
+  <rect x="575" y="375" width="92" height="32" rx="16" fill="#315c83"/><text x="621" y="397" text-anchor="middle" class="step">Step 3</text>
+  <text x="575" y="438" class="head">Human variant–表現型表</text>
+  <rect x="575" y="462" width="350" height="62" rx="12" class="source"/><text x="595" y="489" class="label">ClinVar・HPO・GWAS Catalog・HGNC</text><text x="595" y="512" class="small">variant・疾患・表現型・gene ID</text>
+  <path d="M750 524 L750 552" class="flow"/>
+  <text x="595" y="582" class="label">1行 = variant × phenotype evidence</text><text x="595" y="605" class="small">元の表現型名とsource record IDを保持</text><text x="595" y="631" class="mono">prepare.js / prepare-relaxed.js</text>
+
+  <rect x="1055" y="355" width="390" height="300" rx="20" class="panel"/>
+  <rect x="1075" y="375" width="92" height="32" rx="16" fill="#315c83"/><text x="1121" y="397" text-anchor="middle" class="step">Step 4</text>
+  <text x="1075" y="438" class="head">Mouse allele–表現型表</text>
+  <rect x="1075" y="462" width="350" height="62" rx="12" class="source"/><text x="1095" y="489" class="label">MGI allele・genotype・MP・disease</text><text x="1095" y="512" class="small">allele・background・表現型・出典</text>
+  <path d="M1250 524 L1250 552" class="flow"/>
+  <text x="1095" y="582" class="label">1行 = allele/genotype × phenotype</text><text x="1095" y="605" class="small">一遺伝子・非conditional genotypeに限定</text><text x="1095" y="631" class="mono">prepare.js / prepare-relaxed.js</text>
+
+  <path d="M250 655 L250 710 L750 710" class="join"/><path d="M750 655 L750 710" class="join"/><path d="M1250 655 L1250 710 L750 710" class="join"/><circle cx="750" cy="710" r="7" fill="#6f8197"/><path d="M750 710 L750 748" class="flow"/>
+
+  <rect x="60" y="765" width="1380" height="190" rx="20" class="panel"/>
+  <rect x="80" y="785" width="92" height="32" rx="16" fill="#315c83"/><text x="126" y="807" text-anchor="middle" class="step">Step 5</text>
+  <text x="200" y="809" class="head">Human-Mouse Variantの接続手法別に候補を作る</text>
+  <rect x="90" y="840" width="310" height="88" rx="14" class="route1"/><text x="110" y="870" class="label">Tier 1　HPO ↔ MP</text><text x="110" y="894" class="small">Monarch / MHMI mapping</text><text x="110" y="917" class="mono">src/map.js</text>
+  <rect x="425" y="840" width="310" height="88" rx="14" class="route2"/><text x="445" y="870" class="label">Tier 2　表現型名</text><text x="445" y="894" class="small">全文一致／語彙一致</text><text x="445" y="917" class="mono">src/relaxed-map.js</text>
+  <rect x="760" y="840" width="310" height="88" rx="14" class="route3"/><text x="780" y="870" class="label">Tier 3　同じOMIM ID</text><text x="780" y="894" class="small">MGI curated disease model</text><text x="780" y="917" class="mono">src/tier3-disease-map.js</text>
+  <rect x="1095" y="840" width="310" height="88" rx="14" class="route4"/><text x="1115" y="870" class="label">Semantic similarity</text><text x="1115" y="894" class="small">表現型文のSapBERT cosine</text><text x="1115" y="917" class="mono">src/semantic-map.py</text>
+
+  <path d="M750 955 L750 990" class="flow"/>
+  <rect x="60" y="1005" width="1380" height="115" rx="20" class="panel"/>
+  <rect x="80" y="1025" width="92" height="32" rx="16" fill="#315c83"/><text x="126" y="1047" text-anchor="middle" class="step">Step 6</text>
+  <text x="200" y="1048" class="head">候補リストを検証し、DB用ファイルと説明資料を出力する</text>
+  <text x="200" y="1080" class="small">件数・閾値・DB整合性・TLR4 / CFTR / ALPL・negative controlsを確認</text>
+  <text x="200" y="1105" class="mono">validate.js / verify-semantic.py / case-study-report.js　→　Tier TSV・Semantic SQLite・validation結果・HTML / SVG</text>
+</svg>

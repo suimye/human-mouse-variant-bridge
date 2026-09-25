@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980" role="img" aria-labelledby="title desc">
+  <title id="title">Human-mouse variant correspondence data construction workflow</title>
+  <desc id="desc">Human and mouse genomic regions are connected first by one-to-one orthologous genes. Direct variant correspondence and phenotype evidence are then linked through a recorded exact-match subtype, ontology, exact or lexical phenotype labels, shared disease identifiers, and ortholog-constrained semantic similarity. Variant pairs and each independent evidence route are stored separately with provenance.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7fbff"/>
+      <stop offset="1" stop-color="#f7f5ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#203047" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#65758a"/>
+    </marker>
+    <style>
+      .title{font:700 32px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#17263a}
+      .subtitle{font:400 17px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#526378}
+      .step{font:700 14px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#ffffff;letter-spacing:.05em}
+      .h2{font:700 20px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#17263a}
+      .label{font:600 15px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#22344b}
+      .small{font:400 13px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#5c6d82}
+      .tiny{font:400 12px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#5c6d82}
+      .mono{font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#22344b}
+      .panel{fill:#ffffff;stroke:#d6deea;stroke-width:1.5;filter:url(#shadow)}
+      .genome{stroke:#9bacbf;stroke-width:5;stroke-linecap:round}
+      .gene-human{stroke:#1769aa;stroke-width:22;stroke-linecap:round}
+      .gene-mouse{stroke:#c46b1b;stroke-width:22;stroke-linecap:round}
+      .variant-human{fill:#ffffff;stroke:#1769aa;stroke-width:6}
+      .variant-mouse{fill:#ffffff;stroke:#c46b1b;stroke-width:6}
+      .flow{fill:none;stroke:#65758a;stroke-width:3;marker-end:url(#arrow)}
+      .ortholog{fill:none;stroke:#6b46a2;stroke-width:4;stroke-linecap:round}
+    </style>
+  </defs>
+
+  <rect width="1400" height="980" fill="url(#bg)"/>
+  <text x="70" y="58" class="title">human–mouse variant correspondence: data construction</text>
+  <text x="70" y="88" class="subtitle">Use orthologous genes as the anchor and retain independent evidence without requiring identical variant positions or types</text>
+
+  <rect x="70" y="116" width="190" height="28" rx="14" fill="#314b68"/>
+  <text x="165" y="135" text-anchor="middle" class="step">1  1:1 ORTHOLOG PAIRS</text>
+
+  <rect x="70" y="156" width="555" height="128" rx="18" class="panel"/>
+  <text x="95" y="187" class="h2">Human genomic region</text>
+  <text x="95" y="214" class="small">GRCh38 • ClinVar / GWAS Catalog</text>
+  <line x1="105" y1="248" x2="590" y2="248" class="genome"/>
+  <line x1="222" y1="248" x2="493" y2="248" class="gene-human"/>
+  <text x="357" y="235" text-anchor="middle" class="label">gene A</text>
+  <circle cx="382" cy="248" r="12" class="variant-human"/>
+  <text x="382" y="276" text-anchor="middle" class="tiny">human variant</text>
+
+  <rect x="775" y="156" width="555" height="128" rx="18" class="panel"/>
+  <text x="800" y="187" class="h2">Mouse genomic region</text>
+  <text x="800" y="214" class="small">MGI • allele / genotype / MP</text>
+  <line x1="810" y1="248" x2="1295" y2="248" class="genome"/>
+  <line x1="927" y1="248" x2="1198" y2="248" class="gene-mouse"/>
+  <text x="1062" y="235" text-anchor="middle" class="label">Gene A ortholog</text>
+  <rect x="1050" y="236" width="24" height="24" rx="5" class="variant-mouse"/>
+  <text x="1062" y="276" text-anchor="middle" class="tiny">mouse allele</text>
+
+  <path d="M 493 248 C 610 248 610 124 700 124 C 790 124 790 248 927 248" class="ortholog"/>
+  <rect x="591" y="104" width="218" height="42" rx="21" fill="#f0e9fb" stroke="#a689ca"/>
+  <text x="700" y="130" text-anchor="middle" class="label" fill="#684295">MGI 1:1 protein ortholog</text>
+
+  <path d="M 350 284 L 350 325" class="flow"/>
+  <path d="M 1050 284 L 1050 325" class="flow"/>
+  <rect x="70" y="307" width="150" height="28" rx="14" fill="#314b68"/>
+  <text x="145" y="326" text-anchor="middle" class="step">2  EVIDENCE</text>
+
+  <rect x="70" y="345" width="555" height="164" rx="18" class="panel"/>
+  <text x="95" y="378" class="h2">Build the human evidence table</text>
+  <rect x="95" y="396" width="150" height="82" rx="12" fill="#e9f3fc"/>
+  <text x="170" y="423" text-anchor="middle" class="label">ClinVar</text>
+  <text x="170" y="446" text-anchor="middle" class="tiny">rsID • GRCh38</text>
+  <text x="170" y="465" text-anchor="middle" class="tiny">condition • OMIM</text>
+  <rect x="262" y="396" width="150" height="82" rx="12" fill="#eef8f4"/>
+  <text x="337" y="423" text-anchor="middle" class="label">HPO</text>
+  <text x="337" y="446" text-anchor="middle" class="tiny">disease → HP</text>
+  <text x="337" y="465" text-anchor="middle" class="tiny">exclude NOT</text>
+  <rect x="429" y="396" width="171" height="82" rx="12" fill="#fff4e7"/>
+  <text x="514" y="423" text-anchor="middle" class="label">GWAS Catalog</text>
+  <text x="514" y="446" text-anchor="middle" class="tiny">P ≤ 5×10⁻⁸</text>
+  <text x="514" y="465" text-anchor="middle" class="tiny">direct gene ID only</text>
+  <text x="95" y="496" class="small">Retain the source record for each variant–phenotype evidence row</text>
+
+  <rect x="775" y="345" width="555" height="164" rx="18" class="panel"/>
+  <text x="800" y="378" class="h2">Build the mouse evidence table</text>
+  <rect x="800" y="396" width="150" height="82" rx="12" fill="#fff4e7"/>
+  <text x="875" y="423" text-anchor="middle" class="label">MGI allele</text>
+  <text x="875" y="446" text-anchor="middle" class="tiny">symbol • type</text>
+  <text x="875" y="465" text-anchor="middle" class="tiny">original reference</text>
+  <rect x="967" y="396" width="150" height="82" rx="12" fill="#f7eddf"/>
+  <text x="1042" y="423" text-anchor="middle" class="label">MP phenotype</text>
+  <text x="1042" y="446" text-anchor="middle" class="tiny">single-gene</text>
+  <text x="1042" y="465" text-anchor="middle" class="tiny">non-conditional</text>
+  <rect x="1134" y="396" width="171" height="82" rx="12" fill="#f1ecfb"/>
+  <text x="1219" y="423" text-anchor="middle" class="label">Disease model</text>
+  <text x="1219" y="446" text-anchor="middle" class="tiny">curated DO / OMIM</text>
+  <text x="1219" y="465" text-anchor="middle" class="tiny">genotype provenance</text>
+  <text x="800" y="496" class="small">Retain allele, genotype, background, MP term and PubMed provenance</text>
+
+  <rect x="70" y="533" width="156" height="28" rx="14" fill="#314b68"/>
+  <text x="148" y="552" text-anchor="middle" class="step">3  MATCH ROUTES</text>
+  <text x="246" y="553" class="small">Generate independent evidence routes within the same orthologous gene pair</text>
+
+  <rect x="70" y="577" width="1260" height="48" rx="14" fill="#eef2f6" stroke="#aab7c5"/>
+  <circle cx="116" cy="601" r="9" fill="#43566d"/>
+  <text x="142" y="606" class="label">Tier 0</text>
+  <text x="252" y="606" class="small">human variant record</text>
+  <line x1="468" y1="601" x2="895" y2="601" stroke="#43566d" stroke-width="4"/>
+  <circle cx="468" cy="601" r="7" fill="#ffffff" stroke="#43566d" stroke-width="4"/>
+  <circle cx="895" cy="601" r="7" fill="#ffffff" stroke="#43566d" stroke-width="4"/>
+  <rect x="558" y="585" width="246" height="32" rx="16" fill="#ffffff"/>
+  <text x="681" y="606" text-anchor="middle" class="label">recorded exact-match subtype</text>
+  <text x="932" y="606" class="small">mouse variant record</text>
+
+  <rect x="70" y="633" width="1260" height="48" rx="14" fill="#e9f3fc" stroke="#9fc3e3"/>
+  <circle cx="116" cy="657" r="9" fill="#1769aa"/>
+  <text x="142" y="662" class="label">Tier 1</text>
+  <text x="252" y="662" class="small">ClinVar condition → HPO</text>
+  <line x1="468" y1="657" x2="895" y2="657" stroke="#1769aa" stroke-width="4"/>
+  <circle cx="468" cy="657" r="7" fill="#ffffff" stroke="#1769aa" stroke-width="4"/>
+  <circle cx="895" cy="657" r="7" fill="#ffffff" stroke="#1769aa" stroke-width="4"/>
+  <rect x="575" y="641" width="213" height="32" rx="16" fill="#ffffff"/>
+  <text x="681" y="662" text-anchor="middle" class="label">UPheno / MHMI HPO↔MP</text>
+  <text x="932" y="662" class="small">MGI MP → allele</text>
+
+  <rect x="70" y="689" width="1260" height="48" rx="14" fill="#e9f7f1" stroke="#9acdb8"/>
+  <circle cx="116" cy="713" r="9" fill="#188260"/>
+  <text x="142" y="718" class="label">Tier 2</text>
+  <text x="252" y="718" class="small">ClinVar / GWAS phenotype</text>
+  <line x1="468" y1="713" x2="895" y2="713" stroke="#188260" stroke-width="4"/>
+  <circle cx="468" cy="713" r="7" fill="#ffffff" stroke="#188260" stroke-width="4"/>
+  <circle cx="895" cy="713" r="7" fill="#ffffff" stroke="#188260" stroke-width="4"/>
+  <rect x="584" y="697" width="194" height="32" rx="16" fill="#ffffff"/>
+  <text x="681" y="718" text-anchor="middle" class="label">exact label / lexical match</text>
+  <text x="932" y="718" class="small">MP label / allele name</text>
+
+  <rect x="70" y="745" width="1260" height="48" rx="14" fill="#fff3e3" stroke="#dfb983"/>
+  <circle cx="116" cy="769" r="9" fill="#b86d19"/>
+  <text x="142" y="774" class="label">Tier 3</text>
+  <text x="252" y="774" class="small">ClinVar condition OMIM</text>
+  <line x1="468" y1="769" x2="895" y2="769" stroke="#b86d19" stroke-width="4"/>
+  <circle cx="468" cy="769" r="7" fill="#ffffff" stroke="#b86d19" stroke-width="4"/>
+  <circle cx="895" cy="769" r="7" fill="#ffffff" stroke="#b86d19" stroke-width="4"/>
+  <rect x="596" y="753" width="170" height="32" rx="16" fill="#ffffff"/>
+  <text x="681" y="774" text-anchor="middle" class="label">same OMIM identifier</text>
+  <text x="932" y="774" class="small">MGI curated disease model</text>
+
+  <rect x="70" y="801" width="1260" height="48" rx="14" fill="#f2ecfb" stroke="#b9a1d5"/>
+  <circle cx="116" cy="825" r="9" fill="#7444a6"/>
+  <text x="142" y="830" class="label">Semantic</text>
+  <text x="252" y="830" class="small">human phenotype text</text>
+  <line x1="468" y1="825" x2="895" y2="825" stroke="#7444a6" stroke-width="4"/>
+  <circle cx="468" cy="825" r="7" fill="#ffffff" stroke="#7444a6" stroke-width="4"/>
+  <circle cx="895" cy="825" r="7" fill="#ffffff" stroke="#7444a6" stroke-width="4"/>
+  <rect x="566" y="809" width="230" height="32" rx="16" fill="#ffffff"/>
+  <text x="681" y="830" text-anchor="middle" class="label">SapBERT cosine within gene</text>
+  <text x="932" y="830" class="small">mouse phenotype text</text>
+
+  <path d="M 700 849 L 700 867" class="flow"/>
+  <rect x="70" y="854" width="130" height="28" rx="14" fill="#314b68"/>
+  <text x="135" y="873" text-anchor="middle" class="step">4  DB MODEL</text>
+
+  <rect x="264" y="872" width="330" height="76" rx="16" fill="#ffffff" stroke="#8ca1b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="429" y="902" text-anchor="middle" class="h2">variant_pair</text>
+  <text x="429" y="927" text-anchor="middle" class="small">human variant + mouse allele + ortholog pair</text>
+  <rect x="806" y="872" width="330" height="76" rx="16" fill="#ffffff" stroke="#8ca1b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="971" y="902" text-anchor="middle" class="h2">connection_evidence</text>
+  <text x="971" y="927" text-anchor="middle" class="small">route • phenotype • score • source • review flag</text>
+  <path d="M 594 910 L 800 910" class="flow"/>
+  <text x="700" y="897" text-anchor="middle" class="tiny">1 pair : many evidence rows</text>
+  <text x="700" y="967" text-anchor="middle" class="small">Display each pair once, then expand to route-specific evidence and original sources when needed</text>
+</svg>

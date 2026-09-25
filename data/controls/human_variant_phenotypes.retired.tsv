@@ -1,0 +1,2 @@
+human_gene	human_ncbi_gene_id	rs_id	phenotype_id	phenotype_label	evidence_class	evidence_detail	publication_id	control_id
+TLR4	7099	rs4986790	FUNC:decreased_lipopolysaccharide_response	decreased response to lipopolysaccharide	literature_curated	Blunted inhaled-LPS response and reduced TLR4-mediated inflammatory signaling reported for Asp299Gly	PMID:10835634|PMID:22474023	TLR4_LPS_001

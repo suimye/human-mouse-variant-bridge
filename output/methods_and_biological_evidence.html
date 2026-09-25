@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Human–mouse variant correspondence | Methods and biological evidence</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f6f8fb;--panel:#fff;--ink:#17263a;--muted:#58697d;--line:#d8e0ea;--blue:#1769aa;--green:#188260;--orange:#b86d19;--purple:#7444a6;--slate:#43566d;--soft-blue:#e9f3fc;--soft-green:#e9f7f1;--soft-orange:#fff3e3;--soft-purple:#f2ecfb;--shadow:0 14px 38px rgba(24,40,61,.09)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.72} a{color:var(--blue);text-underline-offset:3px} main{max-width:1180px;margin:0 auto;padding:50px 24px 80px} h1,h2,h3,p{margin-top:0} h1{font-size:clamp(34px,5vw,56px);line-height:1.15;letter-spacing:-.025em;margin:10px 0 18px} h2{font-size:clamp(25px,3vw,34px);line-height:1.3;margin:64px 0 22px} h3{font-size:22px;line-height:1.35;margin:36px 0 14px}.eyebrow{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--green);text-transform:uppercase}.lead{max-width:920px;font-size:19px;color:var(--muted)}.language{float:right;font-size:14px;font-weight:750}.meta{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 28px}.chip{display:inline-flex;align-items:center;padding:6px 11px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:13px;font-weight:700}.callout{background:linear-gradient(135deg,var(--soft-blue),var(--soft-purple));border:1px solid #c9d4e4;border-radius:20px;padding:22px 24px;margin:28px 0}.callout strong{display:block;font-size:20px;margin-bottom:6px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}.nav a{text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:700}.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:24px}.figure{padding:16px;overflow:hidden}.figure img{display:block;width:100%;height:auto}.caption{font-size:13px;color:var(--muted);margin:12px 8px 2px}.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}.card h3{margin-top:0}.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:820px}th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:14px}th{background:#edf2f7;color:#2a3a4f;font-size:12px;letter-spacing:.03em}tr:last-child td{border-bottom:0}.route{font-weight:800;white-space:nowrap}.tier0{color:var(--slate)}.tier1{color:var(--blue)}.tier2{color:var(--green)}.tier3{color:var(--orange)}.semantic{color:var(--purple)}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.91em;background:#edf2f7;color:#26384d;border-radius:6px;padding:.12em .35em;overflow-wrap:anywhere}.case{position:relative;background:var(--panel);border:1px solid var(--line);border-left:7px solid var(--purple);border-radius:20px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}.case.cftr{border-left-color:var(--blue)}.case.alpl{border-left-color:var(--green)}.case h3{font-size:28px;margin:0 0 5px}.case .pair{color:var(--muted);font-weight:700;margin-bottom:18px}.variant-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.variant-box{border-radius:14px;padding:16px;background:var(--soft-blue)}.variant-box.mouse{background:var(--soft-orange)}.variant-box strong{display:block;margin-bottom:6px}.phenotype-note{margin:16px 0;padding:14px 16px;border-radius:13px;background:var(--soft-slate);border:1px solid var(--line)}.phenotype-note strong{display:block;margin-bottom:4px}.route-result{margin-top:16px;padding:14px 16px;border-radius:13px;background:var(--soft-purple)}.case.cftr .route-result{background:var(--soft-blue)}.case.alpl .route-result{background:var(--soft-green)}.refs{font-size:13px;color:var(--muted);margin:15px 0 0}.warning{border-left:5px solid var(--orange);background:var(--soft-orange);padding:15px 18px;border-radius:12px}.steps{counter-reset:step;display:grid;gap:12px}.step{counter-increment:step;position:relative;padding:16px 18px 16px 58px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.step:before{content:counter(step);position:absolute;left:16px;top:15px;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#314b68;color:#fff;font-weight:800}.small{font-size:13px;color:var(--muted)}.footer{margin-top:70px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    @media(prefers-color-scheme:dark){:root{--bg:#101722;--panel:#172131;--ink:#edf4fb;--muted:#b8c5d4;--line:#344255;--soft-blue:#182e43;--soft-green:#18372f;--soft-orange:#3b2a18;--soft-purple:#2c2240;--shadow:none}th{background:#202d3e;color:#e8f1fa}code{background:#243246;color:#e5edf7}}
+    @media(max-width:760px){main{padding:34px 16px 60px}.grid-2,.variant-grid{grid-template-columns:1fr}.panel,.case{padding:18px}.figure{padding:6px}.figure img{min-width:780px}.figure{overflow-x:auto}h2{margin-top:48px}.language{float:none;display:block;margin-bottom:14px}}
+  </style>
+</head>
+<body>
+<main>
+  <a class="language" href="methods_and_biological_evidence_en.html" lang="en">English</a>
+  <div class="eyebrow">Methods • datasets • case studies</div>
+  <h1>Human–mouse variant correspondence</h1>
+  <p class="lead">ヒトのvariantとマウスのalleleを、1:1 ortholog遺伝子内で比較し、表現型や疾患に関する根拠ごとに対応候補を作成した方法を説明する。両者の変異位置や変異の型が一致することは、候補とするための条件にしない。</p>
+  <div class="meta">
+    <span class="chip">raw data: 2026-09-11</span>
+    <span class="chip">semantic output: 2026-09-24</span>
+    <span class="chip">implementation: 2.0.0</span>
+    <span class="chip">GRCh38</span>
+    <span class="chip">1:1 protein ortholog only</span>
+  </div>
+  <div class="callout">
+    <strong>接続の対象と、接続した根拠を区別して扱う。</strong>
+    まずMGIの1:1 protein-coding ortholog遺伝子ペアによって比較範囲を定める。その範囲内で、HPO–MPの対応、表現型名、同じOMIM疾患ID、表現型を表す文章の類似度を、それぞれ別の接続根拠として記録する。候補としての接続は、両variantの生物学的な等価性を意味しない。
+  </div>
+  <nav class="nav" aria-label="page sections">
+    <a href="#overview">接続の考え方</a><a href="#sources">入力データ</a><a href="#methods">6段階の生成手順</a><a href="#routes">接続手法</a><a href="#semantic">SapBERT</a><a href="#scripts">スクリプト</a><a href="#database">保存形式</a><a href="#cases">3例の検証</a><a href="#limits">限界</a>
+  </nav>
+
+  <section id="overview">
+    <h2>接続の対象と根拠</h2>
+    <p>この解析では、ヒト側のvariantとマウス側のalleleを組にして扱う。比較する組合せは、MGIが示すヒト・マウスの1:1 protein-coding ortholog遺伝子ペア内に限定する。そのうえで、各組にどのような表現型または疾患の根拠があるかを調べる。同じ組に複数の根拠が付く場合もある。</p>
+    <p>接続手法はTier 1（HPO–MP）、Tier 2（ortholog + phenotype label）、Tier 3（same OMIM）の三つに分ける。SapBERTによる表現型文章の類似度は、これらのTierとは別に計算し、A/B/C/DのSemantic classで記録する。Tier番号もSemantic classも、variant間の機能的等価性や生物学的信頼度の確率を表すものではない。</p>
+    <div class="panel figure">
+      <img src="tier_matching_strategy_ja.svg" alt="MGIの1対1ortholog gene pair内で、Tier 1はHPOとMP、Tier 2は表現型名、Tier 3はOMIM疾患IDを使ってhuman variantとmouse alleleを結ぶ図。">
+      <p class="caption">Tier別の接続図。細い横線はgenomic region、太い線はgene、色付きの点はvariantまたはalleleを表す。色付きの線は接続根拠を表し、ヒトとマウスで変異位置が一致することは求めない。以前の全体構造図は<a href="methods_data_linkage.svg">別図</a>として参照できる。</p>
+    </div>
+    <p>以下では、最初に入力データと生成手順を示し、続いて各接続手法の条件、文章比較、保存方法を説明する。</p>
+  </section>
+
+  <section id="sources">
+    <h2>入力データと版の記録</h2>
+    <p>解析には、ヒトvariantとその疾患・形質、マウスalleleとその表現型・疾患モデル、ortholog遺伝子、種をまたぐ表現型対応を記載した配布ファイルを使用した。下表に各入力ファイルと、この解析で利用した情報を示す。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>データセット</th><th>使用ファイル</th><th>この解析で利用する情報</th><th>配布元の更新日・版</th><th>取得日 (UTC)</th><th>SHA-256</th></tr></thead>
+        <tbody>
+          <tr><td>ClinVar GRCh38 VCF</td><td><code>data/raw/clinvar/clinvar.vcf.gz</code></td><td>rsID、位置、REF/ALT、condition、classification</td><td>2026-09-06 16:25:09</td><td>2026-09-11 05:06:43</td><td><code>8cff3c5fb9ba…</code></td></tr>
+          <tr><td>HPO disease annotations</td><td><code>data/raw/hpo/phenotype.hpoa</code></td><td>disease ID → HPO</td><td>2026-09-02 21:12:10</td><td>2026-09-11 05:06:46</td><td><code>e89aa39c8f97…</code></td></tr>
+          <tr><td>Monarch UPheno SSSOM</td><td><code>data/raw/monarch/upheno-cross-species.sssom.tsv</code></td><td>cross-species HPO–MP mapping</td><td>2026-09-09 14:51:58</td><td>2026-09-11 05:06:49</td><td><code>133b2ac088b2…</code></td></tr>
+          <tr><td>MHMI MGI SSSOM</td><td><code>data/raw/mhmi/mp_hp_mgi_all.sssom.tsv</code></td><td>MGI-curated HPO–MP mapping</td><td>not reported</td><td>2026-09-11 05:06:49</td><td><code>6b23131d80d5…</code></td></tr>
+          <tr><td>MGI GenePheno</td><td><code>data/raw/mgi/MGI_GenePheno.rpt</code></td><td>genotype–MP evidence</td><td>2026-09-07 12:01:12</td><td>2026-09-11 05:06:55</td><td><code>8defadf48934…</code></td></tr>
+          <tr><td>MGI HOM_ProteinCoding</td><td><code>data/raw/mgi/HOM_ProteinCoding.rpt</code></td><td>1:1 protein-coding ortholog</td><td>2026-09-07 12:00:35</td><td>2026-09-11 05:06:57</td><td><code>14b81c2c8c65…</code></td></tr>
+          <tr><td>GWAS Catalog v1.0.2</td><td><code>data/raw/gwas/gwas_catalog_associations_v1.0.2.zip</code></td><td>significant variant–trait evidence</td><td><code>e116_r2026-09-04</code></td><td>2026-09-11 17:46:50</td><td><code>64f9f7c47daa…</code></td></tr>
+          <tr><td>MGI PhenotypicAllele</td><td><code>data/raw/mgi/MGI_PhenotypicAllele.rpt</code></td><td>allele名、型、原著、synonym</td><td>2026-09-07 12:01:57</td><td>2026-09-11 17:42:44</td><td><code>3fd8b25665b1…</code></td></tr>
+          <tr><td>MGI MP vocabulary</td><td><code>data/raw/mgi/VOC_MammalianPhenotype.rpt</code></td><td>MP label / definition</td><td>2026-09-07 12:02:20</td><td>2026-09-11 17:42:47</td><td><code>2fd454098d42…</code></td></tr>
+          <tr><td>MGI Geno_DiseaseDO</td><td><code>data/raw/mgi/MGI_Geno_DiseaseDO.rpt</code></td><td>curated genotype–disease model</td><td>2026-09-07 12:01:13</td><td>2026-09-11 17:42:50</td><td><code>c4e5e3a05c68…</code></td></tr>
+          <tr><td>HGNC complete set</td><td><code>data/raw/hgnc/hgnc_complete_set.txt</code></td><td>GWAS Ensembl ID → approved human gene</td><td>2026-09-11 13:36:41</td><td>2026-09-11 17:46:57</td><td><code>9e07bb49393c…</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>配布元の更新日または版と取得日を区別して記録した。SHA-256は取得したファイルの内容を後から照合するための値である。完全な値と取得URLは<a href="../DATA_VERSIONS.md">DATA_VERSIONS.md</a>および<a href="../data/raw/manifest.json">manifest.json</a>に記載している。</p>
+  </section>
+
+  <section id="methods">
+    <h2>候補データを生成する6段階</h2>
+    <p>取得した配布ファイルを<code>data/raw/</code>に保存し、解析用の表を<code>data/processed/</code>に作成した。ortholog遺伝子表、ヒトvariant–表現型表、マウスallele–表現型表をそれぞれ作り、同じortholog遺伝子ペアに属するレコードを接続手法ごとに比較した。</p>
+    <div class="panel figure">
+      <img src="data_generation_workflow_ja.svg" alt="設定ファイル、入力データ、処理、使用スクリプト、出力ファイルを6段階で示すデータ作成フローチャート。">
+      <p class="caption">データ作成フロー。Step 2–4はStep 1で取得したファイルから作成し、それぞれの表をStep 5へ入力する。Step 6では生成結果を検査する。</p>
+    </div>
+    <p>各段階で行う処理は次のとおりである。</p>
+    <div class="steps" style="margin-top:20px">
+      <div class="step"><strong>Step 1: 配布データの取得</strong><br>ClinVar、HPO、Monarch/MHMI、MGI、GWAS Catalog、HGNCのファイルを取得し、配布元の更新日または版、取得日、容量、SHA-256を記録する。</div>
+      <div class="step"><strong>Step 2: 1:1 ortholog遺伝子表の作成</strong><br>MGIの<code>HOM_ProteinCoding.rpt</code>に示されたヒト・マウスの1:1 protein-coding ortholog遺伝子ペアを取り出し、比較可能な遺伝子の組合せを定める。<a href="https://www.informatics.jax.org/downloads/reports/index.html">MGIの配布ファイル</a>をこの比較範囲の根拠とし、遺伝子を評価する新しい生物学的指標は作らない。<a href="https://www.ensembl.org/info/docs/compara/homology_method.html">Ensembl Compara</a>は1:1、1対多、多対多の関係を推定できるが、本解析で採用するのはMGIの1:1ペアである。</div>
+      <div class="step"><strong>Step 3: ヒトvariant–表現型表の作成</strong><br>ClinVarまたはGWAS Catalogの一つのvariantに付いた一つの表現型根拠を1行として記録する。疾患IDの<code>MIM:</code>と<code>OMIM:</code>は<code>OMIM:</code>の形式に揃え、HPOのontology URLは<code>HP:</code>形式のIDとして扱う。元の表現型名とsource record IDも残す。</div>
+      <div class="step"><strong>Step 4: マウスallele–表現型表の作成</strong><br>MGIの一つのallele/genotypeに付いた一つの表現型根拠を1行として記録する。allele ID、genotype、genetic background、MP ID、表現型名、PubMed IDを残す。</div>
+      <div class="step"><strong>Step 5: 手法ごとの接続候補の作成</strong><br>Step 2のortholog遺伝子表で比較範囲を限定し、Step 3とStep 4の表を用いて、HPO–MPの対応によるTier 1、表現型名によるTier 2、同じOMIM疾患IDによるTier 3を別々に作成する。表現型文章のSapBERT類似度も、Tierとは別に計算する。</div>
+      <div class="step"><strong>Step 6: 出力と検証</strong><br>Tierの行数、Semantic classの境界、DBの整合性、指定したTLR4・CFTR・ALPLの組、negative controlsを検査する。TSV、SQLite DB、検証結果、説明資料を出力する。</div>
+    </div>
+    <h3>ヒト側のレコードに適用する条件</h3>
+    <div class="grid-2"><div class="card"><h3>ClinVarとHPO</h3><p>ClinVar condition IDとHPO disease IDが同じ場合に、その疾患に付いたHPO annotationを利用する。HPOではphenotypic abnormalityを示すaspect <code>P</code>を採用し、<code>NOT</code> annotationを除外する。同じ遺伝子に属するという理由だけで、疾患のHPO annotationを全variantへ割り当てることはしない。</p></div><div class="card"><h3>GWAS Catalog</h3><p><code>P ≤ 5×10⁻8</code>を満たすレコードのうち、GWAS Catalogの<code>SNP_GENE_IDS</code>に直接記載されたgeneを使用する。nearest gene名だけによる割当や、個別例のために文献から手作業で追加した表現型は使用しない。</p></div></div>
+    <h3>マウス側のレコードに適用する条件</h3>
+    <p class="warning">複数遺伝子を含むgenotypeとconditional genotypeを除外する。Tier 3にはMGIがcurateしたdisease modelを使用し、疾患名が似ていることを理由にOMIM IDを推測して付与しない。</p>
+  </section>
+
+  <section id="routes">
+    <h2>接続手法と生成された候補</h2>
+    <p>Tier 1–3は、どの情報によってヒトとマウスのレコードを接続したかを表す名称である。Tier番号は信頼度の順位ではない。いずれの手法も、先に定めたMGIの1:1 ortholog遺伝子ペア内で適用する。</p>
+    <p>Tier 1ではヒト疾患に付くHPOとマウスgenotypeに付くMPの対応を使う。Tier 2ではヒト側とマウス側の表現型名を比較する。Tier 3ではClinVar conditionとMGIのcurated disease modelに付くOMIM疾患IDを比較する。SapBERTによる文章類似度は、この三つのTierとは別の探索手法として扱う。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>分類</th><th>ヒト側</th><th>マウス側</th><th>接続条件</th><th>行数</th></tr></thead>
+        <tbody>
+          <tr><td class="route tier1">Tier 1</td><td>ClinVar conditionから得たHPO</td><td>MGI allele/genotypeに付くMP</td><td>Monarch UPhenoまたはMHMIがHPOとMPの対応を示す</td><td>1,089,740</td></tr>
+          <tr><td class="route tier2">Tier 2</td><td>ClinVar condition名またはGWAS trait名</td><td>MGI MP labelまたはallele名</td><td>B: 小文字化・記号除去・定義済み別名置換後に全文一致。C: 一般語を除いた語彙の一致</td><td>76,619</td></tr>
+          <tr><td class="route tier3">Tier 3</td><td>ClinVar conditionのOMIM ID</td><td>MGI curated disease modelのOMIM ID</td><td>OMIM IDが同じ</td><td>331,245</td></tr>
+          <tr><td class="route semantic">Semantic similarity</td><td>ClinVar/GWASの表現型文</td><td>MGIの表現型文</td><td>SapBERT cosine class A–D</td><td>A 1,702<br>B 4,412<br>C 66,367<br>D 2,836,628</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Tier 2のB/Cは、その手法内の一致条件を示す。次節のSemantic class A/B/C/Dとは別の分類である。Semantic similarityではA/Bは各閾値内の全pairを、C/Dは各human textについてortholog内のtop 20のみを保存する。</p>
+    <p>各Tierの図解は<a href="tier_evidence_explainer.html">接続根拠の詳細図</a>で確認できる。指定した3例で得られた接続は、後述の<a href="#cases">検証例</a>と<a href="case_study_evidence_explainer.html">結果図</a>に示す。</p>
+  </section>
+
+  <section id="semantic">
+    <h2>SapBERTによる表現型文章の比較</h2>
+    <p>ここでいう「表現型文章」は、ヒトまたはマウスのレコードに付いた表現型を表す名称であり、variantの塩基配列や座標ではない。ヒト側の各文章をqueryとし、対応する1:1 ortholog遺伝子ペア内にあるマウス側の文章と比較する。異なる遺伝子ペアに属する文章同士は比較しない。</p>
+    <p>ヒト側のqueryは<code>human_variant_phenotypes.tsv.gz</code>の<code>phenotype_label</code>で、ClinVar condition名または有意なGWAS trait名を含む。比較対象は<code>mouse_variant_phenotypes.tsv.gz</code>の<code>phenotype_label</code>で、MGIのMP label、allele名、disease labelを含む。したがって、計算されるのは表現型を表す二つの文章の類似度であり、二つのvariantそのものの類似度ではない。</p>
+    <p>SapBERTで各文章を768次元のベクトルに変換し、ヒト側のqueryとマウス側の比較対象とのcosine similarityを計算する。scoreからSemantic class A/B/C/Dを割り当て、両側の文章、score、class、ortholog遺伝子ペア、variant/allele annotationを保存する。増加・低下の方向衝突や否定に関するreview flagも記録する。SapBERTのscoreは、生物学的等価性を直接判定した結果ではない。</p>
+    <div class="table-wrap"><table><thead><tr><th>項目</th><th>この解析での設定</th></tr></thead><tbody>
+      <tr><td>モデル</td><td><a href="https://aclanthology.org/2021.naacl-main.334/">SapBERT</a> / <code>cambridgeltl/SapBERT-from-PubMedBERT-fulltext</code></td></tr>
+      <tr><td>ヒト側のquery</td><td><code>human_variant_phenotypes.tsv.gz</code>の<code>phenotype_label</code>。ClinVar condition名または有意なGWAS trait名</td></tr>
+      <tr><td>マウス側の比較対象</td><td><code>mouse_variant_phenotypes.tsv.gz</code>の<code>phenotype_label</code>。MGI MP label、allele名、またはdisease label</td></tr>
+      <tr><td>比較範囲</td><td>同じMGI 1:1 ortholog gene pair内のみ。異なる遺伝子同士は比較しない</td></tr>
+      <tr><td>文章の表現</td><td>pooler前のCLS、768次元、最大128 token。実データの最長入力は68 tokenで、truncationは0件</td></tr>
+      <tr><td>類似度とclass</td><td>cosine similarity。A ≥ 0.8、B = 0.7–&lt;0.8、C = 0.5–&lt;0.7、D &lt; 0.5。Dは保存するが通常検索から除外</td></tr>
+      <tr><td>出力</td><td><code>phenotype_pairs_class_A/B/C/D.tsv.gz</code>、variant/allele annotation、<code>correspondence.sqlite</code></td></tr>
+      <tr><td>使用したモデルファイル</td><td>revision <code>090663c3…51a4d</code>、model weights SHA-256 <code>a4696930…25614</code>。詳細は<a href="../data/models/sapbert/manifest.json">model manifest</a></td></tr>
+    </tbody></table></div>
+    <p>A = 0.8–1.0、B = 0.7–&lt;0.8、C = 0.5–&lt;0.7、D = &lt;0.5である。A/B/Cは通常検索で参照する候補、Dは保存するが通常検索からは除外する候補とした。これらの境界はcalibrated biological confidenceを表さない。</p>
+  </section>
+
+  <section id="scripts">
+    <h2>データ生成と検証に用いるスクリプト</h2>
+    <p>以下のスクリプトが、取得、解析用の表の作成、手法ごとの接続、検証を担当する。<code>src/run-workflow.js</code>はこれらの処理とテストを順番に実行する。</p>
+    <div class="table-wrap"><table><thead><tr><th>スクリプト</th><th>機能</th><th>主な出力</th></tr></thead><tbody>
+      <tr><td><code>src/download.js</code></td><td>設定されたURLからデータを取得し、更新日、取得日、容量、SHA-256を記録</td><td><code>data/raw/...</code>、<code>manifest.json</code></td></tr>
+      <tr><td><code>src/prepare.js</code></td><td>MGI 1:1 ortholog表、ClinVar–HPO表、MGI allele–MP表を作成</td><td><code>ortholog_mapping.tsv</code>、<code>human_variant_hpo.tsv.gz</code>、<code>mouse_allele_mp.tsv</code></td></tr>
+      <tr><td><code>src/prepare-relaxed.js</code></td><td>ClinVar/GWASのヒト側の表、MGIのマウス側の表、IDを追加したortholog表を作成</td><td><code>human_variant_phenotypes.tsv.gz</code>、<code>mouse_variant_phenotypes.tsv.gz</code></td></tr>
+      <tr><td><code>src/map.js</code></td><td>HPO–MP mappingでTier 1を作成</td><td><code>tier1_monarch_phenotype.tsv.gz</code></td></tr>
+      <tr><td><code>src/relaxed-map.js</code></td><td>表現型名の全文一致または語彙一致でTier 2を作成</td><td><code>tier2_ortholog_phenotype.tsv.gz</code></td></tr>
+      <tr><td><code>src/tier3-disease-map.js</code></td><td>同じOMIM疾患IDでTier 3を作成</td><td><code>tier3_disease_model.tsv.gz</code></td></tr>
+      <tr><td><code>src/semantic-map.py</code></td><td>同じortholog gene内のヒト・マウス表現型文をSapBERTで比較</td><td>class A–D TSV、<code>correspondence.sqlite</code></td></tr>
+      <tr><td><code>src/validate.js</code></td><td>Tier件数、3症例、negative controlsを検査</td><td><code>tier_validation_results.tsv</code></td></tr>
+      <tr><td><code>src/verify-semantic.py</code></td><td>class境界、DB、出力件数、active/archive viewを検査</td><td><code>semantic/verification.json</code></td></tr>
+      <tr><td><code>src/case-study-report.js</code></td><td>TLR4、CFTR、ALPLの接続結果を集計</td><td><code>semantic/case_study_summary.tsv</code></td></tr>
+      <tr><td><code>src/run-workflow.js</code></td><td>上記処理とテストを順番に実行</td><td>各スクリプトの出力</td></tr>
+    </tbody></table></div>
+    <p>各スクリプトの出力は、前節までに述べた入力表、Tier別の候補、Semantic similarityの候補、および検証結果に対応する。</p>
+  </section>
+
+  <section id="database">
+    <h2>接続対象と根拠の保存</h2>
+    <p>データを読む際には、「比較するvariantとalleleの組」と「その組を接続した根拠」を区別する必要がある。次の<code>variant_pair</code>と<code>connection_evidence</code>は、その保存単位を説明するための構成例である。後述するSemantic用SQLite DBの実体表名とは区別する。</p>
+    <div class="grid-2">
+      <div class="card"><h3><code>variant_pair</code>: 比較する組</h3><p>どのヒトvariantとどのマウスalleleを比較するかを1行で表す。pair ID、ヒトのgene/variant ID、マウスのgene/allele ID、ortholog IDを持つ。同じ組に複数の接続根拠があっても、組そのものは1行として考える。</p></div>
+      <div class="card"><h3><code>connection_evidence</code>: 接続の根拠</h3><p>pair IDに結び付けて、HPO–MPの対応、同じOMIM疾患ID、文章類似度などを別々の行で表す。元の表現型、predicateまたはscore、source recordを各根拠とともに残す。</p></div>
+    </div>
+    <h3>CFTRの組で見た保存単位</h3>
+    <p>次の例では、同じCFTR/Cftrの組に、Tier 1とTier 3という異なる根拠が付く。組と根拠を分けることで、どの情報によって接続されたかを確認できる。</p>
+    <div class="table-wrap"><table><thead><tr><th>保存先</th><th>pair ID</th><th>ヒト側</th><th>マウス側</th><th>この行が表すもの</th></tr></thead><tbody>
+      <tr><td><code>variant_pair</code></td><td><code>CFTR-rs113993960-MGI1856709</code></td><td>CFTR / rs113993960</td><td>Cftr / MGI:1856709</td><td>比較対象の組。1行だけ</td></tr>
+      <tr><td><code>connection_evidence</code></td><td>同上</td><td>HP:0001508<br>Failure to thrive</td><td>MP:0001732<br>postnatal growth retardation</td><td>Tier 1: <code>skos:narrowMatch</code>で結んだ根拠</td></tr>
+      <tr><td><code>connection_evidence</code></td><td>同上</td><td>ClinVar condition<br>OMIM:219700</td><td>MGI disease model<br>OMIM:219700</td><td>Tier 3: 同じ疾患IDで結んだ根拠</td></tr>
+    </tbody></table></div>
+    <p>現在の成果物は、Tier 1/2/3のgzip TSVと、Semantic用の情報を関係別の表に分けた<a href="semantic/correspondence.sqlite">SQLite DB</a>である。Semantic DBの実体表は<code>ortholog</code>、<code>phenotype_text</code>、<code>human_annotation</code>、<code>mouse_annotation</code>、<code>phenotype_match</code>、<code>metadata</code>からなる。通常利用ではA/B/Cを返す<code>active_phenotype_pairs</code>および<code>active_variant_correspondence</code>を使い、Dを確認する場合は保存用viewを使う。</p>
+  </section>
+
+  <section id="cases">
+    <h2>指定した3組による接続結果の検証</h2>
+    <p>TLR4、CFTR、ALPLについて、あらかじめ指定したヒトvariantとマウスalleleの組が、どの接続手法で回収されるかを調べた。これらは事前に回収対象として指定した陽性対照であり、全データを用いた独立ベンチマークではない。以下では各組の相違点を示したうえで、実際に得られた接続を記載する。生物学的な記述は各項目末尾の資料に基づく。</p>
+
+    <article class="case">
+      <h3>TLR4</h3>
+      <p class="pair">rs4986790 p.Asp299Gly ↔ Tlr4&lt;Lps-d&gt; p.Pro712His</p>
+      <div class="variant-grid">
+        <div class="variant-box"><strong>ヒト：細胞外ドメインのミスセンス変異</strong>GRCh38 chr9:117,713,024 A&gt;G、ClinVar 6660。Asp299Glyはextracellular domainに位置し、inhaled LPS responseの低下やMyD88/TRIF recruitmentの障害が報告されている。ただし、その効果は集団やassayの間で一貫せず、取得したClinVar VCFのaggregate classificationはBenignである。</div>
+        <div class="variant-box mouse"><strong>マウス：TIRドメインのミスセンス変異</strong>C3H/HeJのspontaneous allele、MGI:1857718。Pro712Hisはcytoplasmic TIR domainに位置し、LPS signal transduction不全とendotoxin hyporesponsivenessを示す。</div>
+      </div>
+      <div class="phenotype-note"><strong>表現型の意味:</strong> TLR4は細菌のlipopolysaccharide（LPS）を感知して炎症応答を始める受容体である。マウスの<code>Tlr4&lt;Lps-d&gt;</code>はendotoxinに対する反応が弱いことが古くから知られている。一方、ヒトAsp299Glyの影響は集団や測定系で一貫しないため、このDBではLPS応答そのものの一致ではなく、表現型文の探索候補として扱う。</div>
+      <p>両variantは同じ残基にも同じdomainにも位置しない。上記の報告は両者を検討する背景となるが、このDBで得られた接続だけからLPS応答の機序が一致すると判断することはできない。</p>
+      <div class="route-result"><strong>このDBでの回収: Semantic Cのみ。</strong> Tier 1/2/3は0行。手動でLPSに関する文章を追加せず、GWASの慢性炎症性疾患複合ラベルとMGIのinduced arthritis susceptibilityの組を、cosine 0.548の1行として保持する。この行はLPS機序一致の証拠ではなく、内容の確認を要する候補である。</div>
+      <p class="refs">参照資料: <a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/6660/">ClinVar 6660</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/10835634/">Arbour 2000</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/22474023/">Figueroa 2012</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/15927851/">Netea 2005</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/9851930/">Poltorak 1998</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/9989976/">Qureshi 1999</a> · <a href="https://www.informatics.jax.org/allele/MGI:1857718">MGI:1857718</a> · <a href="../../TogoVar_MoGplus.pdf">original PDF</a></p>
+    </article>
+
+    <article class="case cftr">
+      <h3>CFTR</h3>
+      <p class="pair">rs113993960 p.Phe508del ↔ Cftr&lt;tm1Unc&gt; p.S489* targeted null</p>
+      <div class="variant-grid">
+        <div class="variant-box"><strong>ヒト：NBD1のアミノ酸1残基欠失</strong>GRCh38 chr7:117,559,590 ATCT&gt;A、ClinVar 7105。Phe508はNBD1表面とICL4のdomain interfaceに関与し、F508delはNBD1 energeticsとdomain assemblyを損なってfolding/traffickingとgatingに影響する。</div>
+        <div class="variant-box mouse"><strong>マウス：premature stopによるnull allele</strong>MGI:1856709。Exon 10にS489*を導入したtargeted nullで、F508del knock-inではない。ホモ接合体はfailure to thrive、intestinal obstruction、gland pathologyなどCFに重なる表現型を示す。</div>
+      </div>
+      <div class="phenotype-note"><strong>表現型の意味:</strong> 嚢胞性線維症では、CFTRの塩化物・重炭酸イオン輸送が低下し、気道、膵臓、腸管などの分泌物が脱水して粘稠になりやすい。<code>Cftr&lt;tm1Unc&gt;</code>のようなnull alleleを持つマウスでは、成長不良や腸閉塞など、CFTR機能低下に関連する表現型が観察される。この事例では、同じ塩基変化ではなく、表現型ontologyと疾患モデルが接続根拠になる。</div>
+      <p><strong>構造的なポイント:</strong> 1残基欠失とpremature stopでvariant classは異なるが、いずれもCFTR function低下へ収束する。接続の主根拠は表現型ontologyとcurated disease model。</p>
+      <div class="route-result"><strong>このDBでの回収: Tier 1 + Tier 3。</strong> Tier 1は6行、Tier 3はOMIM:219700共有で2行。代表例はFailure to thrive (HP:0001508) ↔ postnatal growth retardation (MP:0001732) の<code>skos:narrowMatch</code>。Semanticの最高候補は別の精子表現型であり主根拠にしない。</div>
+      <p class="refs">参照資料: <a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/7105/">ClinVar 7105</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/22265408/">Rabeh 2012</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/1380723/">Snouwaert 1992</a> · <a href="https://www.informatics.jax.org/allele/MGI:1856709">MGI:1856709</a></p>
+    </article>
+
+    <article class="case alpl">
+      <h3>ALPL</h3>
+      <p class="pair">rs1558543066 p.Val7fs ↔ Alpl&lt;Hpp&gt; c.862+5G&gt;A splice-site hypomorph</p>
+      <div class="variant-grid">
+        <div class="variant-box"><strong>ヒト：N末端のframeshift</strong>VCFではGRCh38 chr1:21,554,098 TA&gt;T、HGVSではg.21554099del、NM_000478.6:c.18del、p.Val7fs。ClinVar 518424でPathogenic、hypophosphatasiaに関連する。</div>
+        <div class="variant-box mouse"><strong>マウス：splice-site hypomorph</strong>MGI:3051587、ENU由来。Intron 8のc.862+5G&gt;Aで一部正常splicingが残る。異常transcriptはpremature stopとなり、276 aaのtruncated proteinは野生型525 aaのactive-site構成残基の一部を欠く。</div>
+      </div>
+      <div class="phenotype-note"><strong>表現型の意味:</strong> hypophosphatasia（低ホスファターゼ症）は、組織非特異的アルカリホスファターゼ（TNSALP）の活性低下により、骨や歯の石灰化が障害される疾患である。<code>Alpl&lt;Hpp&gt;</code>マウスは残存活性をもつ低機能alleleで、骨石灰化異常を示すモデルとして利用される。この事例では疾患名の完全一致と同じOMIM疾患IDが主な接続根拠である。</div>
+      <p><strong>構造的なポイント:</strong> N末端frameshiftとsplice-site hypomorphで位置・variant class・残存活性が異なるが、どちらもTNSALP activity低下とhypophosphatasiaへ収束する。</p>
+      <div class="route-result"><strong>このDBでの回収: Tier 2 + Tier 3。</strong> Tier 1は指定alleleを回収しない。Tier 2は<code>hypophosphatasia</code>完全一致で20行、Tier 3はOMIM:146300共有で2行。Semanticよりもexact labelとcurated disease modelを主根拠とする。</div>
+      <p class="refs">参照資料: <a href="https://www.ncbi.nlm.nih.gov/clinvar/variation/518424/">ClinVar 518424</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/17539739/">Hough 2007</a> · <a href="https://www.informatics.jax.org/allele/MGI:3051587">MGI:3051587</a> · <a href="https://www.informatics.jax.org/allele/genoview/MGI:3722925">MGI:3722925</a></p>
+    </article>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>事例</th><th>ヒトvariantの構造的特徴</th><th>マウスalleleの構造的特徴</th><th>主な接続手法</th><th>この事例が示すこと</th></tr></thead>
+        <tbody>
+          <tr><td>TLR4</td><td>extracellular D299G</td><td>TIR-domain P712H</td><td>Semantic C</td><td>Tier 1–3で回収できない組を探索候補として残す。ただし機序一致は主張しない</td></tr>
+          <tr><td>CFTR</td><td>NBD1 F508del</td><td>S489* null</td><td>Tier 1 + Tier 3</td><td>variant classが異なっても、ontology phenotypeとCF disease modelによって接続できる</td></tr>
+          <tr><td>ALPL</td><td>V7 frameshift</td><td>splice hypomorph</td><td>Tier 2 + Tier 3</td><td>HPO–MPで回収できない組を、phenotype labelとHPP modelが補う</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <h2>検証結果と限界</h2>
+    <div class="grid-2">
+      <div class="card"><h3>確認できたこと</h3><ul><li>3つの指定pairを接続手法の統合により3/3回収</li><li>3事例と各Tierについて定めた期待結果は9/9 PASS</li><li>非ortholog間の接続と、同一残基であるとの過剰な判定を検出する陰性対照は2/2 PASS</li><li>ヒト側の文献から手作業で追加した表現型を、本番データに含めた行は0件</li></ul></div>
+      <div class="card"><h3>確認していないこと</h3><ul><li>全体のprecision / recall</li><li>Semantic classをconfidence probabilityとみなす妥当性</li><li>humanとmouseで同じ強さ、方向、機序があること</li><li>background、zygosity、実験条件の完全な統制</li></ul></div>
+    </div>
+    <p class="warning"><strong>特に重要:</strong> cosine similarityは否定、増加/低下、臓器、刺激、疾患と量的形質の違いを完全には処理しない。A/B/Cは候補であり、生物学的等価性の判定ではない。</p>
+  </section>
+
+  <section>
+    <h2>関連成果物</h2>
+    <div class="grid-2">
+      <div class="card"><h3>Methods資料</h3><p><a href="../METHODS_AND_CASE_STUDIES.md">日本語Markdown</a><br><a href="../METHODS_AND_CASE_STUDIES_EN.md">English Markdown</a><br><a href="tier_matching_strategy_ja.svg">Tier別の接続図</a><br><a href="data_generation_workflow_ja.svg">データ作成フローチャート</a><br><a href="methods_data_linkage.svg">以前の全体構造図</a><br><a href="../config/workflow.json">workflow.json</a><br><a href="../DATA_VERSIONS.md">データ取得記録</a></p></div>
+      <div class="card"><h3>機械可読データ</h3><p><a href="semantic/case_study_summary.tsv">case_study_summary.tsv</a><br><a href="semantic/summary.json">semantic summary.json</a><br><a href="tier_validation_results.tsv">tier validation matrix</a><br><a href="semantic/correspondence.sqlite">correspondence.sqlite</a></p></div>
+    </div>
+  </section>
+
+  <div class="footer">2026年版の再構築結果に基づく。利用したデータセットとSapBERTの設定は上記に示し、生物学的な解釈は各事例で参照したレコードと論文の範囲に限定した。</div>
+</main>
+</body>
+</html>

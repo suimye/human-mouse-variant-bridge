@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-09-24T10:23:31.018Z",
+  "positiveControl": {
+    "status": "PASS",
+    "humanFound": true,
+    "orthologFound": true,
+    "mouseFound": true,
+    "distinctSubstitutions": true,
+    "manualHumanPhenotypeUsed": false,
+    "automaticHpoMpRows": 0,
+    "tier2CandidateRows": 0,
+    "tier2Support": ""
+  },
+  "tierValidation": [
+    {
+      "control_id": "TLR4_LPS_001",
+      "tier_id": "tier1",
+      "expected": "not_required",
+      "found_rows": 0,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "No recovery expected for this basis."
+    },
+    {
+      "control_id": "TLR4_LPS_001",
+      "tier_id": "tier2",
+      "expected": "not_required",
+      "found_rows": 0,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "No recovery expected for this basis."
+    },
+    {
+      "control_id": "TLR4_LPS_001",
+      "tier_id": "tier3",
+      "expected": "not_required",
+      "found_rows": 0,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "No recovery expected for this basis."
+    },
+    {
+      "control_id": "CFTR_F508DEL_001",
+      "tier_id": "tier1",
+      "expected": "found",
+      "found_rows": 6,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "Expected positive control recovered."
+    },
+    {
+      "control_id": "CFTR_F508DEL_001",
+      "tier_id": "tier2",
+      "expected": "not_required",
+      "found_rows": 0,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "No recovery expected for this basis."
+    },
+    {
+      "control_id": "CFTR_F508DEL_001",
+      "tier_id": "tier3",
+      "expected": "found",
+      "found_rows": 2,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "Expected positive control recovered."
+    },
+    {
+      "control_id": "ALPL_HPP_001",
+      "tier_id": "tier1",
+      "expected": "not_required",
+      "found_rows": 0,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "No recovery expected for this basis."
+    },
+    {
+      "control_id": "ALPL_HPP_001",
+      "tier_id": "tier2",
+      "expected": "found",
+      "found_rows": 20,
+      "within_tier_support": "B",
+      "status": "PASS",
+      "interpretation": "Expected positive control recovered."
+    },
+    {
+      "control_id": "ALPL_HPP_001",
+      "tier_id": "tier3",
+      "expected": "found",
+      "found_rows": 2,
+      "within_tier_support": "",
+      "status": "PASS",
+      "interpretation": "Expected positive control recovered."
+    }
+  ],
+  "negativeControls": [
+    {
+      "controlId": "NEG_ORTHOLOG_001",
+      "status": "PASS"
+    },
+    {
+      "controlId": "NEG_RESIDUE_001",
+      "status": "PASS"
+    }
+  ]
+}

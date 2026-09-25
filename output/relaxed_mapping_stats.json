@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-24T04:27:11.948Z",
+  "orthologPairs": 16537,
+  "indexedMouseEvidenceRows": 306369,
+  "humanEvidenceRows": 1644708,
+  "humanRowsWithOrtholog": 1572955,
+  "candidateComparisons": 3921856,
+  "finalRows": 76619,
+  "supportGrades": {
+    "A": 0,
+    "B": 9512,
+    "C": 67107
+  },
+  "methods": {
+    "controlled_lexical_overlap": 67107,
+    "exact_normalized_label": 9512
+  },
+  "unique": {
+    "humanVariants": 8572,
+    "humanGenes": 724,
+    "mouseAlleles": 1369,
+    "mouseGenes": 724
+  }
+}

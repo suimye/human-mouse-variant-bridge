@@ -1,0 +1,3 @@
+control_id	status	human_gene	human_variant	mouse_gene	mouse_allele	claim	expected_rejection_reason	observed_reason
+NEG_ORTHOLOG_001	PASS	TLR4	rs4986790	Trp53	Trp53<tm1Tyj>	phenotype match despite non-orthologous genes	non_orthologous_gene	No result bypassed the 1:1 ortholog constraint.
+NEG_RESIDUE_001	PASS	TLR4	rs4986790	Tlr4	Tlr4<Lps-d>	same amino-acid substitution	different_residue_and_substitution	p.Asp299Gly is not p.Pro712His; the control is functional, not residue-equivalent.

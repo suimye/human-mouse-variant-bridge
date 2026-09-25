@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720" role="img" aria-labelledby="title description">
+  <title id="title">Ortholog-first human-mouse candidate correspondence</title>
+  <desc id="description">Current orthologs constrain separately collected human variant and mouse allele phenotype evidence. Counts use logarithmic bars.</desc>
+  <style>
+    .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #17324D; }
+    .subtitle { font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+    .label { font: 600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #243746; }
+    .count { font: 700 16px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #17324D; }
+    .small { font: 400 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+    .control { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  </style>
+  <rect width="1100" height="720" fill="#FFFFFF"/>
+  <text x="48" y="56" class="title">Ortholog-first phenotype evidence expansion</text>
+  <text x="48" y="86" class="subtitle">1:1 gene pair → human variants / mouse alleles → phenotype evidence → tiered candidate correspondence</text>
+  <text x="48" y="120" class="small">Strict HPO–MP output remains separate. Support A is retired; B = exact label; C = lexical hypothesis.</text>
+  <text x="48" y="168" class="label">Current 1:1 ortholog pairs</text>
+      <rect x="48" y="176" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="176" width="453.0" height="21" rx="5" fill="#315C83"/>
+      <text x="716" y="192" class="count">16,537</text>
+<text x="48" y="232" class="label">Human ClinVar phenotype rows</text>
+      <rect x="48" y="240" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="240" width="650.0" height="21" rx="5" fill="#477FA8"/>
+      <text x="716" y="256" class="count">1,129,943</text>
+<text x="48" y="296" class="label">Human significant GWAS rows</text>
+      <rect x="48" y="304" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="304" width="613.3" height="21" rx="5" fill="#477FA8"/>
+      <text x="716" y="320" class="count">514,765</text>
+<text x="48" y="360" class="label">Mouse MP evidence rows</text>
+      <rect x="48" y="368" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="368" width="581.5" height="21" rx="5" fill="#A26A24"/>
+      <text x="716" y="384" class="count">259,953</text>
+<text x="48" y="424" class="label">Mouse allele-name evidence rows</text>
+      <rect x="48" y="432" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="432" width="501.1" height="21" rx="5" fill="#A26A24"/>
+      <text x="716" y="448" class="count">46,416</text>
+<text x="48" y="488" class="label">Candidate variant-allele rows</text>
+      <rect x="48" y="496" width="650" height="21" rx="5" fill="#E8EFF4"/>
+      <rect x="48" y="496" width="524.5" height="21" rx="5" fill="#168273"/>
+      <text x="716" y="512" class="count">76,619</text>
+  <rect x="48" y="586" width="1004" height="86" rx="10" fill="#F1F8F5" stroke="#C3E2D5"/>
+  <text x="70" y="621" class="control" fill="#526779">TLR4 rs4986790 ↔ Tlr4&lt;Lps-d&gt;: MANUAL LITERATURE INPUT DISABLED</text>
+  <text x="70" y="649" class="small">TLR4 is assessed in the separate semantic class C output; no hand-curated human phenotype is injected here.</text>
+  <text x="1025" y="621" text-anchor="end" class="count">support A 0 / B 9,512 / C 67,107</text>
+</svg>

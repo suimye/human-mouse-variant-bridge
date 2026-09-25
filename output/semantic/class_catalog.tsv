@@ -1,0 +1,5 @@
+cosine_class	criterion	phenotype_pair_rows	scope	eligible_for_default_use
+A	0.8 <= cosine <= 1	1702	all above threshold within ortholog	1
+B	0.7 <= cosine < 0.8	4412	all above threshold within ortholog	1
+C	0.5 <= cosine < 0.7	66367	only top 20 retrieved neighbors within ortholog	1
+D	-1 <= cosine < 0.5	2836628	same top-k scope; archive-only; excluded from default use	0

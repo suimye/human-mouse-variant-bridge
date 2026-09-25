@@ -1,0 +1,31 @@
+{
+  "name": "mog-togovar-cross-phenotype-2026",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Reproducible strict and ortholog-first human-mouse variant phenotype mapping",
+  "main": "src/map.js",
+  "scripts": {
+    "workflow": "node src/run-workflow.js",
+    "workflow:dry-run": "node src/run-workflow.js --dry-run",
+    "download": "node src/download.js",
+    "prepare": "node src/prepare.js",
+    "prepare:relaxed": "node src/prepare-relaxed.js",
+    "map": "node src/map.js",
+    "map:relaxed": "node src/relaxed-map.js",
+    "map:tier3": "node src/tier3-disease-map.js",
+    "download:semantic-model": ".venv-semantic/bin/python src/download-semantic-model.py",
+    "map:semantic": ".venv-semantic/bin/python src/semantic-map.py",
+    "test:semantic": ".venv-semantic/bin/python -m unittest discover -s test -p test_semantic.py -v",
+    "verify:semantic": ".venv-semantic/bin/python src/verify-semantic.py",
+    "report:cases": "node src/case-study-report.js",
+    "validate:tier0": "node src/validate-tier0.js",
+    "validate": "node src/validate.js",
+    "relaxed": "npm run prepare:relaxed && npm run map:relaxed && npm run map:tier3 && npm run validate",
+    "all": "npm run download && npm run prepare && npm run map && npm run prepare:relaxed && npm run map:relaxed && npm run map:tier3 && npm run validate && npm test",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

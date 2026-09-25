@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human-mouse variant pair discovery by different matching methods</title>
+<style>
+  :root{color-scheme:light dark;--bg:#f7f8fb;--panel:#fff;--ink:#152235;--muted:#59687a;--line:#c8d1dc;--blue:#2563a6;--green:#188260;--orange:#b86d19;--purple:#7b4bb7;--soft-blue:#eaf2fb;--soft-green:#e7f5ef;--soft-orange:#fff2df;--soft-purple:#f3ecfb;--shadow:0 12px 34px rgba(20,34,53,.08)}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.65} main{max-width:1180px;margin:0 auto;padding:48px 24px 72px} h1,h2,h3,p{margin-top:0} h1{font-size:clamp(30px,5vw,50px);line-height:1.18;letter-spacing:-.02em;margin-bottom:16px} h2{font-size:clamp(24px,3vw,32px);margin:56px 0 20px} .lead{font-size:18px;max-width:900px;color:var(--muted)} .headline{display:inline-block;padding:5px 11px;border-radius:999px;background:var(--soft-green);color:var(--green);font-weight:700;margin-bottom:18px}.summary{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:28px;align-items:start}.summary-count{background:var(--panel);border-radius:18px;padding:20px;box-shadow:var(--shadow);text-align:center}.summary-count strong{display:block;font-size:42px;line-height:1.15}.summary-count span{color:var(--muted)}
+  .schema{background:var(--panel);border-radius:22px;padding:20px;box-shadow:var(--shadow);overflow:hidden}.schema svg{display:block;width:100%;height:auto;min-height:320px}.genome{stroke:var(--line);stroke-width:4;stroke-linecap:round}.gene{stroke:var(--ink);stroke-width:20;stroke-linecap:round}.variant{fill:var(--panel);stroke:var(--blue);stroke-width:7}.allele{fill:var(--panel);stroke:var(--orange);stroke-width:7}.route{fill:none;stroke-width:4;stroke-linecap:round}.route1{stroke:var(--blue)}.route2{stroke:var(--green)}.route3{stroke:var(--orange)}.route4{stroke:var(--purple)}.svg-title{font-size:18px;font-weight:700;fill:var(--ink)}.svg-label{font-size:15px;font-weight:600;fill:var(--ink)}.svg-muted{font-size:13px;fill:var(--muted)}.label-box{fill:var(--panel);opacity:.96}
+  .case-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.case-card{background:var(--panel);border-radius:18px;padding:22px;box-shadow:var(--shadow);border-top:6px solid var(--blue)}.case-alpl{border-top-color:var(--green)}.case-tlr4{border-top-color:var(--purple)}.case-card header p{color:var(--muted);font-size:14px;margin:5px 0 18px}.case-gene{font-size:26px;font-weight:800;margin-right:10px}.case-status{font-size:12px;font-weight:700;color:var(--green);background:var(--soft-green);border-radius:999px;padding:4px 8px;white-space:nowrap}.pair-track{display:grid;grid-template-columns:minmax(74px,1fr) minmax(92px,1.2fr) minmax(74px,1fr);align-items:center;gap:8px;margin:4px 0 14px}.species-node{padding:10px 7px;border-radius:12px;background:var(--soft-blue);text-align:center;min-width:0}.species-node:last-child{background:var(--soft-orange)}.species-node span{display:block;color:var(--muted);font-size:11px}.species-node strong{display:block;font-size:12px;overflow-wrap:anywhere}.route-line{position:relative;text-align:center;color:var(--muted);font-size:10px;line-height:1.25}.route-line:before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;background:currentColor;z-index:0}.route-line span{position:relative;z-index:1;background:var(--panel);padding:3px 5px}.route-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}.route-badge{font-size:11px;font-weight:700;padding:4px 7px;border-radius:999px;background:var(--soft-blue);color:var(--blue)}.route-tier2{background:var(--soft-green);color:var(--green)}.route-tier3{background:var(--soft-orange);color:var(--orange)}.route-semantic_C{background:var(--soft-purple);color:var(--purple)}.evidence{padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-weight:650}.evidence span:first-child{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}.limit{color:var(--muted);font-size:13px;margin-bottom:0}
+  .matrix-wrap{overflow-x:auto;background:var(--panel);border-radius:18px;padding:10px 20px;box-shadow:var(--shadow)}table{border-collapse:collapse;width:100%;min-width:850px}th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;color:var(--muted)}td:first-child{font-weight:800}.route-empty{color:var(--line)}.cell-note{display:block;color:var(--muted);font-size:11px;margin-top:2px}.db-model{display:grid;grid-template-columns:1fr 72px 1.25fr;align-items:center;gap:12px}.db-table{background:var(--panel);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}.db-table h3{font-size:16px;margin:0;padding:13px 16px;background:var(--soft-blue)}.db-table ul{list-style:none;padding:10px 16px 14px;margin:0}.db-table li{padding:5px 0;border-bottom:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}.db-table li:last-child{border:0}.db-arrow{text-align:center;font-size:32px;color:var(--muted)}.note{color:var(--muted);font-size:13px;margin-top:14px}.conclusion{margin-top:48px;padding:22px 24px;border-left:6px solid var(--green);background:var(--soft-green);border-radius:0 16px 16px 0;font-size:18px;font-weight:650}
+  @media(max-width:900px){.summary{grid-template-columns:1fr}.summary-count{max-width:260px}.case-grid{grid-template-columns:1fr}.db-model{grid-template-columns:1fr}.db-arrow{transform:rotate(90deg)}.schema{padding:8px}.schema svg{min-width:760px}.schema{overflow-x:auto}}
+  @media(prefers-color-scheme:dark){:root{--bg:#10151d;--panel:#19212d;--ink:#f4f7fb;--muted:#b2becc;--line:#3b4757;--soft-blue:#182f49;--soft-green:#16382e;--soft-orange:#432e18;--soft-purple:#302343;--shadow:none}}
+</style>
+</head>
+<body>
+<main>
+  <section class="summary">
+    <div>
+      <span class="headline">Complementary evidence routes</span>
+      <h1>表現型連携で、実用的なhuman-mouse variant pairを見つける</h1>
+      <p class="lead">1:1 orthologを共通の足場にし、ontology、表現型名、疾患ID、semantic similarityを別々の証拠経路として保存します。単一の方法に揃えるのではなく、対象ペアと接続根拠を一緒に検索できるDBを目指します。</p>
+    </div>
+    <div class="summary-count"><strong>3/3</strong><span>case-study target pairs recovered by the union of routes</span></div>
+  </section>
+
+  <h2>同じgene pairでも、variant pairへの接続点は異なる</h2>
+  <div class="schema">
+    <svg viewBox="0 0 1120 410" role="img" aria-labelledby="schema-title schema-desc">
+      <title id="schema-title">Human-mouse variant matching through several phenotype evidence routes</title>
+      <desc id="schema-desc">Human and mouse orthologous genes are drawn as thick genome segments. A human variant and mouse allele are joined by four evidence routes and stored as a pair with route-specific evidence.</desc>
+      <text x="52" y="38" class="svg-title">HUMAN genomic region</text>
+      <line x1="52" y1="92" x2="1068" y2="92" class="genome"/>
+      <line x1="272" y1="92" x2="724" y2="92" class="gene"/>
+      <rect x="420" y="42" width="228" height="30" rx="8" class="label-box"/>
+      <text x="534" y="63" text-anchor="middle" class="svg-label">Gene A (human ortholog)</text>
+      <circle cx="474" cy="92" r="13" class="variant"/>
+      <line x1="384" y1="122" x2="458" y2="99" class="genome" style="stroke-width:2"/>
+      <text x="376" y="128" text-anchor="end" class="svg-label">human variant</text>
+
+      <path d="M462 101 C408 160 432 252 486 307" class="route route1"/>
+      <path d="M470 105 C454 165 478 252 494 305" class="route route2"/>
+      <path d="M478 105 C510 165 470 252 502 305" class="route route3"/>
+      <path d="M486 101 C561 160 435 252 510 307" class="route route4"/>
+      <rect x="654" y="145" width="390" height="128" rx="14" class="label-box"/>
+      <line x1="676" y1="173" x2="714" y2="173" class="route route1"/><text x="728" y="178" class="svg-label">HPO-MP ontology bridge</text>
+      <line x1="676" y1="202" x2="714" y2="202" class="route route2"/><text x="728" y="207" class="svg-label">exact phenotype label</text>
+      <line x1="676" y1="231" x2="714" y2="231" class="route route3"/><text x="728" y="236" class="svg-label">shared disease identifier</text>
+      <line x1="676" y1="260" x2="714" y2="260" class="route route4"/><text x="728" y="265" class="svg-label">semantic phenotype candidate</text>
+
+      <text x="52" y="390" class="svg-title">MOUSE genomic region</text>
+      <line x1="52" y1="318" x2="1068" y2="318" class="genome"/>
+      <line x1="272" y1="318" x2="724" y2="318" class="gene"/>
+      <circle cx="498" cy="318" r="13" class="allele"/>
+      <rect x="412" y="264" width="244" height="30" rx="8" class="label-box"/>
+      <text x="534" y="285" text-anchor="middle" class="svg-label">Gene A (mouse ortholog)</text>
+      <line x1="404" y1="348" x2="482" y2="323" class="genome" style="stroke-width:2"/>
+      <text x="396" y="354" text-anchor="end" class="svg-label">mouse allele</text>
+    </svg>
+  </div>
+
+  <h2>3つの例で異なる接続手法が必要になる理由</h2>
+  <section class="case-grid"><article class="case-card case-tlr4">
+    <header>
+      <div><span class="case-gene">TLR4</span><span class="case-status">target pair found</span></div>
+      <p>rs4986790 p.Asp299Gly <span aria-hidden="true">↔</span> Tlr4&lt;Lps-d&gt; p.Pro712His</p>
+    </header>
+    <div class="pair-track" role="img" aria-label="TLR4 human variant to mouse allele correspondence">
+      <div class="species-node"><span>Human</span><strong>rs4986790</strong></div>
+      <div class="route-line"><span>semantic phenotype class C</span></div>
+      <div class="species-node"><span>Mouse</span><strong>Tlr4&lt;Lps-d&gt;</strong></div>
+    </div>
+    <div class="route-badges"><span class="route-badge route-semantic_C">semantic phenotype class C</span></div>
+    <p class="evidence"><span>Representative evidence</span>ankylosing spondylitis, psoriasis, ulcerative colitis, Crohn disease, sclerosing cholangitis <span aria-hidden="true">↔</span> increased susceptibility to induced arthritis</p>
+    <p>The ortholog-constrained semantic search retrieves the specified human variant and mouse allele as a review candidate after all three structured routes miss the pair.</p>
+    <p class="limit"><strong>Limit:</strong> The class C evidence links inflammatory disease and induced-arthritis phenotypes. It does not demonstrate equivalent LPS-response mechanisms or variant equivalence.</p>
+  </article>
+<article class="case-card case-cftr">
+    <header>
+      <div><span class="case-gene">CFTR</span><span class="case-status">target pair found</span></div>
+      <p>rs113993960 p.Phe508del <span aria-hidden="true">↔</span> Cftr&lt;tm1Unc&gt; p.S489* targeted null</p>
+    </header>
+    <div class="pair-track" role="img" aria-label="CFTR human variant to mouse allele correspondence">
+      <div class="species-node"><span>Human</span><strong>rs113993960</strong></div>
+      <div class="route-line"><span>HPO-MP ontology bridge</span></div>
+      <div class="species-node"><span>Mouse</span><strong>Cftr&lt;tm1Unc&gt;</strong></div>
+    </div>
+    <div class="route-badges"><span class="route-badge route-tier1">HPO-MP ontology bridge</span><span class="route-badge route-tier3">shared OMIM disease model</span></div>
+    <p class="evidence"><span>Representative evidence</span>Failure to thrive <span aria-hidden="true">↔</span> postnatal growth retardation</p>
+    <p>The target pair is supported independently by an HPO-MP phenotype bridge and the same OMIM disease model, providing structured and traceable evidence.</p>
+    <p class="limit"><strong>Limit:</strong> The highest semantic match concerns different sperm phenotypes and is not used as the main cystic-fibrosis evidence. Row counts are evidence records, not independent experiments.</p>
+  </article>
+<article class="case-card case-alpl">
+    <header>
+      <div><span class="case-gene">ALPL</span><span class="case-status">target pair found</span></div>
+      <p>rs1558543066 p.Val7fs (NM_000478.6:c.18del) <span aria-hidden="true">↔</span> Alpl&lt;Hpp&gt; c.862+5G&gt;A splice-site hypomorph</p>
+    </header>
+    <div class="pair-track" role="img" aria-label="ALPL human variant to mouse allele correspondence">
+      <div class="species-node"><span>Human</span><strong>rs1558543066</strong></div>
+      <div class="route-line"><span>exact phenotype label</span></div>
+      <div class="species-node"><span>Mouse</span><strong>Alpl&lt;Hpp&gt;</strong></div>
+    </div>
+    <div class="route-badges"><span class="route-badge route-tier2">exact phenotype label</span><span class="route-badge route-tier3">shared OMIM disease model</span></div>
+    <p class="evidence"><span>Representative evidence</span>Hypophosphatasia <span aria-hidden="true">↔</span> hypophosphatasia</p>
+    <p>The target pair is recovered by the exact normalized phenotype label hypophosphatasia and independently by the same OMIM disease model.</p>
+    <p class="limit"><strong>Limit:</strong> A shared phenotype or disease model does not imply the same nucleotide change, protein residue, allelic direction, or experimental context.</p>
+  </article></section>
+
+  <h2>対象ペアをどの経路が回収したか</h2>
+  <div class="matrix-wrap">
+    <table>
+      <thead><tr><th>Case-study pair</th><th>HPO-MP</th><th>Exact phenotype label</th><th>Shared OMIM disease model</th><th>Semantic phenotype evidence</th></tr></thead>
+      <tbody>
+        <tr><td>TLR4 rs4986790 ↔ Tlr4&lt;Lps-d&gt;</td><td><span class="route-empty">-</span></td><td><span class="route-empty">-</span></td><td><span class="route-empty">-</span></td><td><strong>1</strong><span class="cell-note">class C, cosine 0.548</span></td></tr>
+        <tr><td>CFTR rs113993960 ↔ Cftr&lt;tm1Unc&gt;</td><td><strong>6</strong><span class="cell-note">failure to thrive ↔ postnatal growth retardation</span></td><td><span class="route-empty">-</span></td><td><strong>2</strong><span class="cell-note">OMIM:219700</span></td><td>A 1 / B 1 / C 61<span class="cell-note">semantic A is not used as the main CF evidence</span></td></tr>
+        <tr><td>ALPL rs1558543066 ↔ Alpl&lt;Hpp&gt;</td><td><span class="route-empty">-</span></td><td><strong>20</strong><span class="cell-note">hypophosphatasia ↔ hypophosphatasia</span></td><td><strong>2</strong><span class="cell-note">OMIM:146300</span></td><td>A 22 / B 2 / C 24<span class="cell-note">exact semantic label is concordant</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Counts are evidence rows produced by source records, genotypes, backgrounds, and phenotype annotations. They are not counts of independent experiments. Class D is archived and excluded from ordinary use.</p>
+
+  <h2>DBではpairとevidence routeを分けて保存する</h2>
+  <div class="db-model">
+    <section class="db-table"><h3>variant_pair</h3><ul><li>pair_id</li><li>human_gene + rs_id</li><li>mouse_gene + mgi_allele_id</li><li>ortholog_pair_id</li></ul></section>
+    <div class="db-arrow" aria-hidden="true">1 → n</div>
+    <section class="db-table"><h3>connection_evidence</h3><ul><li>pair_id + route_id</li><li>human phenotype/source</li><li>mouse phenotype/source</li><li>ontology predicate / disease ID / cosine class</li><li>score, review flag, provenance</li></ul></section>
+  </div>
+  <p class="note">同じpairに複数のevidence rowを持たせることで、経路を統合して検索しながら、根拠の違いと限界を失いません。</p>
+
+  <p class="conclusion">実用上の意義は、単一の正解経路を決めることではなく、構造化された強い接続と、取りこぼしを拾う緩い接続を同じpair単位で追跡できることです。</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+.venv-semantic/
+**/__pycache__/
+*.pyc
+*.part
+
+# Downloaded source data: publish the manifest, not redistributed source files.
+data/raw/**
+!data/raw/manifest.json
+
+# Reproducible generated intermediates and model weights.
+data/processed/**
+data/models/**/model.safetensors
+
+# Collaborator source data stay outside Git; only the empty exchange header is tracked.
+data/external/**
+!data/external/tier0_exact_variant.template.tsv
+
+# Large or source-derived results are regenerated locally or released separately.
+*.tsv.gz
+*.sqlite
+*.npy

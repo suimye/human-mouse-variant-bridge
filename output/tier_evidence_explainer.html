@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three evidence tiers for human-mouse variant correspondence</title>
+<style>
+  :root{color-scheme:light dark;--bg:#f7f8fb;--panel:#fff;--ink:#152235;--muted:#5a697b;--line:#c8d1dc;--blue:#2563a6;--green:#188260;--orange:#b86d19;--soft-blue:#eaf2fb;--soft-green:#e7f5ef;--soft-orange:#fff2df;--shadow:0 12px 34px rgba(20,34,53,.08)}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.65}main{max-width:1160px;margin:0 auto;padding:48px 24px 72px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(30px,5vw,48px);line-height:1.18;letter-spacing:-.02em;margin-bottom:16px}h2{font-size:clamp(24px,3vw,31px);margin:54px 0 20px}.lead{font-size:18px;max-width:900px;color:var(--muted)}.diagram{background:var(--panel);border-radius:22px;padding:18px;box-shadow:var(--shadow);overflow-x:auto}.diagram img{display:block;width:100%;height:auto;min-width:820px}.diagram svg{display:none}.genome{stroke:var(--line);stroke-width:4;stroke-linecap:round}.gene{stroke:var(--ink);stroke-width:20;stroke-linecap:round}.point-human{fill:var(--panel);stroke:var(--blue);stroke-width:7}.point-mouse{fill:var(--panel);stroke:var(--orange);stroke-width:7}.leader{stroke:var(--line);stroke-width:2}.route{fill:none;stroke-width:5;stroke-linecap:round}.tier1{stroke:var(--blue)}.tier2{stroke:var(--green)}.tier3{stroke:var(--orange)}.svg-title{font-size:18px;font-weight:700;fill:var(--ink)}.svg-label{font-size:15px;font-weight:650;fill:var(--ink)}.svg-small{font-size:13px;fill:var(--muted)}.label-bg{fill:var(--panel);opacity:.97}.tier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.tier-card{background:var(--panel);border-radius:18px;padding:22px;box-shadow:var(--shadow);border-top:6px solid var(--blue)}.tier-card:nth-child(2){border-top-color:var(--green)}.tier-card:nth-child(3){border-top-color:var(--orange)}.tier-card h3{font-size:24px;margin-bottom:4px}.tier-card .count{font-size:30px;font-weight:800;margin:10px 0}.tier-card .basis{font-weight:700}.tier-card ul{padding-left:20px;margin-bottom:0}.flow{display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;gap:12px}.db-table{background:var(--panel);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}.db-table h3{font-size:16px;margin:0;padding:13px 16px;background:var(--soft-blue)}.db-table:last-child h3{background:var(--soft-green)}.db-table ul{list-style:none;padding:10px 16px 14px;margin:0}.db-table li{padding:5px 0;border-bottom:1px solid var(--line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}.db-table li:last-child{border:0}.arrow{text-align:center;font-size:30px;color:var(--muted)}.note{color:var(--muted);font-size:13px}.conclusion{margin-top:44px;padding:22px 24px;border-left:6px solid var(--green);background:var(--soft-green);border-radius:0 16px 16px 0;font-size:18px;font-weight:650}
+  @media(max-width:840px){.tier-grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+  @media(prefers-color-scheme:dark){:root{--bg:#10151d;--panel:#19212d;--ink:#f4f7fb;--muted:#b2becc;--line:#3b4757;--soft-blue:#182f49;--soft-green:#16382e;--soft-orange:#432e18;--shadow:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>human-mouse variant correspondenceを作る3つのTier</h1>
+  <p class="lead">3つのTierは信頼度の順位ではなく、異なる証拠の結び方です。共通するのは、human Gene Aとmouse Gene Aの1:1 orthologを先に確定し、その遺伝子内のvariant、allele、phenotype evidenceを接続することです。</p>
+
+  <h2>ゲノム上のmatching pointから、根拠別のリストを作る</h2>
+  <div class="diagram">
+    <img src="tier_matching_strategy_ja.svg" alt="MGIの1対1ortholog gene pair内で、Tier 1はHPOとMP、Tier 2は表現型名、Tier 3はOMIM疾患IDを使ってhuman variantとmouse alleleを結ぶ図。">
+    <svg viewBox="0 0 1120 540" role="img" aria-labelledby="tier-title tier-desc">
+      <title id="tier-title">Tier 1, Tier 2 and Tier 3 matching within an orthologous gene pair</title>
+      <desc id="tier-desc">Thick lines show orthologous Gene A regions in human and mouse genomes. A human variant and mouse allele are connected through three evidence routes and saved in separate tier tables.</desc>
+      <text x="54" y="38" class="svg-title">HUMAN genomic region</text>
+      <line x1="54" y1="92" x2="1066" y2="92" class="genome"/>
+      <line x1="246" y1="92" x2="758" y2="92" class="gene"/>
+      <rect x="384" y="42" width="244" height="30" rx="8" class="label-bg"/>
+      <text x="506" y="63" text-anchor="middle" class="svg-label">Gene A (human ortholog)</text>
+      <circle cx="468" cy="92" r="13" class="point-human"/>
+      <line x1="372" y1="124" x2="452" y2="99" class="leader"/>
+      <text x="364" y="130" text-anchor="end" class="svg-label">human variant</text>
+
+      <path d="M458 103 C330 178 342 290 470 363" class="route tier1"/>
+      <path d="M468 105 C468 188 480 278 480 361" class="route tier2"/>
+      <path d="M478 103 C614 178 626 290 490 363" class="route tier3"/>
+
+      <rect x="735" y="154" width="330" height="166" rx="14" class="label-bg"/>
+      <line x1="758" y1="185" x2="800" y2="185" class="route tier1"/><text x="814" y="190" class="svg-label">Tier 1: HPO ↔ MP</text>
+      <text x="814" y="211" class="svg-small">ontology predicate + mapping confidence</text>
+      <line x1="758" y1="238" x2="800" y2="238" class="route tier2"/><text x="814" y="243" class="svg-label">Tier 2: ortholog + phenotype</text>
+      <text x="814" y="264" class="svg-small">B exact label / C lexical candidate</text>
+      <line x1="758" y1="291" x2="800" y2="291" class="route tier3"/><text x="814" y="296" class="svg-label">Tier 3: shared OMIM</text>
+      <text x="814" y="317" class="svg-small">ClinVar condition + curated mouse model</text>
+
+      <text x="54" y="444" class="svg-title">MOUSE genomic region</text>
+      <line x1="54" y1="374" x2="1066" y2="374" class="genome"/>
+      <line x1="246" y1="374" x2="758" y2="374" class="gene"/>
+      <rect x="384" y="322" width="244" height="30" rx="8" class="label-bg"/>
+      <text x="506" y="343" text-anchor="middle" class="svg-label">Gene A (mouse ortholog)</text>
+      <circle cx="480" cy="374" r="13" class="point-mouse"/>
+      <line x1="384" y1="410" x2="464" y2="382" class="leader"/>
+      <text x="376" y="416" text-anchor="end" class="svg-label">mouse allele / genotype</text>
+
+      <line x1="300" y1="472" x2="820" y2="472" class="leader"/>
+      <text x="560" y="500" text-anchor="middle" class="svg-label">matching lineごとにvariant pair + evidence sourceを1行として保存</text>
+      <text x="560" y="524" text-anchor="middle" class="svg-small">同じpairが複数Tierに存在してよい。根拠を統合して潰さない。</text>
+    </svg>
+  </div>
+
+  <h2>各Tierが保存するもの</h2>
+  <section class="tier-grid">
+    <article class="tier-card"><h3>Tier 1</h3><p class="count">1,089,740 rows</p><p class="basis">Ontology phenotype bridge</p><ul><li>ClinVar condition → HPO</li><li>HPO-MP mapping</li><li>MGI allele/genotype</li><li>predicate、confidence、sourceを保持</li></ul></article>
+    <article class="tier-card"><h3>Tier 2</h3><p class="count">76,619 rows</p><p class="basis">Ortholog-first phenotype evidence</p><ul><li>ClinVar/GWAS phenotype</li><li>MGI MP/allele name</li><li>B: 小文字化・記号除去・定義済み別名置換後に全文一致</li><li>C: 語彙一致の仮説候補、要レビュー</li></ul></article>
+    <article class="tier-card"><h3>Tier 3</h3><p class="count">331,245 rows</p><p class="basis">Curated disease model</p><ul><li>ClinVar condition identifier</li><li>MGI curated disease model</li><li>shared OMIM ID</li><li>variant equivalenceは主張しない</li></ul></article>
+  </section>
+
+  <h2>DBではpairと接続根拠を分離する</h2>
+  <div class="flow">
+    <section class="db-table"><h3>variant_pair</h3><ul><li>human gene + rsID</li><li>mouse gene + MGI allele/genotype</li><li>ortholog pair ID</li></ul></section>
+    <div class="arrow" aria-hidden="true">1 → n</div>
+    <section class="db-table"><h3>tier_evidence</h3><ul><li>pair ID + tier ID</li><li>human/mouse phenotype</li><li>ontology predicate / shared OMIM / match method</li><li>source record + review status</li></ul></section>
+  </div>
+  <p class="note">Tier番号をconfidence scoreとして比較しません。各Tierの元データ、適用範囲、review条件を保ったまま検索します。Semantic class A/B/C/DはTier 2のB/Cとは別分類です。</p>
+  <p class="conclusion">Tier説明図はデータ構造と接続根拠を示します。TLR4・CFTR・ALPLのケーススタディは、別HTMLでこの設計が実際の対象ペア回収にどう効くかを示します。</p>
+</main>
+</body>
+</html>
