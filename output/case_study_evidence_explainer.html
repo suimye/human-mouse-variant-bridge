@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Human-mouse variant pair discovery by different matching methods</title>
+<title>Human-mouse variant pair discovery by complementary evidence routes</title>
 <style>
   :root{color-scheme:light dark;--bg:#f7f8fb;--panel:#fff;--ink:#152235;--muted:#59687a;--line:#c8d1dc;--blue:#2563a6;--green:#188260;--orange:#b86d19;--purple:#7b4bb7;--soft-blue:#eaf2fb;--soft-green:#e7f5ef;--soft-orange:#fff2df;--soft-purple:#f3ecfb;--shadow:0 12px 34px rgba(20,34,53,.08)}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.65} main{max-width:1180px;margin:0 auto;padding:48px 24px 72px} h1,h2,h3,p{margin-top:0} h1{font-size:clamp(30px,5vw,50px);line-height:1.18;letter-spacing:-.02em;margin-bottom:16px} h2{font-size:clamp(24px,3vw,32px);margin:56px 0 20px} .lead{font-size:18px;max-width:900px;color:var(--muted)} .headline{display:inline-block;padding:5px 11px;border-radius:999px;background:var(--soft-green);color:var(--green);font-weight:700;margin-bottom:18px}.summary{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:28px;align-items:start}.summary-count{background:var(--panel);border-radius:18px;padding:20px;box-shadow:var(--shadow);text-align:center}.summary-count strong{display:block;font-size:42px;line-height:1.15}.summary-count span{color:var(--muted)}
@@ -60,7 +60,7 @@
     </svg>
   </div>
 
-  <h2>3つの例で異なる接続手法が必要になる理由</h2>
+  <h2>3つの例が示す接続方法の相補性</h2>
   <section class="case-grid"><article class="case-card case-tlr4">
     <header>
       <div><span class="case-gene">TLR4</span><span class="case-status">target pair found</span></div>
@@ -83,10 +83,10 @@
     </header>
     <div class="pair-track" role="img" aria-label="CFTR human variant to mouse allele correspondence">
       <div class="species-node"><span>Human</span><strong>rs113993960</strong></div>
-      <div class="route-line"><span>HPO-MP ontology bridge</span></div>
+      <div class="route-line"><span>Category 1-1: MHMI HPO-MP bridge</span></div>
       <div class="species-node"><span>Mouse</span><strong>Cftr&lt;tm1Unc&gt;</strong></div>
     </div>
-    <div class="route-badges"><span class="route-badge route-tier1">HPO-MP ontology bridge</span><span class="route-badge route-tier3">shared OMIM disease model</span></div>
+    <div class="route-badges"><span class="route-badge route-category1-1">Category 1-1: MHMI HPO-MP bridge</span><span class="route-badge route-category2-2">Category 2-2: shared OMIM disease model</span></div>
     <p class="evidence"><span>Representative evidence</span>Failure to thrive <span aria-hidden="true">↔</span> postnatal growth retardation</p>
     <p>The target pair is supported independently by an HPO-MP phenotype bridge and the same OMIM disease model, providing structured and traceable evidence.</p>
     <p class="limit"><strong>Limit:</strong> The highest semantic match concerns different sperm phenotypes and is not used as the main cystic-fibrosis evidence. Row counts are evidence records, not independent experiments.</p>
@@ -98,10 +98,10 @@
     </header>
     <div class="pair-track" role="img" aria-label="ALPL human variant to mouse allele correspondence">
       <div class="species-node"><span>Human</span><strong>rs1558543066</strong></div>
-      <div class="route-line"><span>exact phenotype label</span></div>
+      <div class="route-line"><span>Category 2-1: phenotype label</span></div>
       <div class="species-node"><span>Mouse</span><strong>Alpl&lt;Hpp&gt;</strong></div>
     </div>
-    <div class="route-badges"><span class="route-badge route-tier2">exact phenotype label</span><span class="route-badge route-tier3">shared OMIM disease model</span></div>
+    <div class="route-badges"><span class="route-badge route-category2-1">Category 2-1: phenotype label</span><span class="route-badge route-category2-2">Category 2-2: shared OMIM disease model</span></div>
     <p class="evidence"><span>Representative evidence</span>Hypophosphatasia <span aria-hidden="true">↔</span> hypophosphatasia</p>
     <p>The target pair is recovered by the exact normalized phenotype label hypophosphatasia and independently by the same OMIM disease model.</p>
     <p class="limit"><strong>Limit:</strong> A shared phenotype or disease model does not imply the same nucleotide change, protein residue, allelic direction, or experimental context.</p>

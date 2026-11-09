@@ -13,7 +13,7 @@ test('one workflow config contains unique sources and all mapping sections', () 
   assert.equal(new Set(config.data_sources.map(source => source.id)).size, config.data_sources.length);
   assert.ok(config.strict_mapping.accepted_predicates.length);
   assert.equal(config.semantic_mapping.class_c_min, 0.5);
-  assert.equal(config.tier_definitions.length, 3);
+  assert.equal(config.category_definitions.length, 4);
 });
 
 test('configured source paths are used instead of hard-coded raw paths', () => {
@@ -28,8 +28,8 @@ test('workflow lists every construction and validation stage in order', () => {
   const config = loadWorkflowConfig(projectRoot);
   const ids = buildSteps(config).map(step => step.id);
   assert.deepEqual(ids, [
-    'download', 'prepare_tier1', 'map_tier1', 'prepare_tier2', 'map_tier2',
-    'map_tier3', 'validate_tiers', 'test_node', 'setup_semantic', 'semantic_model', 'test_semantic',
+    'download', 'prepare_categories', 'map_category1', 'prepare_category2', 'map_category2_1',
+    'map_category2_2', 'validate_categories', 'test_node', 'setup_semantic', 'semantic_model', 'test_semantic',
     'map_semantic', 'verify_semantic', 'report_cases', 'validate_tier0'
   ]);
   assert.ok(!buildSteps(config, { skipDownload: true, skipSemantic: true })

@@ -1,0 +1,13 @@
+control_id	category_id	expected	found_rows	within_category_support	status	interpretation
+TLR4_LPS_001	category1-1	not_required	0		PASS	No recovery expected for this basis.
+TLR4_LPS_001	category1-2	not_required	0		PASS	No recovery expected for this basis.
+TLR4_LPS_001	category2-1	not_required	0		PASS	No recovery expected for this basis.
+TLR4_LPS_001	category2-2	not_required	0		PASS	No recovery expected for this basis.
+CFTR_F508DEL_001	category1-1	found	6		PASS	Expected positive control recovered.
+CFTR_F508DEL_001	category1-2	not_required	0		PASS	No recovery expected for this basis.
+CFTR_F508DEL_001	category2-1	not_required	0		PASS	No recovery expected for this basis.
+CFTR_F508DEL_001	category2-2	found	2		PASS	Expected positive control recovered.
+ALPL_HPP_001	category1-1	not_required	0		PASS	No recovery expected for this basis.
+ALPL_HPP_001	category1-2	not_required	0		PASS	No recovery expected for this basis.
+ALPL_HPP_001	category2-1	found	20		PASS	Expected positive control recovered.
+ALPL_HPP_001	category2-2	found	2		PASS	Expected positive control recovered.

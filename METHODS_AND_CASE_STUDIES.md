@@ -68,7 +68,7 @@ Step 2–4はStep 1で取得したファイルから並行して三つの表を�
 - **Step 2:** Human–mouse比較を、MGIが1:1 orthologとして示す遺伝子ペア内に限定します。遺伝子を評価する新しい生物学的指標は作らず、MGIの情報を比較範囲として利用します。[MGI HOM_ProteinCoding.rpt](https://www.informatics.jax.org/downloads/reports/index.html)は1:1 human–mouse protein-coding orthologを直接提供します。別の選択肢である[Ensembl Compara](https://www.ensembl.org/info/docs/compara/homology_method.html)はgene treeから1:1、1対多、多対多を推定しますが、本解析では組合せを一意にするためMGI 1:1だけを使います。
 - **Step 3:** Human側を1行 = 1 variant × 1 phenotype evidenceにします。ClinVar condition–HPOは同じ疾患IDを要求し、GWASは`P <= 5×10^-8`かつdirect `SNP_GENE_IDS`だけを使います。
 - **Step 4:** Mouse側を1行 = 1 allele/genotype × 1 phenotype evidenceにします。一遺伝子・非conditional genotypeだけを使い、allele ID、MP ID、background、PubMed IDを残します。
-- **Step 5:** Step 2の遺伝子表、Step 3のhuman表、Step 4のmouse表を結合し、Tier 1、Tier 2、Tier 3、Semantic similarityを別々に作ります。
+- **Step 5:** Step 2の遺伝子表、Step 3のhuman表、Step 4のmouse表を結合し、Category 1-1、Category 2-1、Category 2-2、Semantic similarityを別々に作ります。
 - **Step 6:** 件数、class境界、DB整合性、TLR4/CFTR/ALPL、negative controlsを検査し、TSV、SQLite、検証結果、HTML/SVGを出力します。
 
 ### Humanデータセット上の注意点
@@ -80,7 +80,7 @@ Step 2–4はStep 1で取得したファイルから並行して三つの表を�
 
 ### Mouseデータセット上の注意点
 
-複数遺伝子を含むgenotypeとconditional genotypeを除外します。Tier 3はMGIがcurateしたdisease modelだけを使い、似た疾患名からOMIM IDを推定しません。
+複数遺伝子を含むgenotypeとconditional genotypeを除外します。Category 2-2はMGIがcurateしたdisease modelだけを使い、似た疾患名からOMIM IDを推定しません。
 
 ### データ生成スクリプト
 
@@ -89,9 +89,9 @@ Step 2–4はStep 1で取得したファイルから並行して三つの表を�
 | `src/download.js` | 配布ファイル取得と取得記録 | `data/raw/...`、`manifest.json` |
 | `src/prepare.js` | ortholog表、ClinVar–HPO表、MGI allele–MP表を作成 | `ortholog_mapping.tsv`、`human_variant_hpo.tsv.gz`、`mouse_allele_mp.tsv` |
 | `src/prepare-relaxed.js` | Human/mouse表現型表とID追加済みortholog表を作成 | `human_variant_phenotypes.tsv.gz`、`mouse_variant_phenotypes.tsv.gz` |
-| `src/map.js` | Tier 1作成 | `tier1_monarch_phenotype.tsv.gz` |
-| `src/relaxed-map.js` | Tier 2作成 | `tier2_ortholog_phenotype.tsv.gz` |
-| `src/tier3-disease-map.js` | Tier 3作成 | `tier3_disease_model.tsv.gz` |
+| `src/map.js` | Category 1-1作成 | `category1-1_monarch_phenotype.tsv.gz` |
+| `src/relaxed-map.js` | Category 2-1作成 | `category2-1_ortholog_phenotype.tsv.gz` |
+| `src/category2-2-disease-map.js` | Category 2-2作成 | `category2-2_disease_model.tsv.gz` |
 | `src/semantic-map.py` | 表現型文のSapBERT比較 | class A–D TSV、SQLite |
 | `src/validate.js` | Tier件数・症例・negative control検査 | `tier_validation_results.tsv` |
 | `src/verify-semantic.py` | class境界・DB・view検査 | `semantic/verification.json` |
@@ -99,32 +99,32 @@ Step 2–4はStep 1で取得したファイルから並行して三つの表を�
 
 ## 5. Human-Mouse Variantの接続手法別の分類
 
-Tier番号は検索戦略の名称であり、普遍的な信頼度順位ではありません。
+Category番号は検索戦略の名称であり、普遍的な信頼度順位ではありません。
 
 | 分類 | Human側 | Mouse側 | 何が一致したとき結ぶか | 行数 |
 | --- | --- | --- | --- | ---: |
-| Tier 1 | ClinVar conditionから得たHPO | MGI allele/genotypeに付くMP | Monarch UPhenoまたはMHMIがHPO–MP対応を示す | 1,089,740 |
-| Tier 2 | ClinVar condition名またはGWAS trait名 | MGI MP labelまたはallele名 | B: 変換後の全文一致、C: 一般語を除いた語彙一致 | 76,619 |
-| Tier 3 | ClinVar conditionのOMIM ID | MGI curated disease modelのOMIM ID | OMIM IDが同じ | 331,245 |
+| Category 1-1 | ClinVar conditionから得たHPO | MGI allele/genotypeに付くMP | Monarch UPhenoまたはMHMIがHPO–MP対応を示す | 1,089,740 |
+| Category 2-1 | ClinVar condition名またはGWAS trait名 | MGI MP labelまたはallele名 | B: 変換後の全文一致、C: 一般語を除いた語彙一致 | 76,619 |
+| Category 2-2 | ClinVar conditionのOMIM ID | MGI curated disease modelのOMIM ID | OMIM IDが同じ | 331,245 |
 | Semantic similarity | ClinVar/GWASの表現型文 | MGIの表現型文 | SapBERT cosine class A–D | A 1,702; B 4,412; C 66,367; D 2,836,628 |
 
-Tier 1ではSSSOMのpredicate、mapping confidence、justification、mapping date、sourceを保持します。採用predicateは`skos:exactMatch`、`closeMatch`、`broadMatch`、`narrowMatch`、confidenceは0.8以上です。
+Category 1-1ではSSSOMのpredicate、mapping confidence、justification、mapping date、sourceを保持します。採用predicateは`skos:exactMatch`、`closeMatch`、`broadMatch`、`narrowMatch`、confidenceは0.8以上です。
 
-Tier 2のsupport Bは、表現型名を小文字化し、記号を空白へ置換し、`LPS`/`endotoxin`などコードで定義した少数の別名を置換した後に、文字列全体が一致する場合です。support Cは、一般語を除いた後に最低2 tokenを共有し、Jaccard 0.6以上となる場合です。旧support Aは手動文献表現型に依存していたため廃止しました。
+Category 2-1のsupport Bは、表現型名を小文字化し、記号を空白へ置換し、`LPS`/`endotoxin`などコードで定義した少数の別名を置換した後に、文字列全体が一致する場合です。support Cは、一般語を除いた後に最低2 tokenを共有し、Jaccard 0.6以上となる場合です。旧support Aは手動文献表現型に依存していたため廃止しました。
 
-Tier 3はOMIM IDの完全一致だけを採用します。
+Category 2-2はOMIM IDの完全一致だけを採用します。
 
 Semantic classはcosine similarityにより、A=`0.8–1.0`、B=`0.7–<0.8`、C=`0.5–<0.7`、D=`<0.5`です。A/Bは閾値以上の全text pair、C/Dは各human phenotype textについて同じortholog gene内の上位20件だけを保存します。Dは`eligible_for_default_use=0`であり、通常検索VIEWから除外します。増加/低下の逆方向、否定、truncationはreview flagとして別に保存し、cosine class自体は書き換えません。
 
 ## 6. DB構造とprovenance
 
-現行成果物は、Tier 1/2/3の独立したgzip TSVと、Semantic用の表を関係別に分けて保存したSQLite `output/semantic/correspondence.sqlite`から構成されます。
+現行成果物は、Category 1-1/2/3の独立したgzip TSVと、Semantic用の表を関係別に分けて保存したSQLite `output/semantic/correspondence.sqlite`から構成されます。
 
 Semantic SQLiteの主な実体表は`ortholog`、`phenotype_text`、`human_annotation`、`mouse_annotation`、`phenotype_match`、`metadata`です。通常利用にはA/B/Cだけを返す`active_phenotype_pairs`と`active_variant_correspondence`を使い、監査時だけDを含む`phenotype_pairs`と`variant_correspondence`を使います。
 
 統合DBでは、`variant_pair`をhuman variant–mouse allele/genotype–ortholog pairの一意表、`connection_evidence`を接続手法ごとの多行表とする設計を推奨します。Tier TSVはontology predicateやshared OMIM、semanticはcosine classをそれぞれ一つのevidence rowとしてロードし、元表現型とsource recordを潰さず保持します。schemaとロード上の注意は[`database/schema.sql`](database/schema.sql)と[`database/README.md`](database/README.md)にあります。
 
-例えばCFTRでは、`variant_pair`に「CFTR / rs113993960 ↔ Cftr / MGI:1856709」を1行だけ保存します。`connection_evidence`には、(1) HP:0001508とMP:0001732を`skos:narrowMatch`で結んだTier 1行、(2) human/mouseがOMIM:219700を共有するTier 3行を別々に保存します。
+例えばCFTRでは、`variant_pair`に「CFTR / rs113993960 ↔ Cftr / MGI:1856709」を1行だけ保存します。`connection_evidence`には、(1) HP:0001508とMP:0001732を`skos:narrowMatch`で結んだCategory 1-1行、(2) human/mouseがOMIM:219700を共有するCategory 2-2行を別々に保存します。
 
 ## 7. Biological case studies
 
@@ -138,7 +138,7 @@ Semantic SQLiteの主な実体表は`ortholog`、`phenotype_text`、`human_annot
 
 **構造的な意味:** human D299Gは細胞外側、mouse P712Hは細胞内TIR側で、同一残基でも同一domainでもありません。それでも同じTLR4 signaling axisの異なる位置を障害し、LPS responseという機能レベルで対応します。この例は「配列上の同一変異」ではなく「ortholog gene内の機能的対応」を検索したい動機を最も明確に示します。
 
-**このDBでの回収:** Tier 1/2/3は0行です。手動のhuman LPS phenotypeを注入せず、ダウンロード済みGWASの慢性炎症性疾患複合ラベルとMGIの`increased susceptibility to induced arthritis`がsemantic class C (cosine 0.548)で1行だけ接続します。これはLPS機序の再現証拠ではなく、review対象の緩い候補です。
+**このDBでの回収:** Category 1-1/2/3は0行です。手動のhuman LPS phenotypeを注入せず、ダウンロード済みGWASの慢性炎症性疾患複合ラベルとMGIの`increased susceptibility to induced arthritis`がsemantic class C (cosine 0.548)で1行だけ接続します。これはLPS機序の再現証拠ではなく、review対象の緩い候補です。
 
 主な根拠: [ClinVar 6660](https://www.ncbi.nlm.nih.gov/clinvar/variation/6660/), [Arbour et al., 2000, PMID 10835634](https://pubmed.ncbi.nlm.nih.gov/10835634/), [Figueroa et al., 2012, PMID 22474023](https://pubmed.ncbi.nlm.nih.gov/22474023/), [Netea et al., 2005, PMID 15927851](https://pubmed.ncbi.nlm.nih.gov/15927851/), [Poltorak et al., 1998, PMID 9851930](https://pubmed.ncbi.nlm.nih.gov/9851930/), [Qureshi et al., 1999, PMID 9989976](https://pubmed.ncbi.nlm.nih.gov/9989976/), [MGI:1857718](https://www.informatics.jax.org/allele/MGI:1857718). 元の説明資料は[`../TogoVar_MoGplus.pdf`](../TogoVar_MoGplus.pdf)です。
 
@@ -150,7 +150,7 @@ Semantic SQLiteの主な実体表は`ortholog`、`phenotype_text`、`human_annot
 
 **構造的な意味:** humanはNBD1の1残基欠失、mouseはより上流のpremature stopです。variant typeも分子構造上の位置も異なりますが、どちらもCFTR function低下へ収束します。したがってvariant identityではなく、表現型とcurated disease modelが主な接続根拠です。
 
-**このDBでの回収:** Tier 1で6 evidence行、Tier 3でOMIM:219700を共有する2行を取得しました。代表例はhuman `Failure to thrive` (HP:0001508) とmouse `postnatal growth retardation` (MP:0001732) の`skos:narrowMatch`です。semanticの最高候補は精子表現型間の一致でcystic fibrosisの主根拠ではないため、case studyの主経路には採用しません。
+**このDBでの回収:** Category 1-1で6 evidence行、Category 2-2でOMIM:219700を共有する2行を取得しました。代表例はhuman `Failure to thrive` (HP:0001508) とmouse `postnatal growth retardation` (MP:0001732) の`skos:narrowMatch`です。semanticの最高候補は精子表現型間の一致でcystic fibrosisの主根拠ではないため、case studyの主経路には採用しません。
 
 主な根拠: [ClinVar 7105](https://www.ncbi.nlm.nih.gov/clinvar/variation/7105/), [Rabeh et al., 2012, PMID 22265408](https://pubmed.ncbi.nlm.nih.gov/22265408/), [Snouwaert et al., 1992, PMID 1380723](https://pubmed.ncbi.nlm.nih.gov/1380723/), [MGI:1856709](https://www.informatics.jax.org/allele/MGI:1856709).
 
@@ -162,7 +162,7 @@ Semantic SQLiteの主な実体表は`ortholog`、`phenotype_text`、`human_annot
 
 **構造的な意味:** humanはN末端frameshift、mouseはintron 8 splice-site hypomorphで、変異位置・variant class・残存活性が異なります。それでもTNSALP activity低下とhypophosphatasiaへ収束します。
 
-**このDBでの回収:** HPO–MP Tier 1では指定alleleを取得しませんが、Tier 2では小文字化・記号除去後の`hypophosphatasia`全文一致で20行、Tier 3ではOMIM:146300共有で2行を取得しました。Semanticでも同語一致を含む候補がありますが、主根拠は全文一致とcurated disease modelです。
+**このDBでの回収:** HPO–MP Category 1-1では指定alleleを取得しませんが、Category 2-1では小文字化・記号除去後の`hypophosphatasia`全文一致で20行、Category 2-2ではOMIM:146300共有で2行を取得しました。Semanticでも同語一致を含む候補がありますが、主根拠は全文一致とcurated disease modelです。
 
 主な根拠: [ClinVar 518424](https://www.ncbi.nlm.nih.gov/clinvar/variation/518424/), [Hough et al., 2007, PMID 17539739](https://pubmed.ncbi.nlm.nih.gov/17539739/), [MGI:3051587](https://www.informatics.jax.org/allele/MGI:3051587), [MGI genotype MGI:3722925](https://www.informatics.jax.org/allele/genoview/MGI:3722925).
 
@@ -171,8 +171,8 @@ Semantic SQLiteの主な実体表は`ortholog`、`phenotype_text`、`human_annot
 | Case | Human variant | Mouse allele | 主要な接続線 | なぜ別経路が必要か |
 | --- | --- | --- | --- | --- |
 | TLR4 | extracellular p.Asp299Gly | TIR-domain p.Pro712His | ortholog + semantic C | 構造化HPO–MP/OMIMでは落ち、変異位置も異なる。探索候補としてだけ回収 |
-| CFTR | NBD1 p.Phe508del | p.S489* null | Tier 1 + Tier 3 | variant classは異なるが、ontology phenotypeとCF disease modelが一致 |
-| ALPL | p.Val7fs | c.862+5G>A splice hypomorph | Tier 2 + Tier 3 | HPO–MPでは指定alleleを落とすが、phenotype名とHPP disease modelが一致 |
+| CFTR | NBD1 p.Phe508del | p.S489* null | Category 1-1 + Category 2-2 | variant classは異なるが、ontology phenotypeとCF disease modelが一致 |
+| ALPL | p.Val7fs | c.862+5G>A splice hypomorph | Category 2-1 + Category 2-2 | HPO–MPでは指定alleleを落とすが、phenotype名とHPP disease modelが一致 |
 
 この3例から、単一のcross-species mappingだけでは実用的なvariant pairを取りこぼすこと、そして「何が一致したか」をroute別に保存するDBが必要であることが分かります。ただし3例は選択済みのpositive controlsであり、全体のprecision、recall、臨床的妥当性を推定するものではありません。
 

@@ -114,6 +114,12 @@
     ],
     "require_single_gene_mouse_genotype": true
   },
+  "monarch_mapping": {
+    "accepted_predicates": ["semapv:crossSpeciesExactMatch"],
+    "minimum_mapping_confidence": 0,
+    "mapping_sources": ["monarch_upheno"],
+    "description": "Monarch UPheno cross-species mappings have no numeric confidence field in the source snapshot and are therefore retained separately from the MHMI high-confidence category."
+  },
   "ortholog_first_mapping": {
     "maximum_gwas_p_value": 5e-8,
     "minimum_informative_token_overlap": 2,
@@ -148,26 +154,37 @@
     "excluded_placeholder_labels": ["not provided", "not specified", "not available", "unknown", "none"],
     "interpretation": "Exploratory cosine bands, not calibrated biological confidence. A/B include all above-threshold ortholog pairs; C/D retain the previous top-k low-similarity retrieval scope. C is [0.5,0.7); D is below 0.5, archive-only and excluded from default-use views."
   },
-  "tier_definitions": [
+  "category_definitions": [
     {
-      "tier_id": "tier1",
-      "name": "Monarch phenotype bridge",
-      "connection_basis": "ClinVar condition to HPO to Monarch UPheno or MHMI HPO-MP to MGI allele, constrained by 1:1 orthology",
-      "output": "output/tier1_monarch_phenotype.tsv.gz",
-      "interpretation": "Ontology-based cross-species phenotype correspondence"
+      "category_id": "category1",
+      "subcategory_id": "category1-1",
+      "name": "MHMI high-confidence HPO-MP bridge",
+      "connection_basis": "ClinVar condition to HPO to MHMI HPO-MP (confidence >= 0.8) to MGI allele, constrained by 1:1 orthology",
+      "output": "output/category1_1_mhmi_hpo_mp.tsv.gz",
+      "interpretation": "High-confidence ontology-based cross-species phenotype correspondence"
     },
     {
-      "tier_id": "tier2",
-      "name": "Ortholog-first phenotype evidence",
+      "category_id": "category1",
+      "subcategory_id": "category1-2",
+      "name": "Monarch UPheno cross-species bridge",
+      "connection_basis": "ClinVar condition to HPO to Monarch UPheno crossSpeciesExactMatch to MGI allele, constrained by 1:1 orthology",
+      "output": "output/category1_2_monarch_upheno.tsv.gz",
+      "interpretation": "Monarch ontology mapping retained separately because this source snapshot has no numeric mapping confidence"
+    },
+    {
+      "category_id": "category2",
+      "subcategory_id": "category2-1",
+      "name": "Ortholog-first phenotype-label evidence",
       "connection_basis": "1:1 ortholog first, then ClinVar or significant GWAS phenotype evidence compared with MGI MP and allele-name evidence",
-      "output": "output/tier2_ortholog_phenotype.tsv.gz",
-      "interpretation": "Candidate correspondence with within-tier support B or C; B is an exact normalized label and C a lexical hypothesis. Manual human literature phenotypes and support A are disabled."
+      "output": "output/category2_1_ortholog_phenotype.tsv.gz",
+      "interpretation": "Candidate correspondence with within-category support B or C; B is an exact normalized label and C a lexical hypothesis. Manual human literature phenotypes and support A are disabled."
     },
     {
-      "tier_id": "tier3",
-      "name": "Curated disease model",
+      "category_id": "category2",
+      "subcategory_id": "category2-2",
+      "name": "Curated disease-model evidence",
       "connection_basis": "Exact OMIM identifier shared by a supported ClinVar condition and an MGI-curated mouse disease model, constrained by 1:1 orthology",
-      "output": "output/tier3_disease_model.tsv.gz",
+      "output": "output/category2_2_disease_model.tsv.gz",
       "interpretation": "Disease-model-level candidate correspondence independent of the HPO-MP bridge"
     }
   ],

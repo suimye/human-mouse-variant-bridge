@@ -15,7 +15,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const PROCESSED_DIR = path.join(PROJECT_ROOT, 'data', 'processed');
 const OUTPUT_DIR = path.join(PROJECT_ROOT, 'output');
 const OUTPUT_COLUMNS = [
-  'tier_id', 'connection_basis',
+  'category_id', 'subcategory_id', 'connection_basis',
   'human_gene', 'human_ncbi_gene_id', 'rs_id', 'human_variant_source',
   'human_source_record_id', 'human_chromosome', 'human_position',
   'human_phenotype_id', 'human_phenotype_label', 'human_evidence_class',
@@ -145,7 +145,8 @@ async function executeRelaxedMapping(paths, config) {
       const match = comparePhenotypes(human, mouseRow, config);
       if (!match.matched) continue;
       const record = {
-        tier_id: 'tier2',
+        category_id: 'category2',
+        subcategory_id: 'category2-1',
         connection_basis: 'ortholog_constrained_phenotype_evidence',
         human_gene: human.human_gene,
         human_ncbi_gene_id: human.human_ncbi_gene_id,
@@ -208,7 +209,7 @@ async function main() {
     human: path.join(PROCESSED_DIR, 'human_variant_phenotypes.tsv.gz'),
     mouse: path.join(PROCESSED_DIR, 'mouse_variant_phenotypes.tsv.gz'),
     ortholog: path.join(PROCESSED_DIR, 'ortholog_mapping.tsv'),
-    output: path.join(OUTPUT_DIR, 'tier2_ortholog_phenotype.tsv.gz')
+    output: path.join(OUTPUT_DIR, 'category2_1_ortholog_phenotype.tsv.gz')
   };
   const stats = await executeRelaxedMapping(paths, config);
   const preparation = JSON.parse(await fsp.readFile(path.join(PROCESSED_DIR, 'relaxed_preparation_stats.json'), 'utf8'));
@@ -219,7 +220,7 @@ async function main() {
   );
   await fsp.copyFile(
     paths.output,
-    path.join(OUTPUT_DIR, 'relaxed_variant_correspondence.tsv.gz')
+    path.join(OUTPUT_DIR, 'tier2_ortholog_phenotype.tsv.gz')
   );
   await writeOrthologFirstSvg(path.join(OUTPUT_DIR, 'ortholog_first_summary.svg'), preparation, stats);
   console.log(`Ortholog-first mapping complete: ${stats.finalRows.toLocaleString('en-US')} candidate rows (support A ${stats.supportGrades.A.toLocaleString('en-US')}, B ${stats.supportGrades.B.toLocaleString('en-US')}, C ${stats.supportGrades.C.toLocaleString('en-US')}).`);

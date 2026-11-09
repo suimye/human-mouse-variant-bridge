@@ -61,9 +61,9 @@
   <rect x="60" y="765" width="1380" height="190" rx="20" class="panel"/>
   <rect x="80" y="785" width="92" height="32" rx="16" fill="#315c83"/><text x="126" y="807" text-anchor="middle" class="step">Step 5</text>
   <text x="200" y="809" class="head">Human-Mouse Variantの接続手法別に候補を作る</text>
-  <rect x="90" y="840" width="310" height="88" rx="14" class="route1"/><text x="110" y="870" class="label">Tier 1　HPO ↔ MP</text><text x="110" y="894" class="small">Monarch / MHMI mapping</text><text x="110" y="917" class="mono">src/map.js</text>
-  <rect x="425" y="840" width="310" height="88" rx="14" class="route2"/><text x="445" y="870" class="label">Tier 2　表現型名</text><text x="445" y="894" class="small">全文一致／語彙一致</text><text x="445" y="917" class="mono">src/relaxed-map.js</text>
-  <rect x="760" y="840" width="310" height="88" rx="14" class="route3"/><text x="780" y="870" class="label">Tier 3　同じOMIM ID</text><text x="780" y="894" class="small">MGI curated disease model</text><text x="780" y="917" class="mono">src/tier3-disease-map.js</text>
+  <rect x="90" y="840" width="310" height="88" rx="14" class="route1"/><text x="110" y="870" class="label">Category 1-1　HPO ↔ MP</text><text x="110" y="894" class="small">Monarch / MHMI mapping</text><text x="110" y="917" class="mono">src/map.js</text>
+  <rect x="425" y="840" width="310" height="88" rx="14" class="route2"/><text x="445" y="870" class="label">Category 2-1　表現型名</text><text x="445" y="894" class="small">全文一致／語彙一致</text><text x="445" y="917" class="mono">src/relaxed-map.js</text>
+  <rect x="760" y="840" width="310" height="88" rx="14" class="route3"/><text x="780" y="870" class="label">Category 2-2　同じOMIM ID</text><text x="780" y="894" class="small">MGI curated disease model</text><text x="780" y="917" class="mono">src/tier3-disease-map.js</text>
   <rect x="1095" y="840" width="310" height="88" rx="14" class="route4"/><text x="1115" y="870" class="label">Semantic similarity</text><text x="1115" y="894" class="small">表現型文のSapBERT cosine</text><text x="1115" y="917" class="mono">src/semantic-map.py</text>
 
   <path d="M750 955 L750 990" class="flow"/>
@@ -71,5 +71,5 @@
   <rect x="80" y="1025" width="92" height="32" rx="16" fill="#315c83"/><text x="126" y="1047" text-anchor="middle" class="step">Step 6</text>
   <text x="200" y="1048" class="head">候補リストを検証し、DB用ファイルと説明資料を出力する</text>
   <text x="200" y="1080" class="small">件数・閾値・DB整合性・TLR4 / CFTR / ALPL・negative controlsを確認</text>
-  <text x="200" y="1105" class="mono">validate.js / verify-semantic.py / case-study-report.js　→　Tier TSV・Semantic SQLite・validation結果・HTML / SVG</text>
+  <text x="200" y="1105" class="mono">validate.js / verify-semantic.py / case-study-report.js　→　Category TSV・Semantic SQLite・validation結果・HTML / SVG</text>
 </svg>

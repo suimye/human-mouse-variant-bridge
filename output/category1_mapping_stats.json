@@ -1,0 +1,38 @@
+{
+  "category1-1": {
+    "generatedAt": "2026-11-09T04:27:06.763Z",
+    "acceptedHpoMpRows": 1354,
+    "indexedMouseRows": 133574,
+    "indexedOrthologRows": 16537,
+    "humanVariantHpoRows": 7720698,
+    "hpoMpCandidateRows": 6099809,
+    "orthologGeneCandidateRows": 7720698,
+    "mousePhenotypeCandidateRows": 1089740,
+    "finalRows": 1089740,
+    "unique": {
+      "humanVariants": 101547,
+      "humanGenes": 1655,
+      "mouseGenes": 1655,
+      "hpoTerms": 503,
+      "mpTerms": 518
+    }
+  },
+  "category1-2": {
+    "generatedAt": "2026-11-09T04:27:26.012Z",
+    "acceptedHpoMpRows": 2102,
+    "indexedMouseRows": 133574,
+    "indexedOrthologRows": 16537,
+    "humanVariantHpoRows": 7720698,
+    "hpoMpCandidateRows": 5594026,
+    "orthologGeneCandidateRows": 7720698,
+    "mousePhenotypeCandidateRows": 986121,
+    "finalRows": 986121,
+    "unique": {
+      "humanVariants": 102087,
+      "humanGenes": 1656,
+      "mouseGenes": 1656,
+      "hpoTerms": 741,
+      "mpTerms": 758
+    }
+  }
+}

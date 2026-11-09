@@ -8,7 +8,7 @@
 | 解説資料の項目 |　リンク |
 | --- | --- |
 | 今回の開発の概要 | このREADME |
-| Tier 1/2/3が何を根拠にアレルを接続するか | [`output/tier_evidence_explainer.html`](output/tier_evidence_explainer.html) |
+| Category 1-1/1-2/2-1/2-2が何を根拠にアレルを接続するか | [`output/tier_evidence_explainer.html`](output/tier_evidence_explainer.html) |
 | TLR4・CFTR・ALPLによる検証 | [`output/case_study_evidence_explainer.html`](output/case_study_evidence_explainer.html) |
 | 入力データ、6段階の生成手順、SapBERT、DB保存形式、3症例の生物学的背景 | [`output/methods_and_biological_evidence.html`](output/methods_and_biological_evidence.html) ([English](output/methods_and_biological_evidence_en.html)) |
 | データセットの取得記録と完全性確認値 | [`DATA_VERSIONS.md`](DATA_VERSIONS.md) と [`data/raw/manifest.json`](data/raw/manifest.json) |
@@ -29,7 +29,7 @@ TLR4、CFTR、ALPLをcase studyにすると、指定した3組は接続方法が
 | CFTR | rs113993960 p.Phe508del - Cftr<tm1Unc> | HPO-MP + OMIM:219700 disease model | 構造化表現型と疾患モデルの独立した根拠で回収 |
 | ALPL | rs1558543066 - Alpl<Hpp> | hypophosphatasia完全一致 + OMIM:146300 disease model | HPO-MPで指定アレルを回収できなくても、表現型名と疾患モデルで回収 |
 
-Tier 1/2/3の接続原理は[`output/tier_evidence_explainer.html`](output/tier_evidence_explainer.html)に残し、3例で異なる接続手法が必要になる理由は[`output/case_study_evidence_explainer.html`](output/case_study_evidence_explainer.html)に分けました。生物学的根拠、構造的なvariant差、利用したデータセット、構築手順、DB設計を統合したMethodsは[`output/methods_and_biological_evidence.html`](output/methods_and_biological_evidence.html)です。機械可読な比較は[`output/semantic/case_study_summary.tsv`](output/semantic/case_study_summary.tsv)です。
+Category 1-1/1-2/2-1/2-2の接続原理は[`output/tier_evidence_explainer.html`](output/tier_evidence_explainer.html)に残し、3例で異なる接続手法が必要になる理由は[`output/case_study_evidence_explainer.html`](output/case_study_evidence_explainer.html)に分けました。生物学的根拠、構造的なvariant差、利用したデータセット、構築手順、DB設計を統合したMethodsは[`output/methods_and_biological_evidence.html`](output/methods_and_biological_evidence.html)です。機械可読な比較は[`output/semantic/case_study_summary.tsv`](output/semantic/case_study_summary.tsv)です。
 
 英語版は[`METHODS_AND_CASE_STUDIES_EN.md`](METHODS_AND_CASE_STUDIES_EN.md)と[`output/methods_and_biological_evidence_en.html`](output/methods_and_biological_evidence_en.html)です。
 
@@ -42,28 +42,29 @@ human variant–mouse variant完全一致データは、phenotypeとは独立し
 
 テンプレートと同じ列に揃えたファイルは`npm run validate:tier0 -- path/to/collaborator.prepared.tsv`で、列順、必須provenance、match-level別の必要項目、SHA-256形式、reciprocal mapping、既存1:1 orthologとの一致を検査できます。
 
-## Tier別の実行結果
+## Category別の実行結果
 
-| Tier | 接続根拠 | 結果行数 | 主な用途 |
+| Category | 接続根拠 | 結果行数 | 主な用途 |
 | --- | --- | ---: | --- |
-| Tier 1 | ClinVar condition -> HPO -> Monarch/UPhenoまたはMHMI HPO-MP -> MGI allele + 1:1 ortholog | 1,089,740 | ontologyに基づく厳密な表現型ブリッジ |
-| Tier 2 | 1:1 orthologを先に限定し、ClinVar/GWASとMGI MP/allele名の表現型証拠を照合 | 76,619 | HPO-MPで落ちる候補の回収。手動文献表現型は使わない |
-| Tier 3 | ClinVarとMGI curated disease modelの同一OMIM ID + 1:1 ortholog | 331,245 | ontology bridgeと独立した疾患モデル対応 |
+| Category 1-1 | ClinVar condition -> HPO -> MHMI HPO-MP (confidence ≥0.8) -> MGI allele + 1:1 ortholog | 1,089,740 | 数値confidenceを伴うontology表現型ブリッジ |
+| Category 1-2 | ClinVar condition -> HPO -> Monarch UPheno crossSpeciesExactMatch -> MGI allele + 1:1 ortholog | 986,121 | Monarchのcross-species mappingを、数値confidenceなしの別来歴として保存 |
+| Category 2-1 | 1:1 orthologを先に限定し、ClinVar/GWASとMGI MP/allele名の表現型証拠を照合 | 76,619 | HPO-MPで落ちる候補の回収。手動文献表現型は使わない |
+| Category 2-2 | ClinVarとMGI curated disease modelの同一OMIM ID + 1:1 ortholog | 331,245 | ontology bridgeと独立した疾患モデル対応 |
 
-Tier番号は異なる検索戦略を表し、普遍的な信頼度順位ではありません。Tier 2だけは内部に次の`within_tier_support`を持ちます。
+Category番号は異なる検索戦略を表し、普遍的な信頼度順位ではありません。Category 2-1だけは内部に次の`within_category_support`を持ちます。
 
 - `B`: 小文字化・記号除去・定義済み別名置換後に、表現型名全体が一致
 - `C`: informative tokenによる語彙的一致。仮説候補であり手動確認が必要
 
-旧support Aは、個別の文献表現型と手動設定概念に依存するため廃止しました。Tier 2の内訳はA 0行、B 9,512行、C 67,107行です。
+旧support Aは、個別の文献表現型と手動設定概念に依存するため廃止しました。Category 2-1の内訳はA 0行、B 9,512行、C 67,107行です。
 
 ## DB用成果物
 
 ### ２０２６.9版追加: SapBERTを用いた、ortholog-first表現型文章類似度
 
-表現型文を医学用語向けSapBERTで数値化し、1:1オーソログ内のコサイン類似度で別リストを作りました。`output/semantic/`にclass A（0.8以上）、B（0.7以上0.8未満）、C（0.5以上0.7未満）、D（0.5未満・保存専用）の文章ペア、variant evidence表、結合用SQLite DBを保存します。C/Dは既存の上位20候補内という範囲を維持します。Dは`eligible_for_default_use=0`で残し、通常利用用の`active_phenotype_pairs` / `active_variant_correspondence`から除外します。既存Tier 2のsupport A/B/Cとは別分類です。
+表現型文を医学用語向けSapBERTで数値化し、1:1オーソログ内のコサイン類似度で別リストを作りました。`output/semantic/`にclass A（0.8以上）、B（0.7以上0.8未満）、C（0.5以上0.7未満）、D（0.5未満・保存専用）の文章ペア、variant evidence表、結合用SQLite DBを保存します。C/Dは既存の上位20候補内という範囲を維持します。Dは`eligible_for_default_use=0`で残し、通常利用用の`active_phenotype_pairs` / `active_variant_correspondence`から除外します。既存Category 2-1のsupport A/B/Cとは別分類です。
 
-類似度だけで生物学的同等性は確定できません。逆方向・否定の補助フラグと、TLR4等の既知対照・例示的negative phrase監査も保存します。手動のヒト文献表現型はsemantic入力にもTier 2入力にも加えません。詳細・DB結合例・再実行方法は[semantic解析の説明](database/SEMANTIC.md)、結果と限界は[解析結果](output/semantic/RESULTS.md)を参照してください。今回の入力は2026-09-11取得データです。
+類似度だけで生物学的同等性は確定できません。逆方向・否定の補助フラグと、TLR4等の既知対照・例示的negative phrase監査も保存します。手動のヒト文献表現型はsemantic入力にもCategory 2-1入力にも加えません。詳細・DB結合例・再実行方法は[semantic解析の説明](database/SEMANTIC.md)、結果と限界は[解析結果](output/semantic/RESULTS.md)を参照してください。今回の入力は2026-09-11取得データです。
 
 | ファイル | 内容 |
 | --- | --- |
@@ -72,19 +73,20 @@ Tier番号は異なる検索戦略を表し、普遍的な信頼度順位では�
 | `data/external/tier0_exact_variant.template.tsv` | Tier 0を受け取るための列定義 |
 | `config/tier0-exact-variant.schema.json` | Tier 0行の必須項目と許容値 |
 | `database/TIER0_INTEGRATION.md` | exact matchの定義、QC、既存pair/evidenceへの統合手順 |
-| `output/tier1_monarch_phenotype.tsv.gz` | Tier 1本体 |
-| `output/tier2_ortholog_phenotype.tsv.gz` | Tier 2本体 |
-| `output/tier3_disease_model.tsv.gz` | Tier 3本体 |
-| `output/tier_catalog.tsv` | Tier定義と正確な行数 |
-| `output/tier_validation_results.tsv` | positive control x Tierの検証行列 |
-| `output/tier_summary.svg` | Tier件数と対照回収の編集可能な図 |
-| `output/tier_evidence_explainer.html` | ゲノム領域、ortholog gene、matching point、Tier 1/2/3の接続根拠を示す模式図 |
+| `output/category1_1_mhmi_hpo_mp.tsv.gz` | Category 1-1本体 |
+| `output/category1_2_monarch_upheno.tsv.gz` | Category 1-2本体 |
+| `output/category2_1_ortholog_phenotype.tsv.gz` | Category 2-1本体 |
+| `output/category2_2_disease_model.tsv.gz` | Category 2-2本体 |
+| `output/category_catalog.tsv` | Category定義と正確な行数 |
+| `output/category_validation_results.tsv` | positive control x Categoryの検証行列 |
+| `output/category_summary.svg` | Category件数と対照回収の編集可能な図 |
+| `output/tier_evidence_explainer.html` | ゲノム領域、ortholog gene、matching point、Category 1-1/1-2/2-1/2-2の接続根拠を示す模式図 |
 | `output/case_study_evidence_explainer.html` | TLR4・CFTR・ALPLで異なる接続手法が必要になる理由を示す模式図と比較表 |
 | `output/methods_and_biological_evidence.html` | 生物学的根拠、利用したデータセット、構築法、DB設計、3例を統合したMethodsページ |
 | `output/methods_and_biological_evidence_en.html` | Methodsページの英語版 |
 | `output/methods_data_linkage.svg` | human/mouse genomeからDBまでの連携手順を示す図 |
-| `output/tier_matching_strategy_ja.svg` | 1:1 ortholog gene内でTier 1/2/3がhuman variantとmouse alleleを結ぶ日本語模式図 |
-| `output/tier_matching_strategy_en.svg` | 上記のTier模式図の英語版 |
+| `output/tier_matching_strategy_ja.svg` | 1:1 ortholog gene内でCategory 1-1/1-2/2-1/2-2がhuman variantとmouse alleleを結ぶ日本語模式図 |
+| `output/tier_matching_strategy_en.svg` | 上記のCategory模式図の英語版 |
 | `output/data_generation_workflow_ja.svg` | Step 2–4の並行処理とStep 5への合流を示す日本語フローチャート |
 | `output/data_generation_workflow_en.svg` | 上記フローチャートの英語版 |
 | `METHODS_AND_CASE_STUDIES.md` | 上記Methodsの文書版 |
@@ -100,9 +102,9 @@ Tier番号は異なる検索戦略を表し、普遍的な信頼度順位では�
 
 ## Case-study target pairs
 
-| 対照 | Tier 1 | Tier 2 | Tier 3 | 解釈 |
+| 対照 | Category 1-1 | Category 2-1 | Category 2-2 | 解釈 |
 | --- | ---: | ---: | ---: | --- |
-| TLR4 rs4986790 - Tlr4<Lps-d> | 0 | 0 | 0 | Tier側では未回収。別のsemantic class Cで回収 |
+| TLR4 rs4986790 - Tlr4<Lps-d> | 0 | 0 | 0 | Category側では未回収。別のsemantic class Cで回収 |
 | CFTR rs113993960 p.Phe508del - Cftr<tm1Unc> | 6 | 0 | 2 | HPO-MP表現型とOMIM:219700疾患モデルの双方で回収 |
 | ALPL rs1558543066 p.Val7fs - Alpl<Hpp> c.862+5G>A splice-site hypomorph | 0 | 20 (support B) | 2 | hypophosphatasia完全一致とOMIM:146300疾患モデルで回収 |
 
@@ -115,19 +117,19 @@ TLR4は、ダウンロード済みGWAS Catalogのrs4986790に付く慢性炎症�
 
 - ClinVar GRCh38 VCF: rsID、1:1 ortholog gene、設定済みclinical significanceを持つcondition evidence
 - HPO: `NOT`でなくaspect `P`のdisease annotation
-- Monarch/UPheno・MHMI: confidence 0.8以上、exact/close/broad/narrow match
+- Category 1-1: MHMIのconfidence 0.8以上、exact/close/broad/narrow HPO–MP mapping
+- Category 1-2: Monarch UPhenoの`crossSpeciesExactMatch`。このsource snapshotのconfidenceは空欄なので、1-1と混ぜず出典別に保存
 - GWAS Catalog v1.0.2: `P <= 5e-8`、`SNP_GENE_IDS`のEnsembl geneがHGNC経由で1:1 orthologへ直接一致するassociation
 - MGI: 一遺伝子の非conditional genotype、specific MP、phenotypic allele名、curated disease model
 - Ortholog: MGI `HOM_ProteinCoding.rpt`の1:1 protein-coding ortholog
-- Tier 3: human ClinVar conditionとmouse disease modelでOMIM IDが完全一致
+- Category 2-2: human ClinVar conditionとmouse disease modelでOMIM IDが完全一致
 
-データURL、保存ファイル名、採用条件、Semantic閾値、Tier定義、実行設定はすべて[`config/workflow.json`](config/workflow.json)にまとめています。配布元URLやファイル名が変わった場合は、このファイルの該当する`data_sources`行だけを修正します。解析スクリプト内のpathを直接書き換える必要はありません。配布ファイル自体の列構成や圧縮形式が変わった場合は、設定変更だけでは解釈できないため、該当する読み取り処理も改修してテストします。
-Monarchは、confidence 0.8以上以外にも緩い閾値のデータも含めていいかもしれませんが、今のところhigh confidenceで制作しています。
+データURL、保存ファイル名、採用条件、Semantic閾値、Category定義、実行設定はすべて[`config/workflow.json`](config/workflow.json)にまとめています。配布元URLやファイル名が変わった場合は、このファイルの該当する`data_sources`行だけを修正します。解析スクリプト内のpathを直接書き換える必要はありません。配布ファイル自体の列構成や圧縮形式が変わった場合は、設定変更だけでは解釈できないため、該当する読み取り処理も改修してテストします。
 
 
 ## 実行方法
 
-Node.js 20以上とPython 3.12用の`.venv-semantic`を使用します。GWAS ZIPの展開にはOSの`unzip`を使います。データ取得からTier 1–3、Semantic、検証、3症例サマリー、Tier 0入力検査までを次の1コマンドで順番に実行します。
+Node.js 20以上とPython 3.12用の`.venv-semantic`を使用します。GWAS ZIPの展開にはOSの`unzip`を使います。データ取得からCategory 1-1/1-2/2-1/2-2、Semantic、検証、3症例サマリー、Tier 0入力検査までを次の1コマンドで順番に実行します。
 
 ```bash
 cd 2026
@@ -147,9 +149,9 @@ cd 2026
 ## 注意事項
 
 - すべての結果は候補対応であり、humanとmouseのvariantが配列上同一、同一残基、または同一機序であることを意味しません。
-- 同じortholog geneであることだけでは出力しません。Tier 2は表現型証拠、Tier 3は同一疾患IDを追加で要求します。
+- 同じortholog geneであることだけでは出力しません。Category 2-1は表現型証拠、Category 2-2は同一疾患IDを追加で要求します。
 - GWASのgene assignmentは近傍遺伝子名だけでなく、Catalogの`SNP_GENE_IDS`に直接記載されたEnsembl geneに限定しています。
-- Tier 2 support Cは探索用です。support Aは廃止済みで、DBの既定表示ではBを先にし、Cには要レビュー表示を推奨します。
+- Category 2-1 support Cは探索用です。support Aは廃止済みで、DBの既定表示ではBを先にし、Cには要レビュー表示を推奨します。
 - `skos:broadMatch`と`skos:narrowMatch`はexactより広い候補を含みます。
 - HPOのOMIM由来annotationには再利用上の制限があり得ます。再配布前に利用条件を確認してください。
 

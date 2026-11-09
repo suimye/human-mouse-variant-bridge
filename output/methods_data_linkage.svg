@@ -116,7 +116,7 @@
 
   <rect x="70" y="633" width="1260" height="48" rx="14" fill="#e9f3fc" stroke="#9fc3e3"/>
   <circle cx="116" cy="657" r="9" fill="#1769aa"/>
-  <text x="142" y="662" class="label">Tier 1</text>
+  <text x="142" y="662" class="label">Category 1-1</text>
   <text x="252" y="662" class="small">ClinVar condition → HPO</text>
   <line x1="468" y1="657" x2="895" y2="657" stroke="#1769aa" stroke-width="4"/>
   <circle cx="468" cy="657" r="7" fill="#ffffff" stroke="#1769aa" stroke-width="4"/>
@@ -127,7 +127,7 @@
 
   <rect x="70" y="689" width="1260" height="48" rx="14" fill="#e9f7f1" stroke="#9acdb8"/>
   <circle cx="116" cy="713" r="9" fill="#188260"/>
-  <text x="142" y="718" class="label">Tier 2</text>
+  <text x="142" y="718" class="label">Category 2-1</text>
   <text x="252" y="718" class="small">ClinVar / GWAS phenotype</text>
   <line x1="468" y1="713" x2="895" y2="713" stroke="#188260" stroke-width="4"/>
   <circle cx="468" cy="713" r="7" fill="#ffffff" stroke="#188260" stroke-width="4"/>
@@ -138,7 +138,7 @@
 
   <rect x="70" y="745" width="1260" height="48" rx="14" fill="#fff3e3" stroke="#dfb983"/>
   <circle cx="116" cy="769" r="9" fill="#b86d19"/>
-  <text x="142" y="774" class="label">Tier 3</text>
+  <text x="142" y="774" class="label">Category 2-2</text>
   <text x="252" y="774" class="small">ClinVar condition OMIM</text>
   <line x1="468" y1="769" x2="895" y2="769" stroke="#b86d19" stroke-width="4"/>
   <circle cx="468" cy="769" r="7" fill="#ffffff" stroke="#b86d19" stroke-width="4"/>

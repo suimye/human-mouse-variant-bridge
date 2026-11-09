@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildTierValidation, validateNegativeControls, validatePositiveControl } = require('../src/validate');
+const { buildCategoryValidation, validateNegativeControls, validatePositiveControl } = require('../src/validate');
 
 const positive = {
   human_gene: 'TLR4', human_variant: 'rs4986790', human_protein_change: 'p.Asp299Gly',
@@ -33,14 +33,14 @@ test('negative controls reject wrong ortholog and same-residue overclaim', () =>
   assert.deepEqual(results.map(result => result.status), ['PASS', 'PASS']);
 });
 
-test('tier validation requires only independently declared expected recoveries', () => {
-  const controls = [{ control_id: 'x', expected_tiers: 'tier2|tier3' }];
+test('category validation requires only independently declared expected recoveries', () => {
+  const controls = [{ control_id: 'x', expected_categories: 'category2-1|category2-2' }];
   const inspections = [
-    { tierId: 'tier1', counts: new Map([['x', 0]]), support: new Map([['x', new Set()]]) },
-    { tierId: 'tier2', counts: new Map([['x', 2]]), support: new Map([['x', new Set(['A'])]]) },
-    { tierId: 'tier3', counts: new Map([['x', 0]]), support: new Map([['x', new Set()]]) }
+    { categoryId: 'category1-1', counts: new Map([['x', 0]]), support: new Map([['x', new Set()]]) },
+    { categoryId: 'category2-1', counts: new Map([['x', 2]]), support: new Map([['x', new Set(['B'])]]) },
+    { categoryId: 'category2-2', counts: new Map([['x', 0]]), support: new Map([['x', new Set()]]) }
   ];
-  const rows = buildTierValidation(controls, inspections);
+  const rows = buildCategoryValidation(controls, inspections);
   assert.deepEqual(rows.map(row => row.status), ['PASS', 'PASS', 'FAIL']);
-  assert.equal(rows[1].within_tier_support, 'A');
+  assert.equal(rows[1].within_tier_support, 'B');
 });

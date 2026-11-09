@@ -11,9 +11,10 @@ const OUTPUT_DIR = path.join(PROJECT_ROOT, 'output');
 const SEMANTIC_DIR = path.join(OUTPUT_DIR, 'semantic');
 
 const ROUTE_LABELS = {
-  tier1: 'HPO-MP ontology bridge',
-  tier2: 'exact phenotype label',
-  tier3: 'shared OMIM disease model',
+  'category1-1': 'Category 1-1: MHMI HPO-MP bridge',
+  'category1-2': 'Category 1-2: Monarch UPheno bridge',
+  'category2-1': 'Category 2-1: phenotype label',
+  'category2-2': 'Category 2-2: shared OMIM disease model',
   semantic_A: 'semantic phenotype class A',
   semantic_B: 'semantic phenotype class B',
   semantic_C: 'semantic phenotype class C'
@@ -26,12 +27,12 @@ const CASE_NARRATIVES = {
     limitation: 'The class C evidence links inflammatory disease and induced-arthritis phenotypes. It does not demonstrate equivalent LPS-response mechanisms or variant equivalence.'
   },
   CFTR_F508DEL_001: {
-    representativeRoute: 'tier1',
+    representativeRoute: 'category1-1',
     interpretation: 'The target pair is supported independently by an HPO-MP phenotype bridge and the same OMIM disease model, providing structured and traceable evidence.',
     limitation: 'The highest semantic match concerns different sperm phenotypes and is not used as the main cystic-fibrosis evidence. Row counts are evidence records, not independent experiments.'
   },
   ALPL_HPP_001: {
-    representativeRoute: 'tier2',
+    representativeRoute: 'category2-1',
     interpretation: 'The target pair is recovered by the exact normalized phenotype label hypophosphatasia and independently by the same OMIM disease model.',
     limitation: 'A shared phenotype or disease model does not imply the same nucleotide change, protein residue, allelic direction, or experimental context.'
   }
@@ -79,28 +80,28 @@ async function firstMatchingRows(filePath, controls) {
 }
 
 function primaryRoutes(control) {
-  const routes = splitPipe(control.expected_tiers);
+  const routes = splitPipe(control.expected_categories);
   if (control.expected_semantic_class) routes.push(`semantic_${control.expected_semantic_class}`);
   return routes;
 }
 
 function representativeEvidence(controlId, routeId, representatives) {
   const row = representatives[routeId]?.get(controlId) || {};
-  if (routeId === 'tier1') {
+  if (routeId === 'category1-1' || routeId === 'category1-2') {
     return {
       human: row.hpo_label || '',
       mouse: row.mp_label || '',
       detail: [row.hpo_id, row.predicate, row.mp_id].filter(Boolean).join(' / ')
     };
   }
-  if (routeId === 'tier2') {
+  if (routeId === 'category2-1') {
     return {
       human: row.human_phenotype_label || '',
       mouse: row.mouse_phenotype_label || row.allele_name || '',
       detail: [row.match_method, row.within_tier_support].filter(Boolean).join(' / ')
     };
   }
-  if (routeId === 'tier3') {
+  if (routeId === 'category2-2') {
     return {
       human: row.human_condition_label || '',
       mouse: row.mouse_allele_name || '',
@@ -115,10 +116,10 @@ function representativeEvidence(controlId, routeId, representatives) {
 }
 
 function buildCaseStudyRows(controls, tierValidation, semanticSummaries, representatives) {
-  const tierByControl = new Map();
+  const categoryByControl = new Map();
   for (const row of tierValidation) {
-    if (!tierByControl.has(row.control_id)) tierByControl.set(row.control_id, new Map());
-    tierByControl.get(row.control_id).set(row.tier_id, row);
+    if (!categoryByControl.has(row.control_id)) categoryByControl.set(row.control_id, new Map());
+    categoryByControl.get(row.control_id).set(row.category_id, row);
   }
   const semanticByControl = new Map(semanticSummaries.map(row => [row.control_id, row]));
 
@@ -127,12 +128,12 @@ function buildCaseStudyRows(controls, tierValidation, semanticSummaries, represe
     const narrative = CASE_NARRATIVES[control.control_id];
     if (!narrative) throw new Error(`Missing case-study narrative for ${control.control_id}`);
     const semantic = semanticByControl.get(control.control_id) || {};
-    const tierRows = tierByControl.get(control.control_id) || new Map();
+    const categoryRows = categoryByControl.get(control.control_id) || new Map();
     const evidence = representativeEvidence(
       control.control_id, narrative.representativeRoute, representatives
     );
     const found = routes.every(route => {
-      if (route.startsWith('tier')) return Number(tierRows.get(route)?.found_rows || 0) > 0;
+      if (route.startsWith('category')) return Number(categoryRows.get(route)?.found_rows || 0) > 0;
       const cosineClass = route.replace('semantic_', '');
       return Number(semantic[`class_${cosineClass}_rows`] || 0) > 0;
     });
@@ -147,9 +148,10 @@ function buildCaseStudyRows(controls, tierValidation, semanticSummaries, represe
       mouse_protein_change: control.mouse_protein_change,
       case_study_status: found ? 'FOUND' : 'NOT_FOUND',
       primary_connection_routes: routes.join('|'),
-      tier1_evidence_rows: Number(tierRows.get('tier1')?.found_rows || 0),
-      tier2_evidence_rows: Number(tierRows.get('tier2')?.found_rows || 0),
-      tier3_evidence_rows: Number(tierRows.get('tier3')?.found_rows || 0),
+      category1_1_evidence_rows: Number(categoryRows.get('category1-1')?.found_rows || 0),
+      category1_2_evidence_rows: Number(categoryRows.get('category1-2')?.found_rows || 0),
+      category2_1_evidence_rows: Number(categoryRows.get('category2-1')?.found_rows || 0),
+      category2_2_evidence_rows: Number(categoryRows.get('category2-2')?.found_rows || 0),
       semantic_class_A_evidence_rows: Number(semantic.class_A_rows || 0),
       semantic_class_B_evidence_rows: Number(semantic.class_B_rows || 0),
       semantic_class_C_evidence_rows: Number(semantic.class_C_rows || 0),
@@ -169,8 +171,8 @@ async function writeCaseStudyTsv(filePath, rows) {
   const columns = [
     'control_id', 'human_gene', 'human_variant', 'human_protein_change',
     'mouse_gene', 'mouse_allele_id', 'mouse_allele', 'mouse_protein_change',
-    'case_study_status', 'primary_connection_routes', 'tier1_evidence_rows',
-    'tier2_evidence_rows', 'tier3_evidence_rows', 'semantic_class_A_evidence_rows',
+    'case_study_status', 'primary_connection_routes', 'category1_1_evidence_rows',
+    'category1_2_evidence_rows', 'category2_1_evidence_rows', 'category2_2_evidence_rows', 'semantic_class_A_evidence_rows',
     'semantic_class_B_evidence_rows', 'semantic_class_C_evidence_rows',
     'semantic_class_D_archive_rows', 'best_active_cosine', 'representative_route',
     'representative_human_phenotype', 'representative_mouse_phenotype',
@@ -291,9 +293,9 @@ function caseStudyHtmlDocument(rows) {
     <table>
       <thead><tr><th>Case-study pair</th><th>HPO-MP</th><th>Exact phenotype label</th><th>Shared OMIM disease model</th><th>Semantic phenotype evidence</th></tr></thead>
       <tbody>
-        <tr><td>TLR4 rs4986790 ↔ Tlr4&lt;Lps-d&gt;</td><td>${countCell(tlr4.tier1_evidence_rows)}</td><td>${countCell(tlr4.tier2_evidence_rows)}</td><td>${countCell(tlr4.tier3_evidence_rows)}</td><td>${countCell(tlr4.semantic_class_C_evidence_rows, '<span class="cell-note">class C, cosine 0.548</span>')}</td></tr>
-        <tr><td>CFTR rs113993960 ↔ Cftr&lt;tm1Unc&gt;</td><td>${countCell(cftr.tier1_evidence_rows, '<span class="cell-note">failure to thrive ↔ postnatal growth retardation</span>')}</td><td>${countCell(cftr.tier2_evidence_rows)}</td><td>${countCell(cftr.tier3_evidence_rows, '<span class="cell-note">OMIM:219700</span>')}</td><td>A ${cftr.semantic_class_A_evidence_rows} / B ${cftr.semantic_class_B_evidence_rows} / C ${cftr.semantic_class_C_evidence_rows}<span class="cell-note">semantic A is not used as the main CF evidence</span></td></tr>
-        <tr><td>ALPL rs1558543066 ↔ Alpl&lt;Hpp&gt;</td><td>${countCell(alpl.tier1_evidence_rows)}</td><td>${countCell(alpl.tier2_evidence_rows, '<span class="cell-note">hypophosphatasia ↔ hypophosphatasia</span>')}</td><td>${countCell(alpl.tier3_evidence_rows, '<span class="cell-note">OMIM:146300</span>')}</td><td>A ${alpl.semantic_class_A_evidence_rows} / B ${alpl.semantic_class_B_evidence_rows} / C ${alpl.semantic_class_C_evidence_rows}<span class="cell-note">exact semantic label is concordant</span></td></tr>
+        <tr><td>TLR4 rs4986790 ↔ Tlr4&lt;Lps-d&gt;</td><td>${countCell(tlr4.category1_1_evidence_rows)}</td><td>${countCell(tlr4.category2_1_evidence_rows)}</td><td>${countCell(tlr4.category2_2_evidence_rows)}</td><td>${countCell(tlr4.semantic_class_C_evidence_rows, '<span class="cell-note">class C, cosine 0.548</span>')}</td></tr>
+        <tr><td>CFTR rs113993960 ↔ Cftr&lt;tm1Unc&gt;</td><td>${countCell(cftr.category1_1_evidence_rows, '<span class="cell-note">failure to thrive ↔ postnatal growth retardation</span>')}</td><td>${countCell(cftr.category2_1_evidence_rows)}</td><td>${countCell(cftr.category2_2_evidence_rows, '<span class="cell-note">OMIM:219700</span>')}</td><td>A ${cftr.semantic_class_A_evidence_rows} / B ${cftr.semantic_class_B_evidence_rows} / C ${cftr.semantic_class_C_evidence_rows}<span class="cell-note">semantic A is not used as the main CF evidence</span></td></tr>
+        <tr><td>ALPL rs1558543066 ↔ Alpl&lt;Hpp&gt;</td><td>${countCell(alpl.category1_1_evidence_rows)}</td><td>${countCell(alpl.category2_1_evidence_rows, '<span class="cell-note">hypophosphatasia ↔ hypophosphatasia</span>')}</td><td>${countCell(alpl.category2_2_evidence_rows, '<span class="cell-note">OMIM:146300</span>')}</td><td>A ${alpl.semantic_class_A_evidence_rows} / B ${alpl.semantic_class_B_evidence_rows} / C ${alpl.semantic_class_C_evidence_rows}<span class="cell-note">exact semantic label is concordant</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -314,9 +316,9 @@ function caseStudyHtmlDocument(rows) {
 `;
 }
 
-function tierHtmlDocument(tierCatalog) {
-  const catalog = new Map(tierCatalog.map(row => [row.tier_id, row]));
-  const count = tier => Number(catalog.get(tier)?.row_count || 0).toLocaleString('en-US');
+function tierHtmlDocument(categoryCatalog) {
+  const catalog = new Map(categoryCatalog.map(row => [row.subcategory_id, row]));
+  const count = category => Number(catalog.get(category)?.row_count || 0).toLocaleString('en-US');
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -332,14 +334,14 @@ function tierHtmlDocument(tierCatalog) {
 </head>
 <body>
 <main>
-  <h1>human-mouse variant correspondenceを作る3つのTier</h1>
-  <p class="lead">3つのTierは信頼度の順位ではなく、異なる証拠の結び方です。共通するのは、human Gene Aとmouse Gene Aの1:1 orthologを先に確定し、その遺伝子内のvariant、allele、phenotype evidenceを接続することです。</p>
+  <h1>human-mouse variant correspondenceを作る2つのCategory</h1>
+  <p class="lead">Categoryは信頼度の順位ではなく、異なる証拠の結び方です。Category 1はHPO–MP ontology bridge、Category 2はortholog内で得る表現型名または疾患モデルの根拠であり、それぞれの由来をsub-categoryとして保存します。</p>
 
   <h2>ゲノム上のmatching pointから、根拠別のリストを作る</h2>
   <div class="diagram">
     <svg viewBox="0 0 1120 540" role="img" aria-labelledby="tier-title tier-desc">
-      <title id="tier-title">Tier 1, Tier 2 and Tier 3 matching within an orthologous gene pair</title>
-      <desc id="tier-desc">Thick lines show orthologous Gene A regions in human and mouse genomes. A human variant and mouse allele are connected through three evidence routes and saved in separate tier tables.</desc>
+      <title id="tier-title">Category 1 and Category 2 matching within an orthologous gene pair</title>
+      <desc id="tier-desc">Thick lines show orthologous Gene A regions in human and mouse genomes. A human variant and mouse allele are connected through separate evidence categories and saved with their provenance.</desc>
       <text x="54" y="38" class="svg-title">HUMAN genomic region</text>
       <line x1="54" y1="92" x2="1066" y2="92" class="genome"/>
       <line x1="246" y1="92" x2="758" y2="92" class="gene"/>
@@ -354,11 +356,11 @@ function tierHtmlDocument(tierCatalog) {
       <path d="M478 103 C614 178 626 290 490 363" class="route tier3"/>
 
       <rect x="735" y="154" width="330" height="166" rx="14" class="label-bg"/>
-      <line x1="758" y1="185" x2="800" y2="185" class="route tier1"/><text x="814" y="190" class="svg-label">Tier 1: HPO ↔ MP</text>
-      <text x="814" y="211" class="svg-small">ontology predicate + mapping confidence</text>
-      <line x1="758" y1="238" x2="800" y2="238" class="route tier2"/><text x="814" y="243" class="svg-label">Tier 2: ortholog + phenotype</text>
+      <line x1="758" y1="185" x2="800" y2="185" class="route tier1"/><text x="814" y="190" class="svg-label">Category 1: HPO ↔ MP</text>
+      <text x="814" y="211" class="svg-small">1-1 MHMI high confidence / 1-2 Monarch UPheno</text>
+      <line x1="758" y1="238" x2="800" y2="238" class="route tier2"/><text x="814" y="243" class="svg-label">Category 2-1: phenotype label</text>
       <text x="814" y="264" class="svg-small">B exact label / C lexical candidate</text>
-      <line x1="758" y1="291" x2="800" y2="291" class="route tier3"/><text x="814" y="296" class="svg-label">Tier 3: shared OMIM</text>
+      <line x1="758" y1="291" x2="800" y2="291" class="route tier3"/><text x="814" y="296" class="svg-label">Category 2-2: shared OMIM</text>
       <text x="814" y="317" class="svg-small">ClinVar condition + curated mouse model</text>
 
       <text x="54" y="444" class="svg-title">MOUSE genomic region</text>
@@ -372,25 +374,25 @@ function tierHtmlDocument(tierCatalog) {
 
       <line x1="300" y1="472" x2="820" y2="472" class="leader"/>
       <text x="560" y="500" text-anchor="middle" class="svg-label">matching lineごとにvariant pair + evidence sourceを1行として保存</text>
-      <text x="560" y="524" text-anchor="middle" class="svg-small">同じpairが複数Tierに存在してよい。根拠を統合して潰さない。</text>
+      <text x="560" y="524" text-anchor="middle" class="svg-small">同じpairが複数Categoryに存在してよい。根拠を統合して潰さない。</text>
     </svg>
   </div>
 
-  <h2>各Tierが保存するもの</h2>
+  <h2>各Categoryが保存するもの</h2>
   <section class="tier-grid">
-    <article class="tier-card"><h3>Tier 1</h3><p class="count">${count('tier1')} rows</p><p class="basis">Ontology phenotype bridge</p><ul><li>ClinVar condition → HPO</li><li>HPO-MP mapping</li><li>MGI allele/genotype</li><li>predicate、confidence、sourceを保持</li></ul></article>
-    <article class="tier-card"><h3>Tier 2</h3><p class="count">${count('tier2')} rows</p><p class="basis">Ortholog-first phenotype evidence</p><ul><li>ClinVar/GWAS phenotype</li><li>MGI MP/allele name</li><li>B: exact normalized label</li><li>C: lexical hypothesis、要レビュー</li></ul></article>
-    <article class="tier-card"><h3>Tier 3</h3><p class="count">${count('tier3')} rows</p><p class="basis">Curated disease model</p><ul><li>ClinVar condition identifier</li><li>MGI curated disease model</li><li>shared OMIM ID</li><li>variant equivalenceは主張しない</li></ul></article>
+    <article class="tier-card"><h3>Category 1-1</h3><p class="count">${count('category1-1')} rows</p><p class="basis">MHMI high-confidence HPO-MP bridge</p><ul><li>ClinVar condition → HPO</li><li>MHMI HPO-MP confidence ≥0.8</li><li>MGI allele/genotype</li><li>predicate、confidence、sourceを保持</li></ul></article>
+    <article class="tier-card"><h3>Category 1-2</h3><p class="count">${count('category1-2')} rows</p><p class="basis">Monarch UPheno bridge</p><ul><li>ClinVar condition → HPO</li><li>Monarch crossSpeciesExactMatch</li><li>数値confidenceなし</li><li>1-1と別に出典を保持</li></ul></article>
+    <article class="tier-card"><h3>Category 2</h3><p class="count">${count('category2-1')} / ${count('category2-2')} rows</p><p class="basis">Ortholog-first evidence</p><ul><li>2-1: phenotype label</li><li>2-2: curated disease model</li><li>shared OMIM ID</li><li>variant equivalenceは主張しない</li></ul></article>
   </section>
 
   <h2>DBではpairと接続根拠を分離する</h2>
   <div class="flow">
     <section class="db-table"><h3>variant_pair</h3><ul><li>human gene + rsID</li><li>mouse gene + MGI allele/genotype</li><li>ortholog pair ID</li></ul></section>
     <div class="arrow" aria-hidden="true">1 → n</div>
-    <section class="db-table"><h3>tier_evidence</h3><ul><li>pair ID + tier ID</li><li>human/mouse phenotype</li><li>ontology predicate / shared OMIM / match method</li><li>source record + review status</li></ul></section>
+    <section class="db-table"><h3>category_evidence</h3><ul><li>pair ID + category/subcategory ID</li><li>human/mouse phenotype</li><li>ontology predicate / shared OMIM / match method</li><li>source record + review status</li></ul></section>
   </div>
-  <p class="note">Tier番号をconfidence scoreとして比較しません。各Tierの元データ、適用範囲、review条件を保ったまま検索します。Semantic class A/B/C/DはTier 2のB/Cとは別分類です。</p>
-  <p class="conclusion">Tier説明図はデータ構造と接続根拠を示します。TLR4・CFTR・ALPLのケーススタディは、別HTMLでこの設計が実際の対象ペア回収にどう効くかを示します。</p>
+  <p class="note">Category番号をconfidence scoreとして比較しません。各Categoryの元データ、適用範囲、review条件を保ったまま検索します。Semantic class A/B/C/DはCategory 2-1のB/Cとは別分類です。</p>
+  <p class="conclusion">Category説明図はデータ構造と接続根拠を示します。TLR4・CFTR・ALPLのケーススタディは、別HTMLでこの設計が実際の対象ペア回収にどう効くかを示します。</p>
 </main>
 </body>
 </html>
@@ -400,22 +402,24 @@ function tierHtmlDocument(tierCatalog) {
 async function main() {
   const [controls, tierValidation, semanticSummaries, tierCatalog] = await Promise.all([
     readTsvObjects(path.join(PROJECT_ROOT, 'data', 'controls', 'positive_controls.tsv')),
-    readTsvObjects(path.join(OUTPUT_DIR, 'tier_validation_results.tsv')),
+    readTsvObjects(path.join(OUTPUT_DIR, 'category_validation_results.tsv')),
     readTsvObjects(path.join(SEMANTIC_DIR, 'controls_summary.tsv')),
-    readTsvObjects(path.join(OUTPUT_DIR, 'tier_catalog.tsv'))
+    readTsvObjects(path.join(OUTPUT_DIR, 'category_catalog.tsv'))
   ]);
   if (!controls.length) throw new Error('No positive controls found.');
 
-  const [tier1, tier2, tier3, semantic] = await Promise.all([
-    firstMatchingRows(path.join(OUTPUT_DIR, 'tier1_monarch_phenotype.tsv.gz'), controls),
-    firstMatchingRows(path.join(OUTPUT_DIR, 'tier2_ortholog_phenotype.tsv.gz'), controls),
-    firstMatchingRows(path.join(OUTPUT_DIR, 'tier3_disease_model.tsv.gz'), controls),
+  const [category11, category12, category21, category22, semantic] = await Promise.all([
+    firstMatchingRows(path.join(OUTPUT_DIR, 'category1_1_mhmi_hpo_mp.tsv.gz'), controls),
+    firstMatchingRows(path.join(OUTPUT_DIR, 'category1_2_monarch_upheno.tsv.gz'), controls),
+    firstMatchingRows(path.join(OUTPUT_DIR, 'category2_1_ortholog_phenotype.tsv.gz'), controls),
+    firstMatchingRows(path.join(OUTPUT_DIR, 'category2_2_disease_model.tsv.gz'), controls),
     firstMatchingRows(path.join(SEMANTIC_DIR, 'control_variant_pairs.tsv.gz'), controls)
   ]);
   const representatives = {
-    tier1,
-    tier2,
-    tier3,
+    'category1-1': category11,
+    'category1-2': category12,
+    'category2-1': category21,
+    'category2-2': category22,
     semantic_A: semantic,
     semantic_B: semantic,
     semantic_C: semantic

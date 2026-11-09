@@ -17,11 +17,14 @@ const OUTPUT_DIR = path.join(PROJECT_ROOT, 'output');
 async function indexPhenotypeMappings(filePath, config) {
   const rows = await readTsvObjects(filePath);
   const accepted = new Set(config.accepted_predicates);
+  const acceptedSources = config.mapping_sources ? new Set(config.mapping_sources) : null;
   const index = new Map();
   for (const row of rows) {
     const confidence = row.confidence === '' ? 1 : Number(row.confidence);
+    const sources = String(row.mapping_source || '').split('|');
     if (!accepted.has(row.predicate) || !Number.isFinite(confidence)
-        || confidence < config.minimum_mapping_confidence) continue;
+        || confidence < config.minimum_mapping_confidence
+        || (acceptedSources && !sources.some(source => acceptedSources.has(source)))) continue;
     if (!index.has(row.hpo_id)) index.set(row.hpo_id, []);
     index.get(row.hpo_id).push(row);
   }
@@ -68,7 +71,7 @@ async function executeMapping(paths, config) {
   const output = zlib.createGzip({ level: 6 });
   output.pipe(compressedFile);
   const outputColumns = [
-    'tier_id', 'connection_basis',
+    'category_id', 'subcategory_id', 'connection_basis',
     'human_gene', 'human_ncbi_gene_id', 'rs_id', 'clinvar_variation_id',
     'chromosome', 'position', 'reference_allele', 'alternate_allele',
     'clinical_significance', 'review_status', 'disease_id', 'disease_name',
@@ -120,8 +123,9 @@ async function executeMapping(paths, config) {
         stats.mousePhenotypeCandidateRows += alleles.length;
         for (const allele of alleles) {
           const record = {
-            tier_id: 'tier1',
-            connection_basis: 'monarch_hpo_mp_phenotype',
+            category_id: config.category_id,
+            subcategory_id: config.subcategory_id,
+            connection_basis: config.connection_basis,
             ...human,
             predicate: bridge.predicate,
             mapping_confidence: bridge.confidence,
@@ -178,29 +182,50 @@ function closePipedStream(transform, destination) {
 /** Load configuration, run the mapping and create its first summary figure. */
 async function main() {
   await ensureDirectory(OUTPUT_DIR);
-  const config = loadWorkflowConfig(PROJECT_ROOT).strict_mapping;
-  const paths = {
+  const workflow = loadWorkflowConfig(PROJECT_ROOT);
+  const sharedPaths = {
     hpoMp: path.join(PROCESSED_DIR, 'hpo_mp_mapping.tsv'),
     mouse: path.join(PROCESSED_DIR, 'mouse_allele_mp.tsv'),
     ortholog: path.join(PROCESSED_DIR, 'ortholog_mapping.tsv'),
     human: path.join(PROCESSED_DIR, 'human_variant_hpo.tsv.gz'),
-    output: path.join(OUTPUT_DIR, 'cross_phenotype_mapping_results.tsv.gz')
   };
 
+  const routes = [
+    {
+      ...workflow.strict_mapping,
+      category_id: 'category1', subcategory_id: 'category1-1',
+      connection_basis: 'mhmi_high_confidence_hpo_mp_phenotype',
+      output: 'category1_1_mhmi_hpo_mp.tsv.gz'
+    },
+    {
+      ...workflow.monarch_mapping,
+      category_id: 'category1', subcategory_id: 'category1-2',
+      connection_basis: 'monarch_upheno_cross_species_hpo_mp_phenotype',
+      output: 'category1_2_monarch_upheno.tsv.gz'
+    }
+  ];
+  const results = {};
   console.log('Indexing phenotype, mouse allele and ortholog data...');
-  const stats = await executeMapping(paths, config);
+  for (const route of routes) {
+    const output = path.join(OUTPUT_DIR, route.output);
+    const stats = await executeMapping({ ...sharedPaths, output }, route);
+    results[route.subcategory_id] = stats;
+    await fsp.copyFile(output, path.join(OUTPUT_DIR, route.subcategory_id === 'category1-1'
+      ? 'tier1_monarch_phenotype.tsv.gz' : 'monarch_upheno_phenotype.tsv.gz'));
+    console.log(`${route.subcategory_id}: ${stats.finalRows.toLocaleString('en-US')} result rows.`);
+  }
   const preparation = JSON.parse(await fsp.readFile(path.join(PROCESSED_DIR, 'preparation_stats.json'), 'utf8'));
   await fsp.writeFile(
     path.join(OUTPUT_DIR, 'mapping_stats.json'),
-    `${JSON.stringify(stats, null, 2)}\n`,
+    `${JSON.stringify(results['category1-1'], null, 2)}\n`,
     'utf8'
   );
-  await fsp.copyFile(
-    paths.output,
-    path.join(OUTPUT_DIR, 'tier1_monarch_phenotype.tsv.gz')
+  await fsp.writeFile(
+    path.join(OUTPUT_DIR, 'category1_mapping_stats.json'),
+    `${JSON.stringify(results, null, 2)}\n`,
+    'utf8'
   );
-  await writeSummarySvg(path.join(OUTPUT_DIR, 'summary.svg'), preparation, stats);
-  console.log(`Mapping complete: ${stats.finalRows.toLocaleString('en-US')} result rows.`);
+  await writeSummarySvg(path.join(OUTPUT_DIR, 'summary.svg'), preparation, results['category1-1']);
 }
 
 if (require.main === module) {

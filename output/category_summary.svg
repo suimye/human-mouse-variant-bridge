@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="680" viewBox="0 0 1100 680" role="img" aria-labelledby="title description">
+  <title id="title">Categorized human-mouse variant correspondence</title>
+  <desc id="description">Independent evidence category row counts and positive-control recovery matrix.</desc>
+  <style>
+    .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #17324D; }
+    .subtitle { font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+    .label { font: 600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #243746; }
+    .count { font: 700 17px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #17324D; }
+    .matrixHead { font: 700 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #17324D; text-anchor: middle; }
+    .cell { font: 700 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .small { font: 400 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
+  </style>
+  <rect width="1100" height="680" fill="#FFFFFF"/>
+  <text x="54" y="56" class="title">Categorized human-mouse variant correspondence</text>
+  <text x="54" y="87" class="subtitle">Independent connection bases, separate DB tables; bars use log10(row count + 1)</text>
+  <text x="54" y="135" class="label">category1-1: MHMI high-confidence HPO-MP</text>
+      <rect x="54" y="145" width="700" height="25" rx="5" fill="#E8EFF4"/>
+      <rect x="54" y="145" width="700.0" height="25" rx="5" fill="#315C83"/>
+      <text x="774" y="164" class="count">1,089,740</text>
+<text x="54" y="197" class="label">category1-2: Monarch UPheno cross-species</text>
+      <rect x="54" y="207" width="700" height="25" rx="5" fill="#E8EFF4"/>
+      <rect x="54" y="207" width="695.0" height="25" rx="5" fill="#607D9C"/>
+      <text x="774" y="226" class="count">986,121</text>
+<text x="54" y="259" class="label">category2-1: Ortholog-first phenotype label</text>
+      <rect x="54" y="269" width="700" height="25" rx="5" fill="#E8EFF4"/>
+      <rect x="54" y="269" width="566.3" height="25" rx="5" fill="#168273"/>
+      <text x="774" y="288" class="count">76,619</text>
+<text x="54" y="321" class="label">category2-2: Curated OMIM disease model</text>
+      <rect x="54" y="331" width="700" height="25" rx="5" fill="#E8EFF4"/>
+      <rect x="54" y="331" width="640.0" height="25" rx="5" fill="#A26A24"/>
+      <text x="774" y="350" class="count">331,245</text>
+  <line x1="54" y1="366" x2="1046" y2="366" stroke="#D7E0E7"/>
+  <text x="54" y="400" class="label">Positive-control recovery</text>
+  <text x="570" y="400" class="matrixHead">category1-1</text>
+<text x="705" y="400" class="matrixHead">category1-2</text>
+<text x="840" y="400" class="matrixHead">category2-1</text>
+<text x="975" y="400" class="matrixHead">category2-2</text>
+  <text x="54" y="433" class="label">TLR4_LPS_001</text><rect x="505" y="410" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="560" y="433" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="640" y="410" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="695" y="433" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="775" y="410" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="830" y="433" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="910" y="410" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="965" y="433" text-anchor="middle" class="cell" fill="#526779">-</text>
+<text x="54" y="485" class="label">CFTR_F508DEL_001</text><rect x="505" y="462" width="110" height="36" rx="7" fill="#D8F0E6"/>
+        <text x="560" y="485" text-anchor="middle" class="cell" fill="#116B4D">6 rows</text>
+<rect x="640" y="462" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="695" y="485" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="775" y="462" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="830" y="485" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="910" y="462" width="110" height="36" rx="7" fill="#D8F0E6"/>
+        <text x="965" y="485" text-anchor="middle" class="cell" fill="#116B4D">2 rows</text>
+<text x="54" y="537" class="label">ALPL_HPP_001</text><rect x="505" y="514" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="560" y="537" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="640" y="514" width="110" height="36" rx="7" fill="#EFF3F6"/>
+        <text x="695" y="537" text-anchor="middle" class="cell" fill="#526779">-</text>
+<rect x="775" y="514" width="110" height="36" rx="7" fill="#D8F0E6"/>
+        <text x="830" y="537" text-anchor="middle" class="cell" fill="#116B4D">20 rows</text>
+<rect x="910" y="514" width="110" height="36" rx="7" fill="#D8F0E6"/>
+        <text x="965" y="537" text-anchor="middle" class="cell" fill="#116B4D">2 rows</text>
+  <text x="54" y="650" class="small">Green = expected and recovered; gray = not required for that evidence basis. Non-required recoveries are retained for review.</text>
+</svg>

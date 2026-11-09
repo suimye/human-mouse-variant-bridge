@@ -16,7 +16,7 @@ const WORKFLOW_CONFIG = loadWorkflowConfig(PROJECT_ROOT);
 const RAW_DISEASE = sourcePath(PROJECT_ROOT, WORKFLOW_CONFIG, 'mgi_genotype_disease_models');
 const RAW_ALLELE = sourcePath(PROJECT_ROOT, WORKFLOW_CONFIG, 'mgi_phenotypic_alleles');
 const COLUMNS = [
-  'tier_id', 'connection_basis', 'human_gene', 'human_ncbi_gene_id', 'rs_id',
+  'category_id', 'subcategory_id', 'connection_basis', 'human_gene', 'human_ncbi_gene_id', 'rs_id',
   'human_variant_source', 'human_source_record_id', 'human_chromosome',
   'human_position', 'human_condition_label', 'human_condition_identifiers',
   'human_evidence_class', 'human_clinical_significance', 'mouse_gene',
@@ -143,7 +143,8 @@ async function executeDiseaseMapping(paths) {
         if (seen.has(signature)) continue;
         seen.add(signature);
         const record = {
-          tier_id: 'tier3',
+          category_id: 'category2',
+          subcategory_id: 'category2-2',
           connection_basis: 'shared_disease_identifier_and_curated_mouse_model',
           human_gene: human.human_gene,
           human_ncbi_gene_id: human.human_ncbi_gene_id,
@@ -193,7 +194,7 @@ async function main() {
   const paths = {
     human: path.join(PROCESSED_DIR, 'human_variant_phenotypes.tsv.gz'),
     ortholog: path.join(PROCESSED_DIR, 'ortholog_mapping.tsv'),
-    output: path.join(OUTPUT_DIR, 'tier3_disease_model.tsv.gz')
+    output: path.join(OUTPUT_DIR, 'category2_2_disease_model.tsv.gz')
   };
   const stats = await executeDiseaseMapping(paths);
   await fsp.writeFile(
@@ -201,6 +202,7 @@ async function main() {
     `${JSON.stringify(stats, null, 2)}\n`,
     'utf8'
   );
+  await fsp.copyFile(paths.output, path.join(OUTPUT_DIR, 'tier3_disease_model.tsv.gz'));
   console.log(`Disease-model mapping complete: ${stats.finalRows.toLocaleString('en-US')} Tier 3 rows.`);
 }
 

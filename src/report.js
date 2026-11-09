@@ -108,45 +108,46 @@ async function writeOrthologFirstSvg(filePath, preparation, mapping, validation 
   await fsp.writeFile(filePath, svg, 'utf8');
 }
 
-/** Generate an editable comparison figure for tier counts and control recovery. */
-async function writeTierSummarySvg(filePath, tierCounts, validationRows) {
-  const tiers = [
-    ['tier1', 'Monarch phenotype bridge', tierCounts.tier1, '#315C83'],
-    ['tier2', 'Ortholog-first phenotype evidence', tierCounts.tier2, '#168273'],
-    ['tier3', 'Curated disease model', tierCounts.tier3, '#A26A24']
+/** Generate an editable comparison figure for category counts and control recovery. */
+async function writeCategorySummarySvg(filePath, categoryCounts, validationRows) {
+  const categories = [
+    ['category1-1', 'MHMI high-confidence HPO-MP', categoryCounts['category1-1'], '#315C83'],
+    ['category1-2', 'Monarch UPheno cross-species', categoryCounts['category1-2'], '#607D9C'],
+    ['category2-1', 'Ortholog-first phenotype label', categoryCounts['category2-1'], '#168273'],
+    ['category2-2', 'Curated OMIM disease model', categoryCounts['category2-2'], '#A26A24']
   ];
-  const maxLog = Math.max(...tiers.map(([, , count]) => Math.log10(Number(count) + 1)), 1);
-  const bars = tiers.map(([tierId, label, count, color], index) => {
-    const y = 155 + index * 78;
+  const maxLog = Math.max(...categories.map(([, , count]) => Math.log10(Number(count) + 1)), 1);
+  const bars = categories.map(([categoryId, label, count, color], index) => {
+    const y = 145 + index * 62;
     const width = Math.max(2, (Math.log10(Number(count) + 1) / maxLog) * 700);
-    return `<text x="54" y="${y - 10}" class="label">${escapeXml(`${tierId}: ${label}`)}</text>
+    return `<text x="54" y="${y - 10}" class="label">${escapeXml(`${categoryId}: ${label}`)}</text>
       <rect x="54" y="${y}" width="700" height="25" rx="5" fill="#E8EFF4"/>
       <rect x="54" y="${y}" width="${width.toFixed(1)}" height="25" rx="5" fill="${color}"/>
       <text x="774" y="${y + 19}" class="count">${formatCount(count)}</text>`;
   }).join('\n');
   const controls = [...new Set(validationRows.map(row => row.control_id))];
-  const matrixHeader = tiers.map(([tierId], index) => (
-    `<text x="${620 + index * 150}" y="442" class="matrixHead">${tierId}</text>`
+  const matrixHeader = categories.map(([categoryId], index) => (
+    `<text x="${570 + index * 135}" y="400" class="matrixHead">${categoryId}</text>`
   )).join('\n');
   const matrixRows = controls.map((controlId, rowIndex) => {
-    const y = 480 + rowIndex * 52;
-    const cells = tiers.map(([tierId], columnIndex) => {
-      const row = validationRows.find(item => item.control_id === controlId && item.tier_id === tierId);
+    const y = 438 + rowIndex * 52;
+    const cells = categories.map(([categoryId], columnIndex) => {
+      const row = validationRows.find(item => item.control_id === controlId && item.category_id === categoryId);
       const expected = row?.expected === 'found';
       const found = Number(row?.found_rows || 0);
       const fill = expected && found ? '#D8F0E6' : expected ? '#F9D8D8' : found ? '#FFF0C7' : '#EFF3F6';
       const textFill = expected && found ? '#116B4D' : expected ? '#A12A2A' : '#526779';
       const label = found ? `${found} row${found === 1 ? '' : 's'}` : '-';
-      const x = 570 + columnIndex * 150;
-      return `<rect x="${x}" y="${y - 28}" width="118" height="36" rx="7" fill="${fill}"/>
-        <text x="${x + 59}" y="${y - 5}" text-anchor="middle" class="cell" fill="${textFill}">${label}</text>`;
+      const x = 505 + columnIndex * 135;
+      return `<rect x="${x}" y="${y - 28}" width="110" height="36" rx="7" fill="${fill}"/>
+        <text x="${x + 55}" y="${y - 5}" text-anchor="middle" class="cell" fill="${textFill}">${label}</text>`;
     }).join('\n');
     return `<text x="54" y="${y - 5}" class="label">${escapeXml(controlId)}</text>${cells}`;
   }).join('\n');
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="680" viewBox="0 0 1100 680" role="img" aria-labelledby="title description">
-  <title id="title">Tiered human-mouse variant correspondence</title>
-  <desc id="description">Independent evidence tier row counts and positive-control recovery matrix.</desc>
+  <title id="title">Categorized human-mouse variant correspondence</title>
+  <desc id="description">Independent evidence category row counts and positive-control recovery matrix.</desc>
   <style>
     .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #17324D; }
     .subtitle { font: 400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
@@ -157,11 +158,11 @@ async function writeTierSummarySvg(filePath, tierCounts, validationRows) {
     .small { font: 400 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #526779; }
   </style>
   <rect width="1100" height="680" fill="#FFFFFF"/>
-  <text x="54" y="56" class="title">Tiered human-mouse variant correspondence</text>
+  <text x="54" y="56" class="title">Categorized human-mouse variant correspondence</text>
   <text x="54" y="87" class="subtitle">Independent connection bases, separate DB tables; bars use log10(row count + 1)</text>
   ${bars}
-  <line x1="54" y1="408" x2="1046" y2="408" stroke="#D7E0E7"/>
-  <text x="54" y="442" class="label">Positive-control recovery</text>
+  <line x1="54" y1="366" x2="1046" y2="366" stroke="#D7E0E7"/>
+  <text x="54" y="400" class="label">Positive-control recovery</text>
   ${matrixHeader}
   ${matrixRows}
   <text x="54" y="650" class="small">Green = expected and recovered; gray = not required for that evidence basis. Non-required recoveries are retained for review.</text>
@@ -169,4 +170,4 @@ async function writeTierSummarySvg(filePath, tierCounts, validationRows) {
   await fsp.writeFile(filePath, svg, 'utf8');
 }
 
-module.exports = { writeOrthologFirstSvg, writeSummarySvg, writeTierSummarySvg };
+module.exports = { writeCategorySummarySvg, writeOrthologFirstSvg, writeSummarySvg };

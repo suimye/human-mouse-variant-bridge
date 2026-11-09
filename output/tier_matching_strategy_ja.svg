@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1120" viewBox="0 0 1500 1120" role="img" aria-labelledby="title desc">
   <title id="title">Ortholog geneからhuman–mouse候補リストを作る</title>
-  <desc id="desc">MGIの1対1ortholog gene pair内で、Tier 1はHPOとMP、Tier 2は表現型名、Tier 3はOMIM疾患IDを使ってhuman variantとmouse alleleを結び、接続根拠ごとに保存する。</desc>
+  <desc id="desc">MGIの1対1ortholog gene pair内で、Category 1-1はHPOとMP、Category 2-1は表現型名、Category 2-2はOMIM疾患IDを使ってhuman variantとmouse alleleを結び、接続根拠ごとに保存する。</desc>
   <defs>
     <style>
       .title{font:500 48px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;fill:#f7f7f7}
@@ -37,11 +37,11 @@
   <path d="M1090 300 C1090 375 1105 438 1115 492 C1122 530 1125 563 1125 600" class="link tier3"/>
 
   <rect x="360" y="382" width="260" height="76" rx="13" fill="#171717" stroke="#377bd2" stroke-width="2"/>
-  <text x="490" y="411" text-anchor="middle" class="label" fill="#377bd2">Tier 1</text><text x="490" y="442" text-anchor="middle" class="small">HPO ↔ MP（Monarch / MHMI）</text>
+  <text x="490" y="411" text-anchor="middle" class="label" fill="#377bd2">Category 1-1</text><text x="490" y="442" text-anchor="middle" class="small">HPO ↔ MP（Monarch / MHMI）</text>
   <rect x="660" y="400" width="330" height="76" rx="13" fill="#171717" stroke="#ffd45a" stroke-width="2"/>
-  <text x="825" y="429" text-anchor="middle" class="label" fill="#ffd45a">Tier 2</text><text x="825" y="460" text-anchor="middle" class="small">表現型名の全文一致／語彙一致</text>
+  <text x="825" y="429" text-anchor="middle" class="label" fill="#ffd45a">Category 2-1</text><text x="825" y="460" text-anchor="middle" class="small">表現型名の全文一致／語彙一致</text>
   <rect x="1010" y="418" width="260" height="76" rx="13" fill="#171717" stroke="#ec7cb2" stroke-width="2"/>
-  <text x="1140" y="447" text-anchor="middle" class="label" fill="#ec7cb2">Tier 3</text><text x="1140" y="478" text-anchor="middle" class="small">同じOMIM疾患ID</text>
+  <text x="1140" y="447" text-anchor="middle" class="label" fill="#ec7cb2">Category 2-2</text><text x="1140" y="478" text-anchor="middle" class="small">同じOMIM疾患ID</text>
   <text x="34" y="520" class="small">humanとmouseでvariantの位置や種類が一致する必要はない</text>
 
   <line x1="180" y1="600" x2="1320" y2="600" class="region"/>
@@ -61,9 +61,9 @@
   <line x1="34" y1="878" x2="1465" y2="878" stroke="#323232" stroke-width="2"/>
   <text x="70" y="910" class="tableh">evidence</text><text x="270" y="910" class="tableh">human variant</text><text x="570" y="910" class="tableh">ortholog pair</text><text x="850" y="910" class="tableh">mouse allele</text><text x="1125" y="910" class="tableh">join key</text>
   <line x1="34" y1="927" x2="1465" y2="927" stroke="#323232" stroke-width="2"/>
-  <circle cx="50" cy="963" r="9" class="tier1"/><text x="72" y="970" class="tabler">Tier 1</text><text x="270" y="970" class="tabler">H-var-01</text><text x="570" y="970" class="tabler">Gene A ↔ Gene A</text><text x="850" y="970" class="tabler">M-allele-01</text><text x="1125" y="970" class="tabler">HPO ↔ MP</text>
+  <circle cx="50" cy="963" r="9" class="tier1"/><text x="72" y="970" class="tabler">Category 1-1</text><text x="270" y="970" class="tabler">H-var-01</text><text x="570" y="970" class="tabler">Gene A ↔ Gene A</text><text x="850" y="970" class="tabler">M-allele-01</text><text x="1125" y="970" class="tabler">HPO ↔ MP</text>
   <line x1="34" y1="989" x2="1465" y2="989" stroke="#323232"/>
-  <circle cx="50" cy="1020" r="9" class="tier2"/><text x="72" y="1027" class="tabler">Tier 2</text><text x="270" y="1027" class="tabler">H-var-02</text><text x="570" y="1027" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1027" class="tabler">M-allele-02</text><text x="1125" y="1027" class="tabler">phenotype label</text>
+  <circle cx="50" cy="1020" r="9" class="tier2"/><text x="72" y="1027" class="tabler">Category 2-1</text><text x="270" y="1027" class="tabler">H-var-02</text><text x="570" y="1027" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1027" class="tabler">M-allele-02</text><text x="1125" y="1027" class="tabler">phenotype label</text>
   <line x1="34" y1="1045" x2="1465" y2="1045" stroke="#323232"/>
-  <circle cx="50" cy="1064" r="9" class="tier3"/><text x="72" y="1071" class="tabler">Tier 3</text><text x="270" y="1071" class="tabler">H-var-03</text><text x="570" y="1071" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1071" class="tabler">M-allele-03</text><text x="1125" y="1071" class="tabler">same OMIM</text>
+  <circle cx="50" cy="1064" r="9" class="tier3"/><text x="72" y="1071" class="tabler">Category 2-2</text><text x="270" y="1071" class="tabler">H-var-03</text><text x="570" y="1071" class="tabler">Gene A ↔ Gene A</text><text x="850" y="1071" class="tabler">M-allele-03</text><text x="1125" y="1071" class="tabler">same OMIM</text>
 </svg>

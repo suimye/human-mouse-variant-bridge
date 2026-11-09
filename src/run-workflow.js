@@ -13,12 +13,12 @@ function buildSteps(config, options = {}) {
     steps.push({ id: 'download', label: 'データファイルを取得し、URL・更新日・SHA-256を記録', command: ['node', 'src/download.js', ...(options.forceDownload ? ['--force'] : [])] });
   }
   steps.push(
-    { id: 'prepare_tier1', label: 'HPO–MP、1:1 ortholog、ClinVar、MGIを共通列へ変換', command: ['node', 'src/prepare.js'] },
-    { id: 'map_tier1', label: 'HPO–MPを使ってTier 1を作成', command: ['node', 'src/map.js'] },
-    { id: 'prepare_tier2', label: 'ClinVar/GWASとMGI表現型を遺伝子別に整理', command: ['node', 'src/prepare-relaxed.js'] },
-    { id: 'map_tier2', label: '表現型名を比較してTier 2を作成', command: ['node', 'src/relaxed-map.js'] },
-    { id: 'map_tier3', label: '同じOMIM疾患IDからTier 3を作成', command: ['node', 'src/tier3-disease-map.js'] },
-    { id: 'validate_tiers', label: 'Tier 1–3とpositive/negative controlsを検証', command: ['node', 'src/validate.js'] },
+    { id: 'prepare_categories', label: 'HPO–MP、1:1 ortholog、ClinVar、MGIを共通列へ変換', command: ['node', 'src/prepare.js'] },
+    { id: 'map_category1', label: 'HPO–MPを使ってCategory 1-1とCategory 1-2を作成', command: ['node', 'src/map.js'] },
+    { id: 'prepare_category2', label: 'ClinVar/GWASとMGI表現型を遺伝子別に整理', command: ['node', 'src/prepare-relaxed.js'] },
+    { id: 'map_category2_1', label: '表現型名を比較してCategory 2-1を作成', command: ['node', 'src/relaxed-map.js'] },
+    { id: 'map_category2_2', label: '同じOMIM疾患IDからCategory 2-2を作成', command: ['node', 'src/tier3-disease-map.js'] },
+    { id: 'validate_categories', label: 'Category 1-1/1-2/2-1/2-2とpositive/negative controlsを検証', command: ['node', 'src/validate.js'] },
     { id: 'test_node', label: 'Node.js単体テストを実行', command: ['npm', 'test'] }
   );
   const runSemantic = config.execution.run_semantic && !options.skipSemantic;

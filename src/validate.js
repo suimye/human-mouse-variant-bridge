@@ -6,7 +6,7 @@ const fsp = require('node:fs/promises');
 const path = require('node:path');
 const { readLines, readTsvObjects, writeTsvRow } = require('./lib/io');
 const { loadWorkflowConfig } = require('./lib/config');
-const { writeOrthologFirstSvg, writeSummarySvg, writeTierSummarySvg } = require('./report');
+const { writeCategorySummarySvg, writeOrthologFirstSvg, writeSummarySvg } = require('./report');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const PROCESSED_DIR = path.join(PROJECT_ROOT, 'data', 'processed');
@@ -37,7 +37,7 @@ async function inspectMappingResults(filePath) {
 }
 
 /** Count each declared positive control in one DB-ready tier table. */
-async function inspectTierResults(filePath, tierId, controls) {
+async function inspectCategoryResults(filePath, categoryId, controls) {
   const counts = new Map(controls.map(control => [control.control_id, 0]));
   const support = new Map(controls.map(control => [control.control_id, new Set()]));
   let invalidOrthologRows = 0;
@@ -64,7 +64,7 @@ async function inspectTierResults(filePath, tierId, controls) {
     }
   }
   return {
-    tierId,
+    categoryId,
     counts,
     support,
     invalidOrthologRows
@@ -72,16 +72,16 @@ async function inspectTierResults(filePath, tierId, controls) {
 }
 
 /** Compare observed positive controls with their independently declared expected tiers. */
-function buildTierValidation(controls, inspections) {
+function buildCategoryValidation(controls, inspections) {
   const rows = [];
   for (const control of controls) {
-    const expected = new Set(String(control.expected_tiers || '').split('|').filter(Boolean));
+    const expected = new Set(String(control.expected_categories || '').split('|').filter(Boolean));
     for (const inspection of inspections) {
       const foundRows = inspection.counts.get(control.control_id) || 0;
-      const shouldBeFound = expected.has(inspection.tierId);
+      const shouldBeFound = expected.has(inspection.categoryId);
       rows.push({
         control_id: control.control_id,
-        tier_id: inspection.tierId,
+        category_id: inspection.categoryId,
         expected: shouldBeFound ? 'found' : 'not_required',
         found_rows: foundRows,
         within_tier_support: [...inspection.support.get(control.control_id)].sort().join('|'),
@@ -163,10 +163,10 @@ async function writePositiveResult(filePath, control, validation) {
 }
 
 /** Write a positive-control by tier matrix suitable for database import. */
-async function writeTierValidation(filePath, rows) {
+async function writeCategoryValidation(filePath, rows) {
   const output = fs.createWriteStream(filePath);
   const columns = [
-    'control_id', 'tier_id', 'expected', 'found_rows', 'within_tier_support',
+    'control_id', 'category_id', 'expected', 'found_rows', 'within_category_support',
     'status', 'interpretation'
   ];
   writeTsvRow(output, columns);
@@ -175,19 +175,20 @@ async function writeTierValidation(filePath, rows) {
 }
 
 /** Write tier metadata and exact row counts for downstream database loading. */
-async function writeTierCatalog(filePath, definitions, rowCounts) {
+async function writeCategoryCatalog(filePath, definitions, rowCounts) {
   const output = fs.createWriteStream(filePath);
   const columns = [
-    'tier_id', 'name', 'connection_basis', 'output_file', 'row_count', 'interpretation'
+    'category_id', 'subcategory_id', 'name', 'connection_basis', 'output_file', 'row_count', 'interpretation'
   ];
   writeTsvRow(output, columns);
   for (const definition of definitions) {
     writeTsvRow(output, [
-      definition.tier_id,
+      definition.category_id,
+      definition.subcategory_id,
       definition.name,
       definition.connection_basis,
       definition.output,
-      rowCounts[definition.tier_id] || 0,
+      rowCounts[definition.subcategory_id] || 0,
       definition.interpretation
     ]);
   }
@@ -228,32 +229,33 @@ async function main() {
   if (!tlr4Control) throw new Error('The primary TLR4 control is required.');
 
   const inspection = await inspectMappingResults(path.join(OUTPUT_DIR, 'cross_phenotype_mapping_results.tsv.gz'));
-  const tierInspections = await Promise.all([
-    inspectTierResults(path.join(OUTPUT_DIR, 'tier1_monarch_phenotype.tsv.gz'), 'tier1', positiveControls),
-    inspectTierResults(path.join(OUTPUT_DIR, 'tier2_ortholog_phenotype.tsv.gz'), 'tier2', positiveControls),
-    inspectTierResults(path.join(OUTPUT_DIR, 'tier3_disease_model.tsv.gz'), 'tier3', positiveControls)
+  const categoryInspections = await Promise.all([
+    inspectCategoryResults(path.join(OUTPUT_DIR, 'category1_1_mhmi_hpo_mp.tsv.gz'), 'category1-1', positiveControls),
+    inspectCategoryResults(path.join(OUTPUT_DIR, 'category1_2_monarch_upheno.tsv.gz'), 'category1-2', positiveControls),
+    inspectCategoryResults(path.join(OUTPUT_DIR, 'category2_1_ortholog_phenotype.tsv.gz'), 'category2-1', positiveControls),
+    inspectCategoryResults(path.join(OUTPUT_DIR, 'category2_2_disease_model.tsv.gz'), 'category2-2', positiveControls)
   ]);
-  const tierValidation = buildTierValidation(positiveControls, tierInspections);
+  const categoryValidation = buildCategoryValidation(positiveControls, categoryInspections);
   const positive = validatePositiveControl(
     tlr4Control, humanRows, mouseRows, orthologRows, inspection
   );
-  const tier2Inspection = tierInspections.find(item => item.tierId === 'tier2');
-  positive.tier2CandidateRows = tier2Inspection.counts.get(tlr4Control.control_id) || 0;
-  positive.tier2Support = [...tier2Inspection.support.get(tlr4Control.control_id)].sort().join('|');
+  const category21Inspection = categoryInspections.find(item => item.categoryId === 'category2-1');
+  positive.tier2CandidateRows = category21Inspection.counts.get(tlr4Control.control_id) || 0;
+  positive.tier2Support = [...category21Inspection.support.get(tlr4Control.control_id)].sort().join('|');
   const combinedInspection = {
-    invalidOrthologRows: tierInspections.reduce((sum, item) => sum + item.invalidOrthologRows, 0)
+    invalidOrthologRows: categoryInspections.reduce((sum, item) => sum + item.invalidOrthologRows, 0)
   };
   const negatives = validateNegativeControls(negativeControls, tlr4Control, combinedInspection);
   await writePositiveResult(
     path.join(OUTPUT_DIR, 'positive_control_tlr4.tsv'), tlr4Control, positive
   );
-  await writeTierValidation(path.join(OUTPUT_DIR, 'tier_validation_results.tsv'), tierValidation);
+  await writeCategoryValidation(path.join(OUTPUT_DIR, 'category_validation_results.tsv'), categoryValidation);
   await writeNegativeResults(path.join(OUTPUT_DIR, 'negative_control_results.tsv'), negatives);
 
   const validation = {
     generatedAt: new Date().toISOString(),
     positiveControl: positive,
-    tierValidation,
+    categoryValidation,
     negativeControls: negatives.map(control => ({ controlId: control.control_id, status: control.status }))
   };
   await fsp.writeFile(
@@ -267,26 +269,29 @@ async function main() {
   const relaxedPreparation = JSON.parse(await fsp.readFile(path.join(PROCESSED_DIR, 'relaxed_preparation_stats.json'), 'utf8'));
   const relaxedMapping = JSON.parse(await fsp.readFile(path.join(OUTPUT_DIR, 'relaxed_mapping_stats.json'), 'utf8'));
   const tier3Mapping = JSON.parse(await fsp.readFile(path.join(OUTPUT_DIR, 'tier3_mapping_stats.json'), 'utf8'));
-  const tierDefinitions = loadWorkflowConfig(PROJECT_ROOT).tier_definitions;
-  await writeTierCatalog(path.join(OUTPUT_DIR, 'tier_catalog.tsv'), tierDefinitions, {
-    tier1: mapping.finalRows,
-    tier2: relaxedMapping.finalRows,
-    tier3: tier3Mapping.finalRows
+  const categoryDefinitions = loadWorkflowConfig(PROJECT_ROOT).category_definitions;
+  const category1Mapping = JSON.parse(await fsp.readFile(path.join(OUTPUT_DIR, 'category1_mapping_stats.json'), 'utf8'));
+  await writeCategoryCatalog(path.join(OUTPUT_DIR, 'category_catalog.tsv'), categoryDefinitions, {
+    'category1-1': mapping.finalRows,
+    'category1-2': category1Mapping['category1-2'].finalRows,
+    'category2-1': relaxedMapping.finalRows,
+    'category2-2': tier3Mapping.finalRows
   });
-  await writeTierSummarySvg(path.join(OUTPUT_DIR, 'tier_summary.svg'), {
-    tier1: mapping.finalRows,
-    tier2: relaxedMapping.finalRows,
-    tier3: tier3Mapping.finalRows
-  }, tierValidation);
+  await writeCategorySummarySvg(path.join(OUTPUT_DIR, 'category_summary.svg'), {
+    'category1-1': mapping.finalRows,
+    'category1-2': category1Mapping['category1-2'].finalRows,
+    'category2-1': relaxedMapping.finalRows,
+    'category2-2': tier3Mapping.finalRows
+  }, categoryValidation);
   await writeOrthologFirstSvg(
     path.join(OUTPUT_DIR, 'ortholog_first_summary.svg'), relaxedPreparation, relaxedMapping, validation
   );
 
   const failures = [positive.status, ...negatives.map(control => control.status),
-    ...tierValidation.map(row => row.status)]
+    ...categoryValidation.map(row => row.status)]
     .filter(status => status !== 'PASS');
-  console.log(`TLR4 positive control: ${positive.status}; Tier 1 rows: ${positive.automaticHpoMpRows}; Tier 2 rows: ${positive.tier2CandidateRows}`);
-  console.log(`Tier expectations: ${tierValidation.filter(row => row.status === 'PASS').length}/${tierValidation.length} PASS`);
+  console.log(`TLR4 positive control: ${positive.status}; Category 1-1 rows: ${positive.automaticHpoMpRows}; Category 2-1 rows: ${positive.tier2CandidateRows}`);
+  console.log(`Category expectations: ${categoryValidation.filter(row => row.status === 'PASS').length}/${categoryValidation.length} PASS`);
   console.log(`Negative controls: ${negatives.filter(control => control.status === 'PASS').length}/${negatives.length} PASS`);
   if (failures.length) throw new Error(`${failures.length} validation control(s) failed.`);
 }
@@ -299,9 +304,9 @@ if (require.main === module) {
 }
 
 module.exports = {
-  buildTierValidation,
+  buildCategoryValidation,
   inspectMappingResults,
-  inspectTierResults,
+  inspectCategoryResults,
   validateNegativeControls,
   validatePositiveControl
 };

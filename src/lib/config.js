@@ -20,7 +20,7 @@ function validateWorkflowConfig(config) {
     if (ids.has(source.id)) throw new Error(`Duplicate data source id: ${source.id}`);
     ids.add(source.id);
   }
-  for (const section of ['strict_mapping', 'ortholog_first_mapping', 'semantic_mapping', 'tier_definitions', 'execution']) {
+  for (const section of ['strict_mapping', 'monarch_mapping', 'ortholog_first_mapping', 'semantic_mapping', 'category_definitions', 'execution']) {
     if (config[section] === undefined) throw new Error(`config/workflow.json is missing ${section}`);
   }
   return config;
